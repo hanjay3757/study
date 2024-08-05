@@ -1,0 +1,14 @@
+function generateRandomName() {
+    const firstNames = ['민준', '서연', '지우', '유진', '예준', '하준', '지민', '수현', '서현', '지아'];
+    const lastNames = ['김', '이', '박', '최', '정', '강', '조', '윤', '임', '오'];
+    
+    // 랜덤으로 이름 선택
+    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+    
+    return lastName + firstName;
+}
+
+// 랜덤 이름 생성 및 출력
+const randomName = generateRandomName();
+console.log(randomName);
