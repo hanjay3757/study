@@ -1,4 +1,6 @@
-var s = prompt();
+while(!s){
+    var s=prompt('Reason for deletion?');
+};
 switch(s){
 case "1":
 document.write("1이다");
