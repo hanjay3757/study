@@ -5,21 +5,22 @@
 // 				숫자가 100이면 while 반복문을 끝내도록 처리	
 
 
-window.onload = function(){
-
+window.onload = function () {
+// 
 
     var t = document.getElementById("a");
 
-    var s ="";
-    
-    
-    while(true){
-    
+    var q = " ";
+
+
+    while (true) {
+// 참으로 설정하면 무한루프
         s = prompt("값을 입력하세요 :");
-        if(s==100){
+        if (s == 100) {
             break;
-        }else{
-            t.innerHTML = "마지막 입력값:"+s+"<br>";
+        } else {
+            t.innerHTML = "마지막 입력값:" + s + "<br>";
+            // t id 변수 ./ innerHTML 내장변수
         }
     }
 
