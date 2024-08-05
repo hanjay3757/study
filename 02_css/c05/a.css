@@ -1,0 +1,46 @@
+div{
+    background-image: image("https://health.chosun.com/site/data/img_dir/2023/07/17/2023071701753_0.jpg");
+}
+#box{
+    width: 1500px;
+    background-color: black;
+    margin-left: auto;
+    margin-right: auto;
+}
+#top{
+background-color: purple;
+/* height:401px; */
+display: flex;
+}
+#top_L{
+    background-image: url('../co3/cat.jpg') ;
+    background-repeat: no-repeat;
+    background-size:150px 180px;
+
+}
+#top_R{
+    background-color: orange;
+    height: 200px;
+    width: 400px;
+}
+#mid{
+    background-color: yellow;
+    height: 1200px;
+}
+#bot{
+    background-color: green;
+    display: flex;
+    
+}
+#bot_L{
+    background-color: rgb(23, 0, 128);
+    height: 100px;
+    width: 200px;
+    
+}
+#bot_R{
+    background-color: rgb(128, 0, 128);
+    height: 100px;
+    width: 400px;
+    
+}
