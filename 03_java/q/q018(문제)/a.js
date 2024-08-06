@@ -1,13 +1,9 @@
-
-
-for(var i=1; i<=10; i=i+1){
-
-    for(var k=1; k <= i - 1; k=k+1){
-        document.write("&nbsp;")
+for(var a =1; a<=10; a++){
+    for(var b =1; b<=a; b++){
+        document.write("c");
     }
-
-    for(var j=10; j>=i; j=j-1){
-        document.write("*");
+    for(var c=10; c>=a; c--){
+         document.write("a");
     }
     document.write("<br>");
 }
