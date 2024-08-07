@@ -1,0 +1,11 @@
+#rpc_result_screen {
+    width:  400px;
+    height: 350px;
+    display: flex;
+    background-color: pink;
+    background-image: url("../q029_가바보_4/cat.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+   color: crimson;
+
+}
