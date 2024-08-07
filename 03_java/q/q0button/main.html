@@ -8,13 +8,33 @@
     <script src="main.js"> </script>
 </head>
 <body>
-    <input type="button" id="a" value="고양이" onkeydown="handleKeyUp(event)" onclick="ac();">
+    <input type="button" id="a" value="고양이"  onclick="ac();">
+    
     <script>
-        function handleKeyUp(event){
-            if(event.key === "Enter"){
-                ac();
-            }
+         window.onload = function() {
+        const input = document.getElementById('a');
+        input.focus(); // 입력 필드에 포커스
+    };
+
+    // 입력 필드 선택
+    const input = document.getElementById('a');
+
+    // 입력 필드에서 키를 누를 때 이벤트 리스너 추가
+    input.addEventListener('keydown', function(event) {
+        // Enter 키가 눌렸는지 확인
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 동작 방지 (예: 폼 제출)
+            // Enter 키 눌렀을 때 동작
+            ac();
+            return;
         }
+    });
+    function ac(){
+    var c = Array("개","고양이","너굴맨","양","토끼");
+    var d= Math.floor(Math.random()*c.length);
+    var b=document.getElementById("a");
+    b.value= c[d];
+}
     </script>
 </body>
 </html>
