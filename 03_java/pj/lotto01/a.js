@@ -227,7 +227,7 @@ switch (win) {
             }
         }
         break;
-        
+        break;
     case 6:
         str = "1등에 당첨되셨습니다.";
         break;
