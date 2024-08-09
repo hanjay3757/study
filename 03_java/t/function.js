@@ -16,4 +16,4 @@ swordRandom = r(5);
 document.write(swordRandom);
 hr();
 var longSwordRandom = r(1000);
-document.write(longSwordRandom);
+document.write(longSwordRandom);0.
