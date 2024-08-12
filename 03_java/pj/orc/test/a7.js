@@ -39,6 +39,7 @@ function procBattleTurn() {
 
     // hp 검사하기
     if (elf.currentHp <= 0 || orc.currentHp <= 0) {
+        
         endBattle();    // 전투 종료 처리
         displayCharactersInfo();//
         return false;
