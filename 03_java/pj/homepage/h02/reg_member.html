@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="reg.js"></script>
     <script src="reg_member.js"></script>
 </head>
 <body>
@@ -74,9 +75,16 @@
                 </select>
                 <h4>성별</h4>
                 <input type="radio" name="sex" value="M">남성
-                <input type="radio" name="sex" value="G">여성
-                
+                <input type="radio" name="sex" value="G" checked>여성
+                <br>
+                <label for="tel1">전화번호</label>
+                <input type="text" class="tel" id="tel_1" minlength="3" maxlength="4" value="010" required> -
+                <input type="text" class="tel" id="tel_2" minlength="4" maxlength="4" required> -
+                <input type="text" class="tel" id="tel_3" minlength="4" maxlength="4" required>
+                <br><br>
             </fieldset>
+            <input type="submit" id="submit" value="회원가입" onclick="check();">
+            <input type="reset" value="다지우기">
         </form>
     </div>
     
