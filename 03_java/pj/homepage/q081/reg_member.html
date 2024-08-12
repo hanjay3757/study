@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="index.css">
     <script src="reg_member.js"></script>
 </head>
 <body>
@@ -77,10 +75,10 @@
             <!-- <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" />             -->
             <input type="tel" id="tel_1" minlength="3" maxlength="3" value="010" required> -
             <input type="tel" id="tel_2" minlength="4" maxlength="4" required> -
-            <input type="tel" id="tel_3" minlength="4" maxlength="4" required>
+            <input type="tel" id="tel_3" minlength="4" maxlength="4" required pattern="[0-9]{4}">
             <br><br>
             <input id="submit" type="submit" value="회원가입" onclick="check();">
-            <input id="resets" type="reset" value="다지우기">
+            <input type="reset" value="다지우기">
         </form>
     </div>
 </body>
