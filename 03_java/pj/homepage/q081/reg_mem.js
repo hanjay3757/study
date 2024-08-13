@@ -49,6 +49,23 @@ function check(){
     user_name = ipUser_name.value;
     email = ipEmail.value;
     birth_y = ipBirth_y.value;
+    birth_m = ipBirth_m.value;
+    birth_d = ipBirth_d.value;
+    tel_1 = ipTel_1.value;
+    tel_2 = ipTel_2.value;
+    tel_3 = ipTel_3.value;
 
+    for(var i=0; i<ipSexes.length; i++){
+        if(ipSexes[i].checked == true){
+            sex = ipSexes[i].value;
+        }
+    }
+
+    var userInfo =
+    "id:" + id + "\n"
+    +"pw:" + pw + "\n"
+    +"pw_re:" + pw_re + "\n"
+    +"useName:" + userName + "\n"
+    +"useName:" + userName + "\n"
 }
 
