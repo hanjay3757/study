@@ -4,9 +4,9 @@ function xxx(){
     popup.style.height = "100px";
     popup.style.width = "100px";
     popup.style.background = "#e5f1E2";
-    popup.style.transitionProperty = "width,height,background,fontsizes";
+    popup.style.fontSize = "4px";
+    popup.style.transitionProperty = "width,height,background,font-size";
     popup.style.transitionDuration = "1s";
-    popup.style.fontSize = "5px";
     
 }
 
