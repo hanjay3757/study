@@ -7,6 +7,7 @@ function x(){
 	
 	if(sec <= 0){
 		divA.innerHTML = "라면 불 꺼!";
+		// 쌍테그 안에 빈공간 <div id="now">요기</div>
 	} else {
 		divA.innerHTML = sec;
 	}
@@ -20,8 +21,11 @@ var sec = 10;
 var divA;
 var divNow;
 window.onload = function(){
+	// 윈도우 onload domcument 개체 브라우저 창 document 문서/ onload = 로딩완료했을 함수를 담는 애 onload 변수((body 로딩되고 난뒤 실행 함수)익명함수 => 
+		// 브라우저에 출력 끝내놓고(로딩끝내고) 여기 봐주세요 ) 
 	divA=document.getElementById("a");
 	divNow=document.getElementById("now");
+	//getElementById(단수) - document.getElementsByName(복수형 배열로)
 
 	////처음 한번 출력 해주기
 	//현 시간
@@ -35,4 +39,4 @@ window.onload = function(){
 	console.log("4")
 }
 
-//실행시점 x 라는 함수 계속 
+//실행시점 x 라는 함수 계속 많은 시간걸림
