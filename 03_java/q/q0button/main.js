@@ -6,3 +6,4 @@ function ac(){
     var b=document.getElementById("a");
     b.value= c[d];
 }
+// aaaaaa
