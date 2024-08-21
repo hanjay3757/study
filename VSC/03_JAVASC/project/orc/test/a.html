@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>    
+    <link rel="stylesheet" href="a.css">
+    <script src="common.js"> </script>
+    <script src="Monster.js"> </script>
+    <script src="Character.js"> </script>
+    <script src="a7.js"> </script>
+</head>
+<body>
+
+    <textarea id="screen_game_object" readonly = "readonly"></textarea>
+    <textarea id="screen_message_box" readonly = "readonly"></textarea>
+    <textarea id="screen_player_info" readonly = "readonly"></textarea>
+<br>
+    <input id="input_turn" value="0" readonly="readonly">
+    <input id="input_txt_turn" value="0" readonly=""readonly><input type="button" value="turn" onkeyup="test(event)"/></input>
+    <script>
+        function test(event){
+            if (event.key === 'Enter') {
+                turn();
+                turnCount++;
+                itTurn.value = turnCount;
+                console.log("현재 턴" +turnCount);
+            }
+        }
+    </script>
+</body>
+</html>
