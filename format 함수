@@ -1,0 +1,14 @@
+package com.kiosk.v7.copy;
+
+public class Main {
+
+	public static void main(String[] args) {
+		String s = String.format("고양이 이름은 %s 입니다. 공격력은 %f 입니다.", "야옹이", 100.10);
+		// %d decimal 십진 매개변수가 가변형 n개 가능
+
+//	"고양이 이름은 "+ kitty.name + "입니다. 취미는 " + %s + "입니다. 공격력은 " + kitty.attack +"입니다.";
+		System.out.println(s);
+	}
+}
+
+//이름 직업 등 원하는걸 적고 순서대로 말을 적든 숫자를 적음 s 는 글자 d 는 숫자 f는 소수점을 적을수있음
