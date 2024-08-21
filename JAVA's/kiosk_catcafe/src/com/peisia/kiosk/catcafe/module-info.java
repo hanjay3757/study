@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author hoyangi
- *
- */
-module KioskCatCafe {
-}
