@@ -1,6 +1,9 @@
 package com.peisia.kiosk.catcafe;
 
+import com.peisia.kiosk.catcafe.product.Product;
+
 public class Order {
+	
 	public Product selectedProduct;
 	public int optionHotCold = 0;	//1: hot, 2:cold
 
