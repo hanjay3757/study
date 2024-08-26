@@ -15,16 +15,16 @@ public class Post {
 	}
 
 	void info() {
-		String s = String.format(" 글 번호 :  %s 제목 : %s 작성자 : %s", no, title, writer);
+		String s = String.format("[글번호: %s 제목: %s 작성자: %s]", no, title, writer);
 		System.out.println(s);
 	}
 
 	void infoForRead() {
-		String s = String.format("글번호 : %s 제목 : %s 작성자 : %s", no, title, writer);
-		System.out.println("==========================================");
+		String s = String.format("[글번호: %s 제목: %s 작성자: %s]", no, title, writer);
+		System.out.println("++++++++++++++++++++++++++++++++++++++++");
 		System.out.println(s);
-		System.out.println("==========================================");
+		System.out.println("========================================");
 		System.out.println(content);
-		System.out.println("==========================================");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++");
 	}
 }
