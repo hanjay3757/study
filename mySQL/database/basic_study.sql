@@ -16,6 +16,7 @@ update visit_count set count=count+1;
 delete from visit_count; 
 #행 삭제 명령어
 #토트넘 테이블 생성 
+{토트넘 테이블{(
 drop table tottenham_squad;		delete from tottenham_squad;		select * from tottenham_squad; select p_name from  tottenham_squad; 
 create table tottenham_squad(                        	
 	id int primary key auto_increment,
@@ -85,8 +86,22 @@ select * from tottenham_squad order by weekly_pay desc;
 select * from tottenham_squad order by p_number desc ;
 select * from tottenham_squad order by p_number asc;
 select * from tottenham_squad order by p_number desc;
-select * from tottenham_squad order by p_height desc, p_weight;						
-);		
+select * from tottenham_squad order by p_height desc, p_weight;			
+#한글화
+select no,name,weeklywage as "주급" from tottenham_squad;		
+select no,name,weeklywage as 주급 from tottenham_squad;		
+select no,name,weeklywage 주급 from tottenham_squad;		
+select no,name,weeklywage/7 일급 from tottenham_squad;		
+#칼럼 추가
+ALTER TABLE tottenham_squad add injury char(1);		
+select * from tottenham_squad where injury is null;			
+select * from tottenham_squad where injury is not null;		
+select * from tottenham_squad where injury='y';		
+#이름 검색
+select * from tottenham_squad where name like '%손%'		
+union		
+select * from tottenham_squad where name like '%케%';			
+)}}	
             
             
             
@@ -95,7 +110,7 @@ select * from tottenham_squad order by p_height desc, p_weight;
             
             #문제 확인 1
             use my_cat;
-
+(
 create table visit_count(	#테이블 만들기. 칼럼(또는 필드 또는 열이름)은 딸랑 한개.
 	count int
 );
@@ -127,3 +142,11 @@ hobby char(50) null #null 이 default 값 안적어도 적용
 insert into member (id,name,age,gender,tel,hobby) values('cat1','고양이',5,'여','010-1234-1234',null);
 insert into member (id,name,age,gender,tel,hobby) values('cat2','개냥이',4,'남','010-1234-1234',null);
 insert into member (id,name,age,gender,tel,hobby) values('cat3','호랑이',9,'남','010-1234-1234',null);
+);
+
+(#현재시간 출력
+select now() from dual;			
+select curdate() from dual;			
+select curtime() from dual;			
+select DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s') from dual;			
+	);
