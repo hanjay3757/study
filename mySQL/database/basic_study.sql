@@ -27,6 +27,8 @@ create table tottenham_squad(
 	p_height int,
 	p_weight int
 );	
+
+
 insert into tottenham_squad values(0,9,'도미닉 솔란케','1997-09-14','공격수',187,80);			
 insert into tottenham_squad values(0,22,'브레넌 존슨','2001-05-23','공격수',179,73);			
 insert into tottenham_squad values(0,7,'손흥민','1992-07-08','공격수',183,78);			
@@ -67,7 +69,7 @@ insert into tottenham_squad values(0,1,'위고 요리스','1986-12-26','골키�
 insert into tottenham_squad values(0,20,'프레이저 포스터','1988-03-17','골키퍼',201,93);			
 #문제 5번 토트넘 공격수만 선택
 select * from tottenham_squad where p_position = '골키퍼';
-select * from tottenham_squad where p_position = '공격수';				
+select * from tottenham_squad ;				
 				#7번 선수 제거
 delete from tottenham_squad where p_number = 7;				
 			# 토트넘 번호 30불러오기	
@@ -75,8 +77,21 @@ update tottenham_squad set p_name = '로드리고밴탄쿠르' where p_number=30
 #9번 특정조건 선수(들) 정보를 불러오기
 select * from tottenham_squad where p_name like '%제%' and p_number > 6;					
 # 10번  주급 집어넣기 
-ALTER TABLE tottenham_squad ADD weekly_pay int default 0;			
-			
+ALTER TABLE tottenham_squad ADD weekly_pay int default 0;		
+#12 주급 +추가하기	
+update tottenham_squad set weekly_pay = 1000 where p_number=9;
+select * from tottenham_squad order by weekly_pay desc;
+#정렬 
+select * from tottenham_squad order by p_number desc ;
+select * from tottenham_squad order by p_number asc;
+select * from tottenham_squad order by p_number desc;
+select * from tottenham_squad order by p_height desc, p_weight;						
+);		
+            
+            
+            
+            
+            
             
             #문제 확인 1
             use my_cat;
