@@ -16,7 +16,8 @@ update visit_count set count=count+1;
 delete from visit_count; 
 #행 삭제 명령어
 #토트넘 테이블 생성 
-{토트넘 테이블{(
+(#토트넘 테이블 
+drop table tottenham_squad;	
 drop table tottenham_squad;		delete from tottenham_squad;		select * from tottenham_squad; select p_name from  tottenham_squad; 
 create table tottenham_squad(                        	
 	id int primary key auto_increment,
@@ -101,16 +102,17 @@ select * from tottenham_squad where injury='y';
 select * from tottenham_squad where name like '%손%'		
 union		
 select * from tottenham_squad where name like '%케%';			
-)}}	
+);
             
             
             
             
             
             
-            #문제 확인 1
+  (          #문제 확인 1
+   use my_cat;
             use my_cat;
-(
+(create table test();
 create table visit_count(	#테이블 만들기. 칼럼(또는 필드 또는 열이름)은 딸랑 한개.
 	count int
 );
@@ -143,10 +145,30 @@ insert into member (id,name,age,gender,tel,hobby) values('cat1','고양이',5,'�
 insert into member (id,name,age,gender,tel,hobby) values('cat2','개냥이',4,'남','010-1234-1234',null);
 insert into member (id,name,age,gender,tel,hobby) values('cat3','호랑이',9,'남','010-1234-1234',null);
 );
-
+);
+( #시간 생성
+create table test();
+create table test(
+y year
+);
+create table test(
+d date
+);
+create table test(
+t time
+);
+create table test(
+dt datetime
+);
 (#현재시간 출력
-select now() from dual;			
+select now() from dual;
+SELECT NOW() from dual;	
 select curdate() from dual;			
 select curtime() from dual;			
 select DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s') from dual;			
 	);
+    
+    
+drop table test;
+    );
+    
