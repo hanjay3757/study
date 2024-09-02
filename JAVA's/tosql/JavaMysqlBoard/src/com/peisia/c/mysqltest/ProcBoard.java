@@ -8,13 +8,14 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class ProcBoard {
-	public static final int PER_PAGE = 3;
+	public static final int PER_PAGE = 2;
 
 	Connection con = null;
 	Statement st = null;
 	ResultSet result = null;
 	Scanner sc = new Scanner(System.in);
 
+//#연결문 sql이랑 연결
 	void run() {
 		Display.showTitle();
 		dbInit();
