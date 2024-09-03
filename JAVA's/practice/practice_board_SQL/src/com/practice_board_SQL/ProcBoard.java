@@ -44,7 +44,7 @@ public class ProcBoard {
 				System.out.println("READ??");
 				String readNo = sc.next();
 				try {
-					result = st.executeQuery("select*from board where b_no" + readNo);
+					result = st.executeQuery("select * from board where b_no=" + readNo);
 					result.next();
 					String title = result.getString("b_title");
 					String content = result.getString("b_text");
@@ -77,6 +77,7 @@ public class ProcBoard {
 				dbExecuteUpdate("delete from board where b_no=" + delNo);
 				break;
 			case "5":
+				System.out.println("edit");
 				String editNo = sc.next();
 				sc.nextLine();
 				String edTitle = sc.nextLine();
@@ -84,8 +85,8 @@ public class ProcBoard {
 				sc.nextLine();
 				String edContent = sc.nextLine();
 
-				dbExecuteUpdate("update board set b_title'" + edTitle + "',b_id='" + edId
-						+ "',b_dateTime=now(),b_text='" + edContent + "' where b_no='" + editNo);
+				dbExecuteUpdate("update board set b_title='" + edTitle + "',b_id='" + edId
+						+ "',b_datetime=now(),b_text='" + edContent + "' where b_no=" + editNo);
 
 				break;
 			case "0":
