@@ -59,7 +59,41 @@ public class ProcBoard {
 				sc.nextLine();
 				System.out.println("title");
 				String title = sc.nextLine();
+				System.out.println("Content");
+				String content = sc.nextLine();
+				System.out.println("ID");
+				String id = sc.next();
+				try {
+					st.executeUpdate("insert into board (b_title,b_id,b_dateTime,b_text,b_hit)" + "values('" + title
+							+ "','" + id + "',now(),'" + content + "',0)");
+					// 작은 따옴표는 가운데 있는 +a+ 용이고 큰 따옴표는 문자열끼리 묶는 용도
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
 			case "4":
+				System.out.println("Delete");
+				String delNo = sc.next();
+				dbExecuteUpdate("delete from board where b_no=" + delNo);
+				break;
+			case "5":
+				String editNo = sc.next();
+				sc.nextLine();
+				String edTitle = sc.nextLine();
+				String edId = sc.next();
+				sc.nextLine();
+				String edContent = sc.nextLine();
+
+				dbExecuteUpdate("update board set b_title'" + edTitle + "',b_id='" + edId
+						+ "',b_dateTime=now(),b_text='" + edContent + "' where b_no='" + editNo);
+
+				break;
+			case "0":
+				break;
+
+			case "e":
+				System.out.println("종료");
+				break loop;
 			}
 		}
 
@@ -67,7 +101,7 @@ public class ProcBoard {
 
 	private void dbInit() {
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost:xx/name", "ID", "PASSWORD");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cat", "root", "root");
 			st = con.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,5 +128,6 @@ public class ProcBoard {
 			e.printStackTrace();
 
 		}
+
 	}
 }
