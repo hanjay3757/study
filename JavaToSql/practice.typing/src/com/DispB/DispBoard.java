@@ -10,11 +10,11 @@ public class DispBoard {
 	public static void title() {
 		Cw.line();
 		Cw.dot();
-		Cw.space(5);
+		Cw.space(20);
 		Cw.w(TITLE);
 		Cw.w(VERSION);
 		Cw.w(FEAT);
-		Cw.space(5);
+		Cw.space(20);
 		Cw.dot();
 		Cw.wn();
 		Cw.line();

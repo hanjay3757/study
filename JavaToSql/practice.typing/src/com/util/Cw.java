@@ -6,6 +6,7 @@ public class Cw {
 
 	public static void w(String s) {
 		System.out.print(s);
+//println 하면 한칸 밑으로 반복
 	}
 
 	public static void wn(String s) {
