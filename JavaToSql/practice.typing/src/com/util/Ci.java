@@ -19,7 +19,7 @@ public class Ci {
 		return sc.next();
 	}
 
-	static public String rl(String comment) {
+	static public String read(String comment) {
 		Cw.w(comment + ":");
 		try {
 			return reader.readLine();
