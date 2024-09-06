@@ -14,6 +14,8 @@ insert into visit_count values(0);	#데이터를 한 줄 넣기 #5
 update visit_count set count=count+1; 
 
 delete from visit_count; 
+
+
 #행 삭제 명령어
 #토트넘 테이블 생성 
 (#토트넘 테이블 
