@@ -1,18 +1,18 @@
 package com.practice.type;
 
-import com.display.Disp;
+import com.DispB.DispBoard;
 import com.util.Ci;
 import com.util.Cw;
 import com.util.Db;
 
 public class ProcBoard {
 	void run() {
-		Disp.showTitle();
+		DispBoard.title();
 		Db.dbInit();
 		Cw.wn("전체 글 수: " + Db.getPostCount());
 		loop: while (true) {
 			Db.dbPostCount();
-			Disp.showMainMenu();
+			DispBoard.menuMain();
 			String cmd = Ci.r("명령입력: ");
 			switch (cmd) {
 			case "1":

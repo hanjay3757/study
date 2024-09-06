@@ -5,11 +5,11 @@ public class Cw {
 	private static final int LINE_LENGTH = 32;
 
 	public static void w(String s) {
-		System.out.println(s);
+		System.out.print(s);
 	}
 
 	public static void wn(String s) {
-		System.out.println(s);
+		System.out.print(s);
 	}
 
 	public static void wn() {

@@ -1,5 +1,6 @@
 package com.practice.type;
 
+import com.DispB.DispBoard;
 import com.display.Disp;
 import com.util.Ci;
 import com.util.Cw;
@@ -34,7 +35,7 @@ public class ProcList {
 				continue;
 			}
 			startIndex = (currentPage - 1) * PER_PAGE; // 페이지의 첫 인덱스를 계산해서 저장하기
-			Disp.titleList();
+			DispBoard.titleList();
 			String sql = "select * from board where b_reply_ori is null limit " + startIndex + "," + PER_PAGE;
 			try {
 				Cw.wn("전송한sql문:" + sql);
@@ -82,7 +83,7 @@ public class ProcList {
 				continue;
 			}
 			startIndex = (currentPage - 1) * PER_PAGE; // 페이지의 첫 인덱스를 계산해서 저장하기
-			Disp.titleList();
+			Disp.entranceTitle();
 			String sql = "select * from board where b_reply_ori is null" + " and b_title like '%" + searchWord + "%'"
 					+ " limit " + startIndex + "," + PER_PAGE;
 			try {
