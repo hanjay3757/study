@@ -23,6 +23,18 @@ public class Db {
 		}
 	}
 
+	static public void dbExcuteUpdate(String query) {
+		Cw.wn("전송할 sql : " + query);
+		try {
+			int resultCount = st.executeUpdate(query);
+			Cw.wn("처리된 행 수 : " + resultCount);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	public static void wn(String s) {
 		System.out.print(s);
 	}
@@ -40,12 +52,14 @@ public class Db {
 	}
 
 	static public void drops() {
+
 		try {
 			st.execute("DROP TABLE IF EXISTS items");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO 자동 생성된 catch 블록
+			e1.printStackTrace();
 		}
+
 		try {
 			st.execute("DROP TABLE IF EXISTS member");
 		} catch (SQLException e) {
