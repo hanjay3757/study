@@ -13,6 +13,7 @@ public class Db {
 	static private String DB_NAME = "my_cat";
 	static private String DB_ID = "root";
 	static private String DB_PW = "root";
+	public static String tableNameBoard = "board";
 
 	static public void dbInit() {
 		try {
@@ -33,6 +34,65 @@ public class Db {
 			e.printStackTrace();
 		}
 
+	}
+
+	static public void dbPostCount() {
+		try {
+			Db.result = Db.st.executeQuery("select count(*) from " + tableNameBoard + " where b_reply_ori is null");
+			Db.result.next();
+			String count = Db.result.getString("count(*)");
+			Cw.wn("글 수:" + count);
+		} catch (Exception e) {
+		}
+	}
+
+	static public int getPostCount() {
+		String count = "";
+		try {
+			Db.result = Db.st.executeQuery("select count(*) from " + tableNameBoard + " where b_reply_ori is null");
+			Db.result.next();
+			count = Db.result.getString("count(*)");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		int intCount = Integer.parseInt(count);
+		return intCount;
+	}
+
+	static public int getPostCountSearch(String searchWord) {
+		String count = "";
+		try {
+			Db.result = Db.st.executeQuery("select count(*) from " + tableNameBoard + " where b_reply_ori is null"
+					+ " and b_title like '%" + searchWord + "%'");
+			Db.result.next();
+			count = Db.result.getString("count(*)");
+			Cw.wn("글 수:" + count);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		int intCount = Integer.parseInt(count);
+		return intCount;
+	}
+
+	static public boolean isProcLogin(String id, String pw) {
+		String count = "";
+		try {
+			Db.result = Db.st.executeQuery("select count(*) from member where s_id+'" + id + "'and s_pw='" + pw + "'");
+			Db.result.next();
+			count = Db.result.getString("count(*)");
+			Cw.wn("찾은회원 수 : " + count);
+		} catch (SQLException e) {
+			// TODO 자동 생성된 catch 블록
+			e.printStackTrace();
+		}
+		if (count.equals("1")) {
+			Cw.wn("로그인 성공");
+			return true;
+
+		} else {
+			Cw.wn("로그인 실패");
+			return false;
+		}
 	}
 
 	public static void wn(String s) {

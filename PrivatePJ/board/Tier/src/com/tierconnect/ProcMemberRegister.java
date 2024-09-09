@@ -1,7 +1,6 @@
 package com.tierconnect;
 
 public class ProcMemberRegister {
-	static private String cmd = "";
 
 	static public void run() {
 		Cw.wn("======== 회원가입 =========");
