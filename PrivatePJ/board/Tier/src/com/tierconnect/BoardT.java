@@ -12,7 +12,7 @@ public class BoardT {
 				cmd = Ci.r("[r]회원가입 [l]로그인 [e]프로그램종료");
 			} else {
 				Cw.wn(LoginedId);
-				cmd = Ci.r("[l]로그아웃 [b]a등급 [t]b등급 [e]프로그램종료 ");
+				cmd = Ci.r("[l]로그아웃 [a]a등급 [b]b등급 [t]관리자 [e]프로그램종료 ");
 			}
 			switch (cmd) {
 			case "r":
@@ -27,11 +27,18 @@ public class BoardT {
 					LoginedId = null;
 				}
 				break;
-			case "b":
+			case "a":
 				if (LoginedId == null) {
 					Cw.wn("로그인이나 하슈");
 				} else {
 					Db.tableNameBoard = "A등급";
+					ProcBoard.run();
+				}
+			case "b":
+				if (LoginedId == null) {
+					Cw.wn("로그인이나 하슈");
+				} else {
+					Db.tableNameBoard = "B등급";
 					ProcBoard.run();
 				}
 			}
