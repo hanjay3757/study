@@ -26,7 +26,7 @@ public class Pack {
 
 			// 파라미터 설정
 			pstmt.setString(1, title); // 제목
-			pstmt.setString(2, SiteMain.loginedId); // 로그인된 사용자 ID
+			pstmt.setString(2, BoardT.LoginedId); // 로그인된 사용자 ID
 			pstmt.setString(3, content); // 내용
 			pstmt.setInt(4, 0); // 조회수 (기본값 0)
 
