@@ -1,13 +1,13 @@
 package com.tierconnect;
 
 public class ProcBoard {
+
 	static public void run() {
+
 		Db.getPostCount();
 		loop: while (true) {
-			Db.dbPostCount();
-			Ci.r("[l]로그아웃 [b]a등급 [t]b등급 [e]프로그램종료 ");
-			Db.getPostCount();
-			String cmd = Ci.r("명령입력");
+
+			String cmd = Ci.r("[1]리스트 [2]읽기 [3]쓰기 [4]삭제 [5] 수정  [6]리스트검색 [x]종료");
 			switch (cmd) {
 			case "1": // 글리스트
 				ProcList.run();
