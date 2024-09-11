@@ -10,12 +10,12 @@
 <body>
 
 
-<jsp:include page="q07.jsp" flush="true">	
-	<jsp:param name="x"  value="11" />
-	<jsp:param name="y"  value="22" />
+<jsp:include page="q07.jsp"  flush="true">	
+	<jsp:param name="x"   value="11" />
+	<jsp:param name="y"   value="22" />
 </jsp:include>
 
-왈
+왈 ㅠ
 
 
 

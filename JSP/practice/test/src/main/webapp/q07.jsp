@@ -5,35 +5,17 @@
 <a href='q06_2.jsp'>페이지2</a>
 
 <%
-    // Retrieve parameters as Strings
-    String xParam = request.getParameter("x");
-    String yParam = request.getParameter("y");
-
-    // Initialize variables
     int x = 0;
     int y = 0;
-
-    // Process x parameter
-    if (xParam != null && !xParam.isEmpty()) {
-        try {
-            x = Integer.parseInt(xParam); // Parse x parameter to integer
-        } catch (NumberFormatException e) {
-            // Handle error or invalid number, e.g., log error or use default value
-            x = 0; // Default value in case of error
-        }
-    }
-
-    // Process y parameter
-    if (yParam != null && !yParam.isEmpty()) {
-        try {
-            y = Integer.parseInt(yParam); // Parse y parameter to integer
-        } catch (NumberFormatException e) {
-            // Handle error or invalid number, e.g., log error or use default value
-            y = 0; // Default value in case of error
-        }
+    try {
+        x = Integer.parseInt(request.getParameter("x"));
+        //매개변수를 가져와라  1이면 1을 가져오삼  x=1이랑 같음
+        y = Integer.parseInt(request.getParameter("y"));
+    } catch (NumberFormatException e) {
+        // Handle the error, e.g., show a message or set default values
+       
+        return;
     }
 %>
 
-<!-- Output the values -->
-<p>x: <%= x %></p>
-<p>y: <%= y %></p>
+<%=x + y%>

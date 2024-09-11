@@ -9,6 +9,7 @@
     int y = 0;
     try {
         x = Integer.parseInt(request.getParameter("x"));
+        //매개변수를 가져와라  1이면 1을 가져오삼  x=1이랑 같음
         y = Integer.parseInt(request.getParameter("y"));
     } catch (NumberFormatException e) {
         // Handle the error, e.g., show a message or set default values
