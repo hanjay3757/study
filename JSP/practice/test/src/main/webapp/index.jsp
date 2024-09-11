@@ -1,4 +1,3 @@
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,16 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-ArrayList<String>ss = new ArrayList<>();
-ss.add("cat");
-ss.add("dog");
-ss.add("raccoon");
-for(int i=0; i<3; i++){
-	%>
-<%= ss.get(i) %>
-<% }
+<a href = "q05.jsp">문제5</a>
+<a href = "q06.jsp">문제6</a>
+<a href= "q08.jsp">문제 8</a>
+<%--common이라는 페이지를 만들어서 메인에 있는 배너 처럼 고정시키는 거 만드는거 가능  --%>
 
-%>
 </body>
 </html>

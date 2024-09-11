@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="index_img.jsp">Go to ssss.jsp</a>
 <%
 	//ArrayList 끝에 커서 두고 ctrl + space 하면 힌트 팝업뜨고 고르면
 	//알아서 상단에 jsp 지시자  import 삽입됨.
