@@ -10,7 +10,7 @@
 <body>
 
 
-<jsp:include page="common.jsp" flush="true">	
+<jsp:include page="q07.jsp" flush="true">	
 	<jsp:param name="x"  value="11" />
 	<jsp:param name="y"  value="22" />
 </jsp:include>
