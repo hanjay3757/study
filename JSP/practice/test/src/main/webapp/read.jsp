@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 - 글읽기</title>
+<link rel="stylesheet" href="common.css">
 </head>
 <body>
 <hr>
@@ -40,5 +41,8 @@
 		e.printStackTrace();
 	}	
 %>
+<a href="delproc.jsp?num=<%=readNum%>">글삭제하기</a>
+<a href="modify.jsp?num=<%=readNum%>">글수정하기</a>
+
 </body>
 </html>
