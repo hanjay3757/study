@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 - 글읽기</title>
+<link rel="stylesheet" href="common.css">
 </head>
 <body>
 <hr>
@@ -16,10 +17,10 @@
 String readNum = request.getParameter("num");
 try{
 	Class.forName("com.mysql.cj.jdbc.Driver");
-	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cats","root","roor");
+	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cats","root","root");
 Statement st = con.createStatement();
-ResultSet rs = st.executeQuery("select*from cat_board where num="+readNum);
-while(rs.next()){
+ResultSet rs = st.executeQuery("select * from cat_board where num="+readNum);
+rs.next();
 	String num = rs.getString("num");
 	String title = rs.getString("title");
 	String content = rs.getString("content");
@@ -31,7 +32,7 @@ while(rs.next()){
 	글내용:<br>
 	<%=content%>
 	<%
-	}
+	
 }catch(Exception e){
 	e.printStackTrace();
 }

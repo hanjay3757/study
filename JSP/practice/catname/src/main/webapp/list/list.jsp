@@ -21,9 +21,11 @@
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cats", "root", "root");
 		Statement st = con.createStatement();
 		System.out.println("접속 잘됐음");
+		response.sendRedirect("index.jsp");
 	} catch (Exception e) {		
 		e.printStackTrace();
 	}	
+
 %>
 </body>
 </html>

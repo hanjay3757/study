@@ -12,7 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-NO|TITLE|CONTENT|ID
+     NO | TITLE | CONTENT | ID
 <hr>
 
 <%
@@ -34,6 +34,7 @@ try{
 }catch(Exception e){
 	e.printStackTrace();
 }
+
 %>
 </body>
 </html>
