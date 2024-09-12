@@ -6,26 +6,32 @@
     pageEncoding="UTF-8"%>
 
 <%
-	String title = request.getParameter("title");
-	String content = request.getParameter("content");
-	String id = request.getParameter("id");
+	String editNum = request.getParameter("num");
+	String title = request.getParameter("title"); 
+	String content = request.getParameter("content"); 
+	String id = request.getParameter("id"); 
+
 	try {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cat", "root", "root");
 		Statement st = con.createStatement();
-		String sql = "insert into cat_board (title,content,id) values ('"
+		String sql = "update cat_board set "
+				+"title='"
 				+title
-				+"','"
+				+"', "
+				+"content='"
 				+content
-				+"','"
+				+"', "
+				+"id='"
 				+id
-				+"')";
+				+"' "
+				+"where num=" + editNum;
 		System.out.println("==== 전송하려는 sql:" + sql);		
 		int resultCount = st.executeUpdate(sql);	// 글쓰기 sql 전송
 		if(resultCount == 1){
-			System.out.println("==== 글쓰기 성공");
+			System.out.println("==== 글수정 성공");
 		} else {
-			System.out.println("==== 글쓰기 실패");
+			System.out.println("==== 글수정 실패");
 		}
 	} catch (Exception e) {		
 		e.printStackTrace();

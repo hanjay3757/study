@@ -25,10 +25,10 @@
 		String sql = "select * from cat_board where num="+editNum;
 		System.out.println("==== 전송하려는 sql:" + sql);		
 		ResultSet rs = st.executeQuery(sql);	// 수정 할 글 하나 읽기 sql 전송
-		rs.next();	// 글 선반에서 글 하나 꺼내서 작업대에 올리기.
+	while (rs.next()){	// 글 선반에서 글 하나 꺼내서 작업대에 올리기.
 		title = rs.getString("title");
 		content = rs.getString("content");
-		id = rs.getString("id");
+		id = rs.getString("id");}
 	} catch (Exception e) {		
 		e.printStackTrace();
 	}
@@ -36,6 +36,7 @@
 
 글번호:<%=editNum %><br>
 
+<%--form action="modifyproc.jsp" method="get"  action에서 ㅡead.jsp?num = 1" 안됨 그래서 hidden으로 적용--%>
 <form action="modifyproc.jsp" method="get">
 	<input name="num" type="hidden" value=<%=editNum%>>
 	제목:<input name="title" value="<%=title %>"><br>
