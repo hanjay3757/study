@@ -42,6 +42,6 @@
 	}	
 %>
 <a href="delproc.jsp?num=<%=readNum%>">글삭제하기</a>
-
+<a href="list.jsp">빡구 </a>
 </body>
 </html>
