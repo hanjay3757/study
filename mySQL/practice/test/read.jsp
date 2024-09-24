@@ -28,5 +28,9 @@ try{
 	e.printStackTrace();
 }
 %>
+<a href="delproc.jsp?num=<%=readNum%>">글삭제하기</a>
+<a href="write.jsp">글쓰기</a>
+<a href="list.jsp">리스트로 </a>
+
 </body>
 </html>
