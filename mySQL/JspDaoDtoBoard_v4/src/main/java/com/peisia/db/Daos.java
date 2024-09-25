@@ -11,7 +11,7 @@ public class Daos extends Da2 {
 		super.close();
 	}
 
-	public void write(Dto d) {
+	public void write(Dto2 d) {
 		super.connect();
 		String sql = String.format("insert into %s(b_title,b_id,b_text) values ('%s','%s','%s')",
 				Db.TABLE_PS_BOARD_FREE, d.title, d.id, d.text);
@@ -19,15 +19,15 @@ public class Daos extends Da2 {
 		super.close();
 	}
 
-	public Dto read(String no) {
+	public Dto2 read(String no) {
 		super.connect();
-		Dto post = null;
+		Dto2 post = null;
 		try {
 			String sql = String.format("select*from %s where b_no=%s", Db.TABLE_PS_BOARD_FREE, no);
 			System.out.println("sql" + sql);
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			post = new Dto(rs.getString("B_NO"), rs.getString("B_TITLE"), rs.getString("B_ID"),
+			post = new Dto2(rs.getString("B_NO"), rs.getString("B_TITLE"), rs.getString("B_ID"),
 					rs.getString("B_DATETIME"), rs.getString("B_HIT"), rs.getString("B_TEXT"),
 					rs.getString("B_REPLY_COUNT"), rs.getString("B_REPLY_ORI"));
 
@@ -38,16 +38,16 @@ public class Daos extends Da2 {
 		return post;
 	}
 
-	public ArrayList<Dto> list(String page) {
+	public ArrayList<Dto2> list(String page) {
 		super.connect();
-		ArrayList<Dto> posts = new ArrayList<>();
+		ArrayList<Dto2> posts = new ArrayList<>();
 		try {
 			int startIndex = ((Integer.parseInt(page)) - 1) * 3;
-			String sql = String.format("select*Ufrom %s limit %s,3", Db.TABLE_PS_BOARD_FREE, startIndex);
+			String sql = String.format("select*from %s limit %s,3", Db.TABLE_PS_BOARD_FREE, startIndex);
 			System.out.println("sql" + sql);
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				posts.add(new Dto(rs.getString("B_NO"), rs.getString("B_TITLE"), rs.getString("B_ID"),
+				posts.add(new Dto2(rs.getString("B_NO"), rs.getString("B_TITLE"), rs.getString("B_ID"),
 						rs.getString("B_DATETIME"), rs.getString("B_HIT"), rs.getString("B_TEXT"),
 						rs.getString("B_REPLY_COUNT"), rs.getString("B_REPLY_ORI")));
 			}
@@ -59,7 +59,7 @@ public class Daos extends Da2 {
 
 	}
 
-	public void edit(Dto d, String no) {
+	public void edit(Dto2 d, String no) {
 		super.connect();
 		String sql = String.format("update %s set b_title='%s',b_text='%s',where b_no=%s", Db.TABLE_PS_BOARD_FREE,
 				d.title, d.text, no);
