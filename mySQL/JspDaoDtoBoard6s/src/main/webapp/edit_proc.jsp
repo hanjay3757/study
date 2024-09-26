@@ -18,6 +18,6 @@
 	dao.edit(dto,request.getParameter("no"));
 	response.sendRedirect("list.jsp");
 %>
-
+<!-- a -->
 </body>
 </html>
