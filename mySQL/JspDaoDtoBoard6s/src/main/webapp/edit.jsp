@@ -13,7 +13,7 @@
 <%
 //글번호 no가 get 방식으로 넘어 왔다고 가정
 String no = request.getParameter("no");
-//글 가져오기
+//글 가져오기 dao로 function처럼 미리 등록한 함수들을 불러오기
 Dao dao = new Dao();
 Dto dto = dao.read(no);
 %>
