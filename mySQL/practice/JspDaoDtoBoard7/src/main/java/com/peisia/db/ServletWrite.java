@@ -30,6 +30,6 @@ public class ServletWrite extends HttpServlet {
 
 		// list.jsp로 포워딩 (URL 변경 없음)
 		RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp"); // 추가된 부분
-		dispatcher.forward(request, response); // 변경된 부분
+		dispatcher.forward(request, response); // 변경된 부분 포워딩
 	}
 }
