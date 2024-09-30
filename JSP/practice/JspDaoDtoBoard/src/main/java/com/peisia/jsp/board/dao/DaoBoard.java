@@ -7,12 +7,10 @@ import com.peisia.db.Dao;
 import com.peisia.jsp.board.Board;
 import com.peisia.jsp.board.dto.Dto;
 
-@SuppressWarnings("unused")
 public class DaoBoard extends Dao {
 	/* (1/5)삭제 */
 	public void del(String category, String no) {
-		super.connect();
-//		 conect()라고 해도 됨. //[고정1,2,3]
+		super.connect(); // conect()라고 해도 됨. //[고정1,2,3]
 //		connect();
 		String sql = String.format("delete from %s where b_no=%s and b_category like '%s'", Board.TABLE_PS_BOARD_FREE,
 				no, category);
