@@ -13,7 +13,7 @@ public class ServletEdit extends HttpServlet {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3359288192135978432L; // 직렬화 궁금하면 ㅋ
+	private static final long serialVersionUID = 3359288192135978432L;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

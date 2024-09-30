@@ -1,3 +1,5 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="java.nio.charset.StandardCharsets"%>
 <%@page import="com.peisia.db.Board"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.peisia.db.Dto"%>
@@ -109,8 +111,7 @@ for(int i=0;i<posts.size();i=i+1){
 <%				
 		} else {				// <2>검색어로 검색한 리스트
 %>				
-			<a href="list.jsp?page=<%=prevPage%>&word=<%=searchWord%>">🐿️이전블럭가기🐿️</a>
-<%				
+			<%				
 		}		
 	}
 	
@@ -119,7 +120,8 @@ for(int i=0;i<posts.size();i=i+1){
 	//for(int i=1;i<=pageMaxNumber;i++){  			<< 이전 반복문을
 	for(int i=blockStartNo;i<=blockEndNo;i++){	// 	<< 이렇게 바꿈
 		if(nPageNum == i){
-%>
+%><a href="list.jsp?page=<%=prevPage%>&word=<%=searchWord%>">🐿️이전블럭가기🐿️</a>
+
 			🌰<%=i %>🌰
 <%
 		} else {
@@ -130,7 +132,7 @@ for(int i=0;i<posts.size();i=i+1){
 <%				
 			} else {				// <2>검색어로 검색한 리스트
 				//*중요* 한글 검색어를 전달할 때는 url인코딩을 해줘야함. 영어는 괜찮음. 그래도 다 해주고..
-				String urlEncodedSearchWord = java.net.URLEncoder.encode(searchWord);				
+				String urlEncodedSearchWord = URLEncoder.encode(searchWord, StandardCharsets.UTF_8.toString());			
 %>				
 				🌰<a href="list.jsp?page=<%=i %>&word=<%=urlEncodedSearchWord%>"><%=i %></a>🌰
 <%				
