@@ -11,8 +11,9 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/ServletWrite")
 public class ServletWrite extends HttpServlet {
+
 	/**
-	 * 
+	 * 버전 나눈거 암호크래딧
 	 */
 	private static final long serialVersionUID = 8907413264731166991L;
 
