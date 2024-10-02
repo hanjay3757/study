@@ -13,6 +13,7 @@ public class session extends HttpServlet {
 	/**
 	 * 
 	 */
+//	밑에 꺼 업뎃마다 번호가 바뀌고 암호화에 도움되는 뭐시기한 그거
 	private static final long serialVersionUID = 6403644450541216099L;
 
 	@Override
