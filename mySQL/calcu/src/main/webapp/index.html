@@ -12,7 +12,7 @@
                 document.getElementById("result").innerText = `Result: ${result.toLocaleString()}`;
             }
         };
-
+//이거 하나로만 작동 다른거랑 연결된것도 없음
         function calculate() {
             const x = 3000; // x 값을 3000으로 고정
             const y = Number(document.getElementById("y").value); // y 값은 사용자 입력
@@ -23,6 +23,7 @@
             // ProcList.run() 호출
             ProcList.run(x, y);
         }
+//         Calculate.run(); 이거 안됨
     </script>
 </head>
 <body>
