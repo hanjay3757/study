@@ -10,11 +10,9 @@
 <body>
     <h1>Calculator</h1>
     <form action="CalculatorServlet" method="post"> <!-- 서블릿으로 POST 요청을 보냄 -->
+        <h2>x: 3000</h2> <!-- x 값을 고정된 값으로 표시 -->
         <label for="y">Enter y:</label>
         <input type="number" name="y" required> <!-- 사용자로부터 y 값을 입력 받음 -->
-        <br>
-        <h2>x: 3000</h2> <!-- x 값을 고정된 값으로 표시 -->
-        <br>
         <button type="submit">Multiply</button> <!-- 곱셈 버튼 -->
     </form>
     <h2 id="result">
