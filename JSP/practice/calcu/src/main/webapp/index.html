@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <script>
+        const ProcList = {
+            run: function(x, y) {
+                const result = x * y; // 곱셈 계산
+                // 결과를 세 자리마다 쉼표를 찍어서 표시
+                document.getElementById("result").innerText = `Result: ${result.toLocaleString()}`;
+            }
+        };
+//이거 하나로만 작동 다른거랑 연결된것도 없음
+        function calculate() {
+            const x = 3000; // x 값을 3000으로 고정
+            const y = Number(document.getElementById("y").value); // y 값은 사용자 입력
+            
+            // 결과를 초기화
+            document.getElementById("result").innerText = ''; // 결과를 빈 문자열로 설정
+
+            // ProcList.run() 호출
+            ProcList.run(x, y);
+        }
+//         Calculate.run(); 이거 안됨
+    </script>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <h2 id="x-value">x: 3000</h2> <!-- x 값을 보여주는 요소 추가 -->
+    <br>
+    <label for="y">갯수 :</label>
+    <input type="number" id="y" required>
+    <button onclick="calculate()">Multiply</button> <!-- calculate() 호출 -->
+    <h2 id="result"></h2>
+</body>
+</html>
