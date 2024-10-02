@@ -16,13 +16,13 @@
 글번호, 제목, 작성자<hr>
 
 <%
-    // 현재 페이지 번호를 가져옵니다. 기본값은 1입니다.
+    // 현재 페이지 번호를 가져옵니다. 기본값은 1입니다. 
     String pageNum=request.getParameter("page");
     if(pageNum==null){
         pageNum="1";
     }
 
-    // Dao 객체 생성
+    // Dao 객체 생성 (미리짜둔 코드에 입력한 번호 입력)
     Dao dao=new Dao();
 
     int totalPage = 0; // 총 페이지 수를 저장할 변수
