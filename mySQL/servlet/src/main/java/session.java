@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ServletHelloWorld")
 
 public class session extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6403644450541216099L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("==== 두 겟");
