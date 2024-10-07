@@ -95,6 +95,7 @@ for(int i=0;i<posts.size();i=i+1){
 		
 		
 	}
+	
 	boolean hasNext = true;	//다음 블럭 가기 가능 여부 저장값 초기화.
 	if(currentBlockNo < totalBlock ){	//현재 블럭이 마지막 블럭보다 작으면
 		hasNext = true;					//다음 블럭 가기 가능
@@ -106,6 +107,7 @@ for(int i=0;i<posts.size();i=i+1){
 		hasNext = false;				//다음 블럭 가기 불가능
 	}
 	
+	//<---------------------------------------------------------------------------------->
 	
 	//🐿️🐿️🐿️{블럭 처리 - 7/9}.(이전/다음)의 (이전) 처리🐿️🐿️🐿️
 	//🐿️🐿️🐿️: 이전 블럭 이동이 가능하면 미리 계산한 이전 블록 이동 시 이동 할 페이지번호를 랑크에 전달하기🐿️🐿️🐿️//
@@ -113,6 +115,7 @@ for(int i=0;i<posts.size();i=i+1){
 		if(searchWord==null){	// <1>일반 리스트
 %>
 			<a href="list.jsp?page=<%=prevPage%>">🐿️이전블럭가기🐿️</a>
+<!-- 			ㄴ전페이지 번호로 가시오 -->
 <%				
 		} else {				// <2>검색어로 검색한 리스트
 %>				
@@ -123,6 +126,7 @@ for(int i=0;i<posts.size();i=i+1){
 	//🐿️🐿️🐿️{블럭 처리 - 8/9}.기존의 제한 없던 페이지리스트 나열을 ex.[1][2][3].....[n] 블럭 적용하기🐿️🐿️🐿️
 	//🐿️🐿️🐿️현재 블럭의 페이지 시작번호와 끝번호를 이용하여 반복문의 시작값 끝값으로 하고 이 값을 페이지 번호로 출력하기🐿️🐿️🐿️
 	//for(int i=1;i<=pageMaxNumber;i++){  			<< 이전 반복문을
+// 		보이는 페이지 블럭을 정하기
 	for(int i=blockStartNo;i<=blockEndNo;i++){	// 	<< 이렇게 바꿈
 		if(nPageNum == i){	//현재 페이지랑 번호가 같으면 링크 안걸어줌
 %>
@@ -131,18 +135,22 @@ for(int i=0;i<posts.size();i=i+1){
 		} else {
 			//<검색처리 5/5>.하단 페이지 링크 리스트 출력 및 링크처리를 검색모드/일반모드 구분해서 처리			
 			if(searchWord==null){	// <1>일반 리스트
-%>				
+				%>
+<!-- 				페이지 번호를 입력했을때 그 페이지로 이동하기 -->
 			🌰<a href="list.jsp?page=<%=i %>"><%=i %></a>🌰
 <%				
 			} else {				// <2>검색어로 검색한 리스트
 				//*중요* 한글 검색어를 전달할 때는 url인코딩을 해줘야함. 영어는 괜찮음. 그래도 다 해주고..
-				String urlEncodedSearchWord = java.net.URLEncoder.encode(searchWord);				
+				String urlEncodedSearchWord = java.net.URLEncoder.encode(searchWord, "UTF-8");
+// 				"UTF-8" 만 입력하면 됨
 %>				
 				🌰<a href="list.jsp?page=<%=i %>&word=<%=urlEncodedSearchWord%>"><%=i %></a>🌰
 <%				
 			}			
 		}
 	}
+// ㄴ	이전가기
+// 	다음 가기  ㄱ 
 	//🐿️🐿️🐿️{블럭 처리 - 9/9}.(이전/다음)의 (다음) 처리🐿️🐿️🐿️
 	//🐿️🐿️🐿️: 다음 블럭 이동이 가능하면 미리 계산한 이전 블록 이동 시 이동 할 페이지번호를 랑크에 전달하기🐿️🐿️🐿️//
 	if(hasNext){
@@ -150,7 +158,7 @@ for(int i=0;i<posts.size();i=i+1){
 %>
 				<a href="list.jsp?page=<%=nextPage%>">🐿️다음블럭가기🐿️</a>
 <%				
-			} else {				// <2>검색어로 검색한 리스트
+			} else {				// <2>검색어로 검색한 리스트 위에있는 검색기능 그대로 사용
 %>				
 				<a href="list.jsp?page=<%=nextPage%>&word=<%=searchWord%>">🐿️다음블럭가기🐿️</a>
 <%				
