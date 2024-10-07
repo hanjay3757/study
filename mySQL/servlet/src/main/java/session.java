@@ -24,7 +24,7 @@ public class session extends HttpServlet {
 //	디버깅 도움: 클래스 변경 사항 추적하기 쉬워서 개발하는 데 도움 됨.
 //
 //	결론적으로, serialVersionUID는 객체 직렬화 관련해서 중요한 역할 함. 객체 안정성과 호환성 유지하는 데 도움 줌.
-	private static final long serialVersionUID = 6403644450541216099L;
+	private static final long serialVersionUID = 6403644450541216091L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
