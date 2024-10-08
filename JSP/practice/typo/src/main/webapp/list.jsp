@@ -38,7 +38,13 @@ for(int i = 0; i<posts.size();i++){
 <%
 }
 int nPageNum = Integer.parseInt(pageNum);
+//블럭 총 갯수 구하기
 int totalBlock = (int)Math.ceil((double)totalPage/Board.PAGE_LINK_AMOUNT);
+//블럭 번호 구하기 현재 페이지 번호 / 블럭당 페이지 수 = 결과값 소수점은 올림 처리 현재 몇번째인지 확인
+int currrentBlockNo = (int)Math.ceil((double)nPageNum/Board.PAGE_LINK_AMOUNT);
+//블럭 페이지 번호 구하기 전블록의 번호 * 전블럭의 전체 피이지 수 에 +1 한 값 출력
+int blockStartNo = (currrentBlockNo - 1) * Board.PAGE_LINK_AMOUNT +1;
+
 %>
 </body>
 </html>
