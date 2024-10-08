@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="com.db.Board"%>
 <%@page import="com.db.Dao"%>
 <%@page import="com.db.Dto"%>
@@ -86,7 +87,42 @@ if(searchWord == null){
 <%
  }
 }
+//8현재 블럭의 페이지 시작번호와 끝번호를 이용하여 반복문의 시작값 긑값을 정하고 이를 출력
+for(int i=blockStartNo;i<=blockEndNo;i++){
+	if(nPageNum==i){
+	%>
+	<%=i%>
+	<%
+}else{
+	if(searchWord == null){
+%>
+<a href="list.jsp?page=<%=i%>"><%=i%></a>
+<%
+
+	}else{
+		String urlEncodedSearchWord = URLEncoder.encode(searchWord,"UTF-8");
+	%>
+	🌰<a href="list.jsp?page=<%=i %>&word=<%=urlEncodedSearchWord%>"><%=i %></a>🌰
+	<%
+		}
+	}
+}
+if(hasNext){
+	if(searchWord==null){
+		%>
+		<a href="list.jsp?page=<%=nextPage%>">다음 블럭</a>
+<%	}else{
+	%>
+	<a href="list.jsp?page=<%=nextPage%>&word=<%=searchWord%>">🐿️다음블럭가기🐿️</a>
+	<%
+}
+}	
 
 %>
+<form action="list.jsp">
+	<input name="word">
+	<input type="submit" value="검색">
+</form>
+<a href="write.jsp">쓰기</a><a href="list.jsp">list로</a>
 </body>
 </html>
