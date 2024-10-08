@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.peisia.db.Dto;
-
 public class Dao extends Da {
 	public void reg(String id, String pw) {
 		super.connect();
@@ -65,23 +63,57 @@ public class Dao extends Da {
 		return post;
 	}
 
+//{} 체크
 	public ArrayList<Dto> list(String page) {
 		super.connect();
-		ArrayList<Dto>posts = new ArrayList<>();
+		ArrayList<Dto> posts = new ArrayList<>();
 		try {
 			int startIndex = ((Integer.parseInt(page)) - 1) * Board.LIST_AMOUNT;
 			String sql = String.format("select * from %s limit %s,%s", Db.TABLE_PS_BOARD_FREE, startIndex,
 					Board.LIST_AMOUNT);
-	System.out.println("sql:" +sql);
-	ResultSet rs = st.executeQuery(sql);
-	while{rs.next()){
-		posts.add(new Dto(rs.getString("B_NO"), rs.getString("B_TITLE"), rs.getString("B_ID"),
-				rs.getString("B_DATETIME"), rs.getString("B_HIT"), rs.getString("B_TEXT"),
-				rs.getString("B_REPLY_COUNT"), rs.getString("B_REPLY_ORI")));
-	}
+			System.out.println("sql:" + sql);
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				posts.add(new Dto(rs.getString("B_NO"), rs.getString("B_TITLE"), rs.getString("B_ID"),
+						rs.getString("B_DATETIME"), rs.getString("B_HIT"), rs.getString("B_TEXT"),
+						rs.getString("B_REPLY_COUNT"), rs.getString("B_REPLY_ORI")));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		super.close();
+		return posts;
+	}
 
-}
+	public void edit(Dto d, String no) {
+		super.connect();
+		String sql = String.format("update %s set b_title = '%s',b_text='%s' where b_no=%s", Db.TABLE_PS_BOARD_FREE,
+				d.title, d.text, no);
+		super.update(sql);
+		super.close();
+	}
+
+	public int getPostCount() {
+		int count = 0;
+		super.connect();
+		try {
+			String sql = String.format("select count(*) from %s", Db.TABLE_PS_BOARD_FREE);
+			System.out.println("count(*)");
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			count = rs.getInt("count(*)");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		super.close();
+		return count;
+	}
+
+	public int getSearchPostCount(String word) {
+		int count = 0;
+		super.connect();
+		try {
+			String sql = String.format("select count(*) from %s where b_title like '%%%s%%'",Db.TABLE_PS_BOARD_FREE,word);
+		}
+	}
 }
