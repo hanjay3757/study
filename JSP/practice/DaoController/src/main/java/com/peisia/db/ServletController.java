@@ -16,7 +16,7 @@ public class ServletController extends HttpServlet {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5831410338497288616L;
+	private static final long serialVersionUID = -58314103384972813116L;
 	String nextPage;
 	Dao dao;
 
