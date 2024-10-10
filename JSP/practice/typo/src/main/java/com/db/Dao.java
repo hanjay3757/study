@@ -70,7 +70,7 @@ public class Dao extends Da {
 		super.close(); // [고정4,5]
 		return post;
 	}
--=-=-=-=
+
 	/* (4/5)글 리스트 */
 	public ArrayList<Dto> list(String page) {
 		super.connect(); // [고정1,2,3]
