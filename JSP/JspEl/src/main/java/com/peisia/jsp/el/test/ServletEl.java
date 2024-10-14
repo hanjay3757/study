@@ -11,18 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/ServletEl")
 public class ServletEl extends HttpServlet {
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Cat cat = new Cat("키티",7);
-		
-		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7065572009799114389L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		Cat cat = new Cat("키티", 7);
+
 		request.setAttribute("kitty", cat);
-		
+
 		request.setAttribute("x", "문자엑스");
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/cat.jsp");
 		rd.forward(request, response);
 	}
-	
+
 }
