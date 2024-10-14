@@ -16,12 +16,12 @@ public class control extends HttpServlet {
 	private static final long serialVersionUID = -5831410334972813116L; // 클래스의 버전 관리용 고유 ID
 
 	String nextPage; // 다음 페이지 이동을 위한 변수
-	Dao dao; // DB와 연동을 위한 Dao 객체
+	ServiceBoard service;
 
 	// 서블릿 초기화 메소드 - 서블릿이 처음 로딩될 때 호출됨
 	@Override
 	public void init() throws ServletException {
-		dao = new Dao(); // Dao 객체 초기화
+		service = new ServiceBoard();
 	}
 
 	// HTTP GET 요청 처리 메소드
@@ -39,7 +39,7 @@ public class control extends HttpServlet {
 			case "/del": // /Board/del 요청이 들어오면 실행
 				Cw.wn("삭제"); // 삭제 작업 시작 로그
 				nextPage = "/list.jsp"; // 삭제 후 이동할 페이지 설정 (게시글 목록 페이지)
-				dao.del(request.getParameter("no")); // 요청 파라미터로 받은 'no'를 기준으로 DB에서 삭제 처리
+				service.del(request.getParameter("no")); // 요청 파라미터로 받은 'no'를 기준으로 DB에서 삭제 처리
 				break;
 
 			// 2. 글쓰기 처리
@@ -49,7 +49,7 @@ public class control extends HttpServlet {
 				// 사용자가 입력한 제목, 아이디, 텍스트를 Dto 객체로 묶어서 DB에 저장
 				Dto dto = new Dto(request.getParameter("title"), request.getParameter("id"),
 						request.getParameter("text"));
-				dao.write(dto); // 글쓰기 DB 처리
+				service.write(dto); // 글쓰기 DB 처리
 				break;
 
 			// 3. 글 수정 처리 (첫 번째 단계)
