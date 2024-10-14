@@ -9,8 +9,8 @@
 <body>
 <%
 Cookie [] cookies = request.getCookies();
-System.Out.println("쿠키 길이:" + cookies.length);
-if(cookies! = null){
+System.out.println("쿠키 길이:" + cookies.length);
+if(cookies!=null){
 	for(int i = 0;i<cookies.length; i++){
 		if(cookies[i].getName().equals("myCookie")){
 			%>

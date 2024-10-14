@@ -24,6 +24,7 @@ public class control extends HttpServlet {
 		service = new ServiceBoard();
 	}
 
+//연습
 	// HTTP GET 요청 처리 메소드
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
