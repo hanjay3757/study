@@ -47,6 +47,8 @@
 	<logger name="jdbc.connection">
 		<level value="warn" />
 	</logger>	
-	
+	<logger name="com.peisia.controller">		
+	<level value="info" />	
+</logger>		
 	
 </log4j:configuration>

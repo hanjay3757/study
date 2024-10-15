@@ -15,5 +15,5 @@
 	<select id="getData4" resultType="com.peisia.spring.dto.TestDto">
 		SELECT * from tbl_test where no = 4
 	</select>
-<!-- 	//마이바테스 -->
+<!-- ㄴ	MyBatis -->
 </mapper>

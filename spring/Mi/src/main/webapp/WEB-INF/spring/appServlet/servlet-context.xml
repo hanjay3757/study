@@ -22,7 +22,8 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.peisia.spring.mi" />
-	
+	<context:component-scan base-package="com.peisia.controller" />
+<!-- 	인식 시키기 -->
 	
 	
 </beans:beans>
