@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.peisia</groupId>
 	<artifactId>spring</artifactId>
-	<name>typo</name>
+	<name>typos</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<java-version>11</java-version>
-		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
+		<java-version>11</java-version><!-- 내가 버전수정(1/7) -->
 		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<org.springframework-version>5.0.7.RELEASE</org.springframework-version><!-- 내가 버전수정(2/7) -->
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
@@ -61,7 +61,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
+			<version>1.2.17</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.mail</groupId>
@@ -80,7 +80,7 @@
 					<artifactId>jmxri</artifactId>
 				</exclusion>
 			</exclusions>
-			<scope>runtime</scope>
+<!-- 			<scope>runtime</scope> -->
 		</dependency>
 
 		<!-- @Inject -->
@@ -94,7 +94,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId><!-- 내가 버전수정(6-1/7) -->
-			<version>3.1.0</version><!-- 내가 버전수정(6-2/7) -->
+			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.12</version><!-- 내가 버전수정(5/7) -->
 			<scope>test</scope>
 		</dependency>       
 				<!-- ////////////////// 내가 추가 (시작) ////////////////////// -->
@@ -198,8 +198,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                <source>11</source><!-- 내가 버전수정(3/7) -->
+                <target>11</target><!-- 내가 버전수정(4/7) -->
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>

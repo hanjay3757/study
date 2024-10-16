@@ -23,6 +23,6 @@
 	
 	<context:component-scan base-package="com.peisia.spring" />
 	
-	
+	<context:component-scan base-package="com.peisia.controller" />
 	
 </beans:beans>

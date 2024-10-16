@@ -23,7 +23,7 @@ public class JDBCTests {
 
 	@Test
 	public void testConnection() {
-		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_board", "root", "admin")) {
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cat", "root", "root")) {
 			log.info(con);
 			;
 		} catch (Exception e) {
