@@ -4,8 +4,21 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.peisia.mapper.GuestMapper">
 	<!-- resultType 에 복수형(ArrayList 등)을 적는게 아님. 
-	그냥 dto 단수의 경로를 적어야됨. -->
+	그냥 vo 단수의 경로를 적어야됨. -->
 	<select id="getList" resultType="com.peisia.dto.GuestDto">
 		SELECT * from tbl_guest
 	</select>
+	
+	<select id="read" resultType="com.peisia.dto.GuestDto">
+		<!-- #{bno} << 마이바티스 문법임. -->
+		<!--
+			매퍼 인터페이스의 read 함수의 매개변수로 넘어오는 값을 받아 처리하는 sql문임.
+			
+			매개변수로 넘어온 값을 sql 에 삽입하려면
+			
+			해당 매개변수명을 #{ } 로 묶으면 안에 값이 뿅 나옴. bno 쉽게말해 글번호
+		-->
+		select * from tbl_guest where bno = #{bno}
+<!-- 		띄어쓰기 걱정 ㄴㄴ -->
+	</select>	
 </mapper>

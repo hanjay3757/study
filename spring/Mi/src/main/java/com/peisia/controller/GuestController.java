@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.peisia.service.GuestService;
 
@@ -34,5 +35,12 @@ public class GuestController {
 		// 그리고 이 파일은
 		// PJ\src\main\webapp\WEB-INF\views\guest\getList.jsp
 		// 에 만들어 놓으면 됨.
+
+	@GetMapping("/read")
+	public void read(@RequestParam("bno") Long bno, Model model) {
+		log.info("컨트롤러 ==== 글번호 ===============" + bno);
+		// 나오는지 확인 용
+		model.addAttribute("read", service.read(bno));
+	}
 
 }

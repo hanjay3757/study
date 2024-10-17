@@ -17,15 +17,17 @@ import lombok.extern.log4j.Log4j;
 public class GuestServiceImpl implements GuestService {
 
 	@Setter(onMethod_ = @Autowired)
-	// setter를 입력했을때 자동으로 lombok을 따라가는다는 거
 	private GuestMapper mapper;
 
-	// 주입
-	//
 	@Override
 	public ArrayList<GuestDto> getList() {
 		log.info("비지니스 계층===========");
 		return mapper.getList();
+	}
+
+	@Override
+	public GuestDto read(long bno) {
+		return mapper.read(bno);
 	}
 
 }

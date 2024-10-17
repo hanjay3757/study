@@ -13,5 +13,6 @@
 <P>  The time on the server is ${serverTime}. </P>
 <a href="/test/getOnePlusTwo">1+2 확인하러가기</a>
 <a href="/guest/getList">방명록</a>
+<a href="/guest/read?bno=1">읽기</a>
 </body>
 </html>
