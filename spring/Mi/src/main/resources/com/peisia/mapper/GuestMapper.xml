@@ -19,6 +19,8 @@
 			해당 매개변수명을 #{ } 로 묶으면 안에 값이 뿅 나옴. bno 쉽게말해 글번호
 		-->
 		select * from tbl_guest where bno = #{bno}
-<!-- 		띄어쓰기 걱정 ㄴㄴ -->
+<!-- 		띄어쓰기 걱정 ㄴㄴ 
+#bno = 변수값 꺼냄
+-->
 	</select>	
 </mapper>
