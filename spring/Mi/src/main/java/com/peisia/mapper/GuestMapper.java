@@ -13,4 +13,6 @@ public interface GuestMapper {
 
 	public void write(GuestDto dto);
 
+	public void modify(GuestDto dto);
+
 }

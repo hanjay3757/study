@@ -36,30 +36,16 @@
 		
 		해당 값은 btext 멤버변수 값을 말함.
 		(내부적으론 getBtext 함수를 호출해서 얻어옴)		
-		개체 변수 dto 써주거나 하지 않음 btext 매개변수 text를 꺼냄 #{이거}
-		
-		
-	 1. #{btext}는 MyBatis에서 사용되는 변수 바인딩 문법입니다.
-    2. "write"라는 id를 가진 insert SQL 쿼리를 정의하고 있습니다.
-    3. 이 쿼리는 "tbl_guest" 테이블에 새로운 레코드를 삽입(insert)하는 쿼리입니다.
-    
-    4. #{btext}는 매개변수로 넘어온 GuestDto 객체의 "btext" 멤버 변수의 값을 자동으로 추출하여
-       SQL 쿼리의 `values` 부분에 삽입합니다.
-
-    5. 마이바티스는 내부적으로, #{btext}를 사용할 때,
-       `GuestDto` 객체의 `getBtext()` 메서드를 호출하여 해당 값을 추출하고,
-       그 값을 SQL 쿼리에 바인딩하여 실행합니다.
-
-    6. 즉, "GuestDto" 객체가 파라미터로 넘어가면,
-       `btext` 필드의 값이 SQL 쿼리에 삽입됩니다.
-
-    7. 예를 들어, `GuestDto` 객체의 `btext`가 "Hello, world!"라면,
-       SQL 쿼리는 `insert into tbl_guest (btext) values ('Hello, world!')`로 실행됩니다.
-       x = btext일때 
-       #btext 는 x를 자동으로 그 수/문장으로 변환
 	-->	
 	<insert id="write">
 		insert into tbl_guest (btext) values (#{btext})
-		
-	</insert>				
+	</insert>
+	
+	
+	<update id="modify">
+		update tbl_guest
+		set btext = #{btext}
+		where bno = #{bno}
+	</update>	
+					
 </mapper>

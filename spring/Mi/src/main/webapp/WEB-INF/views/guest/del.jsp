@@ -37,5 +37,6 @@
     <!-- 다른 페이지로 이동할 수 있는 링크들 -->
     <a href="/guest/write">글쓰기</a> <!-- 글을 새로 쓸 수 있는 링크 -->
     <a href="http://localhost:8080/">홈으로 돌아가기</a>
+    
 </body>
 </html>

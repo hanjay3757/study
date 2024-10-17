@@ -29,6 +29,9 @@
 <a href="/test/getOnePlusTwo">1+2 확인하러가기</a><br>
 <a href="/guest/getList">방명록</a><br>
 <a href="/guest/write">글쓰기</a>
+<a href="/guest/del?bno=${item.bno}" onclick="return confirm('정말 삭제하시겠습니까?');">글삭제?</a>
+
+<a href="/guest/modify?bno=1">글수정</a>
 
 </body>
 </html>
