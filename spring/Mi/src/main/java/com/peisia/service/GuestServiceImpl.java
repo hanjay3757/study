@@ -35,4 +35,9 @@ public class GuestServiceImpl implements GuestService {
 		mapper.del(bno);
 	}
 
+	@Override
+	public void write(GuestDto dto) {
+		mapper.write(dto);
+	}
+
 }

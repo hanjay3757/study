@@ -3,9 +3,11 @@ package com.peisia.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.peisia.dto.GuestDto;
 import com.peisia.service.GuestService;
 
 import lombok.AllArgsConstructor;
@@ -49,6 +51,22 @@ public class GuestController {
 		log.info("컨트롤러 ==== 글번호 ===============" + bno);
 		service.del(bno);
 		return "redirect:/guest/getList"; // sendRedirect 로 이동하게 됨.
+	}
+
+	// >>> 홈페이지/spring/guest/write (Post 방식으로 오면 여기로 옴)
+	@PostMapping("/write")
+	// 폼 태그의 텍스트에어리어 태그에 btext 변수로 데이터가 넘어왔는데
+	// 매개변수에 (GuestVO gvo) 이런 클래스를 선언해놓게 되면
+	// 해당 객체의 멤버변수에 스프링이 알아서 채워줌.
+	public String write(GuestDto dto) {
+		service.write(dto);
+		return "redirect:/guest/getList"; // sendRedirect 로 이동하게 됨. // 책 p.245 참고
+	}
+
+	// >>> 홈페이지/spring/guest/write (get 방식으로 오면 여기로 옴. 일반링크이동=get방식임)
+	@GetMapping("/write") // 책 p.239 /write 중복이지만 이건 글쓰기 화면을 위한 url 매핑
+	public void write() {
+
 	}
 
 }

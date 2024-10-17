@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.peisia.mapper.GuestMapper">
 	<!-- resultType 에 복수형(ArrayList 등)을 적는게 아님. 
-	그냥 vo 단수의 경로를 적어야됨. -->
+	그냥 dto 단수의 경로를 적어야됨. -->
 	<select id="getList" resultType="com.peisia.dto.GuestDto">
 		SELECT * from tbl_guest
 	</select>
@@ -23,5 +23,21 @@
 	
 	<delete id="del">
 		delete from tbl_guest where bno = #{bno}
-	</delete>	
+	</delete>
+	
+	
+	<!-- #{btext} << 마이바티스 문법임. -->
+	<!--
+		매퍼 인터페이스의 write 함수의 매개변수로 넘어오는 값을 받아 처리하는 sql문임.
+		
+		주의할 부분이 GuestDto 객체가 매개변수로 넘어오는데
+		
+		마이바티스 변수 #{btext} 를 써도 해당 값을 뽑아옴.
+		
+		해당 값은 btext 멤버변수 값을 말함.
+		(내부적으론 getBtext 함수를 호출해서 얻어옴)		
+	-->	
+	<insert id="write">
+		insert into tbl_guest (btext) values (#{btext})
+	</insert>				
 </mapper>

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +8,10 @@
 </head>
 <body>
 
-글 읽기 
-<hr>
-글번호:${read.bno}
-<hr>
-글내용:${read.btext}
-</body>
+	<form action="/guest/write" method="post">	<!-- todo: http://localhost:8080/guest/write 부분 해결 -->
+		<textarea rows="3" name='btext'></textarea>
+		<input type="submit" value="글쓰기">
+	</form>
 <a href="http://localhost:8080/">홈으로 돌아가기</a>
+</body>
 </html>

@@ -20,5 +20,6 @@
 
 <a href="/test/getOnePlusTwo">1+2 확인하러가기</a>
 <a href="/guest/getList">방명록</a>
+<a href="/guest/write">글쓰기</a>
 </body>
 </html>

@@ -54,5 +54,9 @@
         out.print("The object 'list' is either null or not a valid ArrayList.");
     }
 %>
+
+<!-- 10. http://localhost:8080/로 돌아가는 링크 추가 -->
+<a href="http://localhost:8080/">홈으로 돌아가기</a>
+
 </body>
 </html>

@@ -10,4 +10,7 @@ public interface GuestMapper {
 	public GuestDto read(long bno);
 
 	public void del(long bno);
+
+	public void write(GuestDto dto);
+
 }
