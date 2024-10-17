@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peisia.mapper.GuestMapper">
+	<!-- resultType 에 복수형(ArrayList 등)을 적는게 아님. 
+	그냥 dto 단수의 경로를 적어야됨. -->
+	<select id="getList" resultType="com.peisia.dto.GuestDto">
+		SELECT * from tbl_guest
+	</select>
+</mapper>

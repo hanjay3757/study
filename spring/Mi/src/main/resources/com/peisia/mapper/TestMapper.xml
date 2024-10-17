@@ -15,5 +15,20 @@
 	<select id="getData4" resultType="com.peisia.spring.dto.TestDto">
 		SELECT * from tbl_test where no = 4
 	</select>
-<!-- ㄴ	MyBatis -->
+	
+	<!-- 문제 1 -->
+	<update id="updateVisitantCount">	
+		update tbl_visitant_count set count = 200
+	</update>
+		
+	<!-- 문제 2 -->
+	<insert id="insertDoodle">	
+		insert into tbl_doodle values ("aaaaaaaa")	<!-- ; 찍으면 안됨 -->
+	</insert>
+	
+	<!-- 문제 3 -->
+	<delete id="delTest">	
+		delete from tbl_test_del where no = 1
+	</delete>		
+		
 </mapper>
