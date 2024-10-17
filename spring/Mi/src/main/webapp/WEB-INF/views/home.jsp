@@ -18,8 +18,17 @@
     <button type="submit">읽기</button>
 </form>
 
-<a href="/test/getOnePlusTwo">1+2 확인하러가기</a>
-<a href="/guest/getList">방명록</a>
+<!-- 게시글 삭제 폼 추가 -->
+<form action="/guest/del" method="get" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+    <label for="del-bno">삭제할 게시글 번호:</label>
+    <input type="text" id="del-bno" name="bno" />
+    <button type="submit">삭제</button>
+</form>
+
+<!-- 다른 링크들 -->
+<a href="/test/getOnePlusTwo">1+2 확인하러가기</a><br>
+<a href="/guest/getList">방명록</a><br>
 <a href="/guest/write">글쓰기</a>
+
 </body>
 </html>

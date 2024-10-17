@@ -34,9 +34,9 @@ public class GuestController {
 	public void getList(Model model) { // 매개변수에 Model m 식으로 작성하게 되면, 스프링이 알아서 모델 객체를 만들어서 넘겨줌.
 		model.addAttribute("list", service.getList());
 	} // 위 /getList 와 동일한 jsp파일을 염. 상위 경로 포함(/guest). 즉 PJ루트/guest/getList.jsp 파일을 염.
-	// 그리고 이 파일은
-	// PJ\src\main\webapp\WEB-INF\views\guest\getList.jsp
-	// 에 만들어 놓으면 됨.
+		// 그리고 이 파일은
+		// PJ\src\main\webapp\WEB-INF\views\guest\getList.jsp
+		// 에 만들어 놓으면 됨.
 
 	@GetMapping("/read")
 	public void read(@RequestParam("bno") Long bno, Model model) {
@@ -64,7 +64,7 @@ public class GuestController {
 	}
 
 	// >>> 홈페이지/spring/guest/write (get 방식으로 오면 여기로 옴. 일반링크이동=get방식임)
-	@GetMapping("/write") // 책 p.239 /write 중복이지만 이건 글쓰기 화면을 위한 url 매핑
+	@GetMapping("/write") // 책 p.239 /write 중복이지만 이건 글쓰기 화면을 위한 url 매핑 이거 실행이 아니라 위에있는거 실행됨
 	public void write() {
 
 	}
