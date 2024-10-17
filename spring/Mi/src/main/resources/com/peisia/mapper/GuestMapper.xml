@@ -55,6 +55,8 @@
 
     7. 예를 들어, `GuestDto` 객체의 `btext`가 "Hello, world!"라면,
        SQL 쿼리는 `insert into tbl_guest (btext) values ('Hello, world!')`로 실행됩니다.
+       x = btext일때 
+       #btext 는 x를 자동으로 그 수/문장으로 변환
 	-->	
 	<insert id="write">
 		insert into tbl_guest (btext) values (#{btext})
