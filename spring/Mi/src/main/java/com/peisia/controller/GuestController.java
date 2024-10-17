@@ -32,19 +32,23 @@ public class GuestController {
 	public void getList(Model model) { // 매개변수에 Model m 식으로 작성하게 되면, 스프링이 알아서 모델 객체를 만들어서 넘겨줌.
 		model.addAttribute("list", service.getList());
 	} // 위 /getList 와 동일한 jsp파일을 염. 상위 경로 포함(/guest). 즉 PJ루트/guest/getList.jsp 파일을 염.
-		// 그리고 이 파일은
-		// PJ\src\main\webapp\WEB-INF\views\guest\getList.jsp
-		// 에 만들어 놓으면 됨.
+	// 그리고 이 파일은
+	// PJ\src\main\webapp\WEB-INF\views\guest\getList.jsp
+	// 에 만들어 놓으면 됨.
 
 	@GetMapping("/read")
 	public void read(@RequestParam("bno") Long bno, Model model) {
 		log.info("컨트롤러 ==== 글번호 ===============" + bno);
-		// 나오는지 확인 용
 		model.addAttribute("read", service.read(bno));
 	}
-////Model의 주요 기능:
-//	컨트롤러에서 데이터를 뷰로 전달: 컨트롤러에서 비즈니스 로직을 처리한 후, 그 결과를 뷰로 전달하여 화면에 표시할 수 있도록 합니다.
-//	데이터를 뷰 템플릿에 전달: 예를 들어, JSP나 Thymeleaf에서는 Model에 담긴 데이터를 가져와서 동적으로 HTML을 생성할 수 있습니다.
-//	addAttribute() 메서드: 컨트롤러에서 뷰로 데이터를 전달할 때 사용되는 메서드로, 특정 이름의 속성(attribute)을 모델에 추가합니다.
-	// @override 쪽꺼 실행
+
+	// 이런식으로 url 호출될 것을 가정하고..
+	// >>> 홈페이지/spring/guest/del?bno=2
+	@GetMapping("/del")
+	public String del(@RequestParam("bno") Long bno) {
+		log.info("컨트롤러 ==== 글번호 ===============" + bno);
+		service.del(bno);
+		return "redirect:/guest/getList"; // sendRedirect 로 이동하게 됨.
+	}
+
 }

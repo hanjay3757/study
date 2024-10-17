@@ -30,4 +30,9 @@ public class GuestServiceImpl implements GuestService {
 		return mapper.read(bno);
 	}
 
+	@Override
+	public void del(long bno) {
+		mapper.del(bno);
+	}
+
 }

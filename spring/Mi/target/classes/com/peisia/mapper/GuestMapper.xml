@@ -16,11 +16,12 @@
 			
 			매개변수로 넘어온 값을 sql 에 삽입하려면
 			
-			해당 매개변수명을 #{ } 로 묶으면 안에 값이 뿅 나옴. bno 쉽게말해 글번호
+			해당 매개변수명을 #{ } 로 묶으면 안에 값이 뿅 나옴.
 		-->
 		select * from tbl_guest where bno = #{bno}
-<!-- 		띄어쓰기 걱정 ㄴㄴ 
-#bno = 변수값 꺼냄
--->
 	</select>	
+	
+	<delete id="del">
+		delete from tbl_guest where bno = #{bno}
+	</delete>	
 </mapper>

@@ -8,4 +8,6 @@ public interface GuestMapper {
 	public ArrayList<GuestDto> getList();
 
 	public GuestDto read(long bno);
+
+	public void del(long bno);
 }

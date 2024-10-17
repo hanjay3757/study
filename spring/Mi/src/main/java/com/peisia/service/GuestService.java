@@ -8,4 +8,6 @@ public interface GuestService {
 	public ArrayList<GuestDto> getList();
 
 	public GuestDto read(long bno);
+
+	public void del(long bno);
 }
