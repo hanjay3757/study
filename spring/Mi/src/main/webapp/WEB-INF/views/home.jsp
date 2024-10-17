@@ -2,36 +2,47 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
-<h1>
-    Hello world!  
-</h1>
 
-<p>The time on the server is ${serverTime}.</p>
+<h1>사용자가 선택할 수 있는 메뉴</h1>
 
-<!-- 사용자가 bno 값을 입력할 수 있는 폼 추가 -->
+<!-- 글 읽기 폼 -->
+<h3>게시글 읽기</h3>
 <form action="/guest/read" method="get">
     <label for="bno">게시글 번호 입력:</label>
-    <input type="text" id="bno" name="bno" />
+    <input type="text" id="bno" name="bno" required />
     <button type="submit">읽기</button>
 </form>
 
-<!-- 게시글 삭제 폼 추가 -->
+<!-- 글 삭제 폼 -->
+<h3>게시글 삭제</h3>
 <form action="/guest/del" method="get" onsubmit="return confirm('정말 삭제하시겠습니까?');">
     <label for="del-bno">삭제할 게시글 번호:</label>
-    <input type="text" id="del-bno" name="bno" />
+    <input type="text" id="del-bno" name="bno" required />
     <button type="submit">삭제</button>
 </form>
 
-<!-- 다른 링크들 -->
-<a href="/test/getOnePlusTwo">1+2 확인하러가기</a><br>
-<a href="/guest/getList">방명록</a><br>
-<a href="/guest/write">글쓰기</a>
-<a href="/guest/del?bno=${item.bno}" onclick="return confirm('정말 삭제하시겠습니까?');">글삭제?</a>
+<!-- 글 수정 폼 -->
+<h3>게시글 수정</h3>
+<form action="/guest/modify" method="get">
+    <label for="mod-bno">수정할 게시글 번호:</label>
+    <input type="text" id="mod-bno" name="bno" required />
+    <button type="submit">수정하기</button>
+</form>
 
-<a href="/guest/modify?bno=1">글수정</a>
+<h3>글쓰기</h3>
+<form action="/guest/write" method="get">
+    <button type="submit" style="padding:10px; border-radius:5px; background-color:#007BFF; color:white;">글쓰기</button>
+</form>
+
+<!-- 방명록 보기 -->
+<h3>방명록</h3>
+<form action="/guest/getList" method="get">
+    <button type="submit" style="padding:10px; border-radius:5px; background-color:#28a745; color:white;">방명록 보기</button>
+</form>
 
 </body>
 </html>

@@ -13,73 +13,64 @@ import com.peisia.service.GuestService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@Log4j
-@RequestMapping("/guest/*") // 프로젝트 루트 경로 이하 /guest 상위폴더로 진입 시 여기로 진입하게 됨.
-@AllArgsConstructor // 필드 값을 매개변수로 하는 생성자를 스프링이 알아서 만들어 줌. 그리고 그런 형태의 생성자를 추가하면 스프링이 알아서 객체관리
-					// 해줌(@Auto.. 처럼)
-@Controller
+@Log4j // 로그 출력을 위한 어노테이션
+@RequestMapping("/guest/*") // /guest 하위 경로로 요청이 들어오면 이 컨트롤러로 매핑
+@AllArgsConstructor // 클래스의 모든 필드를 매개변수로 하는 생성자를 자동으로 생성
+@Controller // 이 클래스가 스프링의 컨트롤러 역할을 함을 정의
 public class GuestController {
 
-//	위에 @AllArgsConstructor 이걸 쓰면
-//	롬복라이브러리가 아래 코드를 자동으로 삽입해줌
+	private GuestService service; // GuestService 객체를 필드로 선언 (서비스 로직을 호출)
 
-	//
-//	public GuestController(GuestService service){
-//		this.service = service;
-//	}
-
-	private GuestService service;
-
-	@GetMapping("/getList") // 프로젝트 루트 경로 이하 /guest/getList url 진입 시 여기로 진입하게 됨.
-	public void getList(Model model) { // 매개변수에 Model m 식으로 작성하게 되면, 스프링이 알아서 모델 객체를 만들어서 넘겨줌.
+	// 'getList' 요청을 처리하는 메서드
+	@GetMapping("/getList") // URL /guest/getList 로 GET 요청이 들어오면 실행
+	public void getList(Model model) { // Model 객체를 사용하여 데이터를 뷰로 전달
+		// GuestService의 getList() 메서드를 호출하여 방명록 목록을 가져오고,
+		// 이를 "list"라는 이름으로 뷰에 전달
 		model.addAttribute("list", service.getList());
-	} // 위 /getList 와 동일한 jsp파일을 염. 상위 경로 포함(/guest). 즉 PJ루트/guest/getList.jsp 파일을 염.
-	// 그리고 이 파일은
-	// PJ\src\main\webapp\WEB-INF\views\guest\getList.jsp
-	// 에 만들어 놓으면 됨.
+	}
+	// 이 메서드는 /guest/getList.jsp 파일로 데이터를 전달하고 렌더링한다.
 
-	// 이런식으로 url 호출될 것을 가정하고..
-	// >>> 홈페이지/spring/guest/read?bno=3
-//	@GetMapping("/read")
-//	public void read(@RequestParam("bno") Long bno, Model model) {
-//		log.info("컨트롤러 ==== 글번호 ==============="+bno);
-//		model.addAttribute("read",service.read(bno));
-//	}
-
-	@GetMapping({ "/read", "/modify" })
+	// 글 조회 및 수정 페이지를 처리하는 메서드 (공통 URL 사용)
+	@GetMapping({ "/read", "/modify" }) // URL /guest/read 또는 /guest/modify로 GET 요청이 들어오면 실행
 	public void read(@RequestParam("bno") Long bno, Model model) {
+		// URL에서 전달받은 'bno'를 사용하여 해당 방명록을 조회
 		log.info("컨트롤러 ==== 글번호 ===============" + bno);
+		// 방명록 데이터를 'read'라는 이름으로 뷰에 전달
 		model.addAttribute("read", service.read(bno));
 	}
 
-	// 이런식으로 url 호출될 것을 가정하고..
-	// >>> 홈페이지/spring/guest/del?bno=2
-	@GetMapping("/del")
+	// 글 삭제 요청을 처리하는 메서드
+	@GetMapping("/del") // URL /guest/del로 GET 요청이 들어오면 실행
 	public String del(@RequestParam("bno") Long bno) {
+		// 'bno'를 사용하여 해당 방명록을 삭제
 		log.info("컨트롤러 ==== 글번호 ===============" + bno);
 		service.del(bno);
-		return "redirect:/guest/getList"; // sendRedirect 로 이동하게 됨.
+		// 삭제 후 /guest/getList로 리다이렉트하여 목록 페이지로 이동
+		return "redirect:/guest/getList";
 	}
 
-	// >>> 홈페이지/spring/guest/write (Post 방식으로 오면 여기로 옴)
-	@PostMapping("/write")
-	// 폼 태그의 텍스트에어리어 태그에 btext 변수로 데이터가 넘어왔는데
-	// 매개변수에 (GuestVO gvo) 이런 클래스를 선언해놓게 되면
-	// 해당 객체의 멤버변수에 스프링이 알아서 채워줌.
+	// 글쓰기 요청을 처리하는 메서드 (POST 방식)
+	@PostMapping("/write") // URL /guest/write로 POST 요청이 들어오면 실행
 	public String write(GuestDto dto) {
+		// 폼에서 전달된 GuestDto 객체를 사용하여 글을 작성
 		service.write(dto);
-		return "redirect:/guest/getList"; // sendRedirect 로 이동하게 됨. // 책 p.245 참고
+		// 작성 후 /guest/getList로 리다이렉트하여 목록 페이지로 이동
+		return "redirect:/guest/getList";
 	}
 
-	// >>> 홈페이지/spring/guest/write (get 방식으로 오면 여기로 옴. 일반링크이동=get방식임)
-	@GetMapping("/write") // 책 p.239 /write 중복이지만 이건 글쓰기 화면을 위한 url 매핑
+	// 글쓰기 화면을 보여주는 메서드 (GET 방식)
+	@GetMapping("/write") // URL /guest/write로 GET 요청이 들어오면 실행
 	public void write() {
-
+		// 이 메서드는 특별히 처리할 로직이 없고, 단순히 글쓰기 화면을 보여주는 역할을 한다.
+		// /guest/write.jsp 페이지가 뷰로 렌더링된다.
 	}
 
-	@PostMapping("/modify")
+	// 글 수정 요청을 처리하는 메서드 (POST 방식)
+	@PostMapping("/modify") // URL /guest/modify로 POST 요청이 들어오면 실행
 	public String modify(GuestDto dto) {
+		// 수정할 데이터를 담고 있는 GuestDto 객체를 받아서 수정 처리
 		service.modify(dto);
+		// 수정 후 /guest/getList로 리다이렉트하여 목록 페이지로 이동
 		return "redirect:/guest/getList";
 	}
 
