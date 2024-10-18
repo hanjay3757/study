@@ -12,6 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.peisia.java">
+<!-- 	패키지 -->
 		<level value="info" />
 	</logger>
 	
@@ -34,10 +35,11 @@
 
 	<!-- Root Logger -->
 	<root>
+<!-- 	모든 로그에대한 설정  경고/에러/인포/디버깅 까직 본다-->
 		<priority value="warn" />
 		<appender-ref ref="console" />
 	</root>
-		<!-- 내가 추가한거 -->
+		<!-- 내가 추가한거 logger = 예외(=특혜)-->
 	<logger name="jdbc.audit">
 		<level value="warn" />
 	</logger>
@@ -49,6 +51,6 @@
 	</logger>	
 	<logger name="com.peisia.controller">		
 	<level value="info" />	
-</logger>		
+	</logger>		
 	
 </log4j:configuration>

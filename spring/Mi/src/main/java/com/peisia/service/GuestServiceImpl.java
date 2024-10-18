@@ -16,6 +16,7 @@ import lombok.extern.log4j.Log4j;
 // 이 클래스는 서비스 계층에 해당하는 클래스임을 나타내는 어노테이션
 @Service
 public class GuestServiceImpl implements GuestService {
+//클래스가 추상
 
 	// GuestMapper를 자동으로 주입하기 위한 어노테이션
 	@Setter(onMethod_ = @Autowired)

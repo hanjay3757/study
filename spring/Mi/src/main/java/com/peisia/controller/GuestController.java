@@ -73,7 +73,7 @@ public class GuestController {
 		service.modify(dto);
 		// 수정 후 /guest/getList로 리다이렉트하여 목록 페이지로 이동
 		return "redirect:/guest/getList";
-		// 처리
+		// 처리 get의 경우 url에 등재가 되기 때문에 보안상 이슈가 있기에 post로만 사용가능 근데 공부중이면 get으로 하는게 더 나을지도
 	}
 
 }
