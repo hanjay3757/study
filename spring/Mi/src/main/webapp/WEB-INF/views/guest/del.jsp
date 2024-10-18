@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.contextPath}" /><!-- el변수 cp에 경로저장 -->
 <html>
 <head>
     <title>글 목록</title> <!-- 웹 페이지의 제목을 "글 목록"으로 설정 -->
+    <link rel="stylesheet" href="${cp}/resources/common.css" >
 </head>
 <body>
     <h1>방명록 목록</h1> <!-- 웹 페이지 상단에 "방명록 목록"이라고 크게 표시 -->
@@ -35,8 +37,7 @@
     </table>
     
     <!-- 다른 페이지로 이동할 수 있는 링크들 -->
-    <a href="/guest/write">글쓰기</a> <!-- 글을 새로 쓸 수 있는 링크 -->
-    <a href="http://localhost:8080/">홈으로 돌아가기</a>
-    
+    <a href="${cp}/guest/write">글쓰기</a> <!-- 글을 새로 쓸 수 있는 링크 -->
+<a href="http://localhost:8080/java">홈으로 돌아가기</a>    
 </body>
 </html>
