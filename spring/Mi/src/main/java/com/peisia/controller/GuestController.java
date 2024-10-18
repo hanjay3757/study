@@ -37,6 +37,7 @@ public class GuestController {
 		log.info("컨트롤러 ==== 글번호 ===============" + bno);
 		// 방명록 데이터를 'read'라는 이름으로 뷰에 전달
 		model.addAttribute("read", service.read(bno));
+		// 수정하러가는거
 	}
 
 	// 글 삭제 요청을 처리하는 메서드
@@ -72,6 +73,7 @@ public class GuestController {
 		service.modify(dto);
 		// 수정 후 /guest/getList로 리다이렉트하여 목록 페이지로 이동
 		return "redirect:/guest/getList";
+		// 처리
 	}
 
 }
