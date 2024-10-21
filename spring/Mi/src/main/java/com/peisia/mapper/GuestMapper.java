@@ -11,8 +11,6 @@ public interface GuestMapper {
 
 	public void del(long bno);
 
-	public void del(String btext);
-
 	public void write(GuestDto dto);
 
 	public void modify(GuestDto dto);
