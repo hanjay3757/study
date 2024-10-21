@@ -9,7 +9,7 @@ public interface GuestService {
 
 	public GuestDto read(long bno);
 
-	public void del(long bno);
+	public void del(String btext);
 
 	public void write(GuestDto dto);
 

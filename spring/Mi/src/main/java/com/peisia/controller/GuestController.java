@@ -42,9 +42,10 @@ public class GuestController {
 
 	// 글 삭제 요청을 처리하는 메서드
 	@GetMapping("/del") // URL /guest/del로 GET 요청이 들어오면 실행
-	public String del(@RequestParam("bno") Long bno) {
+	public String del(@RequestParam("btext") String bno) {
 		// 'bno'를 사용하여 해당 방명록을 삭제
 		log.info("컨트롤러 ==== 글번호 ===============" + bno);
+		service.del(bno);
 		service.del(bno);
 		// 삭제 후 /guest/getList로 리다이렉트하여 목록 페이지로 이동
 		return "redirect:/guest/getList";

@@ -4,17 +4,14 @@ import java.util.ArrayList;
 
 import com.peisia.dto.GuestDto;
 
-public interface GuestMapper {
+public interface a {
 	public ArrayList<GuestDto> getList();
 
 	public GuestDto read(long bno);
 
 	public void del(long bno);
 
-	public void del(String btext);
-
 	public void write(GuestDto dto);
 
 	public void modify(GuestDto dto);
-
 }

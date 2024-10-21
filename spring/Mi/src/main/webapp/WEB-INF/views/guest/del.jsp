@@ -23,12 +23,12 @@
             <c:forEach var="item" items="${list}">
                 <tr>
                     <td>${item.bno}</td> <!-- 글 번호를 표시 -->
-                    <td><a href="/guest/read?bno=${item.bno}">${item.title}</a></td> 
+                    <td><a href="${cp}/guest/read?bno=${item.bno}">${item.title}</a></td> 
                     <!-- 글 제목을 클릭하면 해당 글을 읽을 수 있는 링크로 만들어줌 -->
                     <td>${item.writer}</td> <!-- 글 작성자를 표시 -->
                     <td>
                         <!-- 삭제 링크를 만들어주고, 클릭하면 삭제 여부를 묻는 확인 창이 뜨도록 설정 -->
-                        <a href="/guest/del?bno=${item.bno}" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+                        <a href="${cp}/guest/del?bno=${item.bno}" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
                         <!-- 삭제 링크 클릭 시 글 번호(bno)를 함께 보내고, 확인 창을 띄운 후 삭제 진행 -->
                     </td>
                 </tr>
