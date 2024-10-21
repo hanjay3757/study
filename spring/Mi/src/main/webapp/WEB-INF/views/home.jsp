@@ -13,6 +13,6 @@ a
 
 <a href="${cp}/guest/getList?currentPage=1">[방명록]</a>
 
-<a href="${cp}/guest/del?btext=1">[방s</a>
+<a href="${cp}/guest/del?btext=1">TEXT로 검색</a>
 </body>
 </html>
