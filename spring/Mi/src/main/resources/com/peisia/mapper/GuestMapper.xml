@@ -27,7 +27,7 @@
 	<delete id="del">
 		<!-- bno 값에 해당하는 게시글을 삭제 -->
 		<!-- #{bno}는 매개변수로 넘어온 bno 값을 쿼리 내에서 사용 -->
-		delete from tbl_guest where btext = #{btext}
+		delete from tbl_guest where bno = #{bno}
 	</delete>
 	
 	<!-- 새로운 방명록 게시글을 추가하는 SQL -->

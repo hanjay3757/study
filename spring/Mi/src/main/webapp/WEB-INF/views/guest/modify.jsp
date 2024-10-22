@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="${cp}/resources/common.css" >
     <title>Home</title>
 </head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="/resources/common.css" >
-<title>글 수정</title>
 </head>
 <body>
     <h2>글 수정</h2>
@@ -21,18 +18,20 @@
         String btext = read.getBtext();
     %>  
 
-    <p>글번호: <%=bno%></p>
+  <p>글번호: ${bno}</p>
+
+<form action="/guest/modify" method="post">
+    <input type="hidden" name="bno" value="${bno}">
     
-    <form action="/guest/modify" method="post">
-        <input type="hidden" name="bno" value="<%=bno %>" >
-        
-        <!-- 글 내용을 수정할 수 있는 텍스트 영역 (textarea) -->
-        <textarea name="btext" rows="10" cols="50"><%=btext %></textarea>
-        
-        <br><br>
-        <a href="/guest/getList">글 리스트</a>
-        <a href="/guest/modify?bno=<%=bno%>">글 수정</a>
-        <input type="submit" value="수정하기">
+    <!-- 글 내용을 수정할 수 있는 텍스트 영역 (textarea) -->
+    <textarea name="btext" rows="10" cols="50">${btext}</textarea>
+    
+    <br><br>
+    <a href="/guest/getList">글 리스트</a>
+    <a href="/guest/modify?bno=${bno}">글 수정</a>
+    <input type="submit" value="수정하기">
+</form>
+
     </form>
 </body>
 </html>

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.peisia.dto.GuestDto;
 import com.peisia.service.GuestService;
@@ -14,7 +13,6 @@ import com.peisia.service.GuestService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@SessionAttributes("x")
 @Log4j // 로그 출력을 위한 어노테이션
 @RequestMapping("/guest/*") // /guest 하위 경로로 요청이 들어오면 이 컨트롤러로 매핑
 @AllArgsConstructor // 클래스의 모든 필드를 매개변수로 하는 생성자를 자동으로 생성
@@ -23,18 +21,12 @@ public class GuestController {
 
 	private GuestService service; // GuestService 객체를 필드로 선언 (서비스 로직을 호출)
 
-//	@GetMapping("/ttttlist")
-//	public void getList(Model model) {
-//		model.addAttribute("list", service.getList());
-//	}
-
-//'getList' 요청을 처리하는 메서드
+	// 'getList' 요청을 처리하는 메서드
 	@GetMapping("/getList") // URL /guest/getList 로 GET 요청이 들어오면 실행
 	public void getList(Model model) { // Model 객체를 사용하여 데이터를 뷰로 전달
-// GuestService의 getList() 메서드를 호출하여 방명록 목록을 가져오고,
-//이를 "list"라는 이름으로 뷰에 전달
+		// GuestService의 getList() 메서드를 호출하여 방명록 목록을 가져오고,
+		// 이를 "list"라는 이름으로 뷰에 전달
 		model.addAttribute("list", service.getList());
-
 	}
 	// 이 메서드는 /guest/getList.jsp 파일로 데이터를 전달하고 렌더링한다.
 
@@ -50,10 +42,9 @@ public class GuestController {
 
 	// 글 삭제 요청을 처리하는 메서드
 	@GetMapping("/del") // URL /guest/del로 GET 요청이 들어오면 실행
-	public String del(@RequestParam("bno") long bno) {
+	public String del(@RequestParam("bno") Long bno) {
 		// 'bno'를 사용하여 해당 방명록을 삭제
 		log.info("컨트롤러 ==== 글번호 ===============" + bno);
-		service.del(bno);
 		service.del(bno);
 		// 삭제 후 /guest/getList로 리다이렉트하여 목록 페이지로 이동
 		return "redirect:/guest/getList";
@@ -85,10 +76,4 @@ public class GuestController {
 		// 처리 get의 경우 url에 등재가 되기 때문에 보안상 이슈가 있기에 post로만 사용가능 근데 공부중이면 get으로 하는게 더 나을지도
 	}
 
-	@RequestMapping("/reg")
-	public void reg(@RequestParam("id") String id, @RequestParam("pw") String pw) {
-		// id에는 "cat", pw에는 "dog" 값이 들어옴
-		System.out.println("ID: " + id);
-		System.out.println("PW: " + pw);
-	}
 }

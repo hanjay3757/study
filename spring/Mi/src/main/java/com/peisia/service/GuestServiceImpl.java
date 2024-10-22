@@ -39,7 +39,6 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public void del(long bno) {
 		mapper.del(bno); // GuestMapper의 del 메서드를 호출하여 게시글을 삭제
-//		mapper.del(Integer.parseInt(bno)); // GuestMapper의 del 메서드를 호출하여 게시글을 삭제
 	}
 
 	// 새 게시글을 작성하는 메서드
