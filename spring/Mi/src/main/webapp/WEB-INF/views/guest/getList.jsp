@@ -19,7 +19,6 @@
             <td>번호</td>
             <td>내용</td>
         </tr>
-                <!-- 번호 출력 -->
                 <!-- 텍스트와 링크 출력 -->
         <!-- JSTL을 사용해 list 객체 반복 -->
    <c:forEach var = "guest" items = "${list}">
