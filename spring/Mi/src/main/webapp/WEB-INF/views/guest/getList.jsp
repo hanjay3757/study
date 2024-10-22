@@ -21,14 +21,16 @@
         </tr>
 
         <!-- JSTL을 사용해 list 객체 반복 -->
-        <c:forEach var="guest" items="${list}">
-            <tr>
-                <!-- 번호 출력 -->
-                <td>${guest.bno}</td>
-                <!-- 텍스트와 링크 출력 -->
-                <td><a href="/guest/read?bno=${guest.bno}">${guest.btext}</a></td>
-            </tr>
-        </c:forEach>
+     <c:forEach var="guest" items="${list}">
+    <tr>
+        <!-- 번호 출력: guest 객체의 bno 속성을 출력 -->
+        <td>${guest.bno}</td>
+        
+        <!-- 텍스트와 링크 출력: guest 객체의 btext 속성을 링크로 출력, 클릭 시 해당 게시글을 볼 수 있는 URL로 이동 -->
+        <td><a href="/guest/read?bno=${guest.bno}">${guest.btext}</a></td>
+    </tr>
+</c:forEach>
+
     </table>
 
     <br><br>

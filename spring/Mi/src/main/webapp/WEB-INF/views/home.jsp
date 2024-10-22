@@ -9,10 +9,8 @@
 <body>
 
 <h1>사용자가 선택할 수 있는 메뉴</h1>
-a
 
 <a href="${cp}/guest/getList?currentPage=1">[방명록]</a>
-
 <a href="${cp}/guest/del?btext=1">TEXT로 검색</a>
 </body>
 </html>
