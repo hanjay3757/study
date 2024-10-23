@@ -1,0 +1,7 @@
+create table member(
+	id char(20),
+    pw char(20)
+);
+desc member;
+select * from member;
+insert into member values('tester','abcd');
