@@ -66,10 +66,15 @@ function onYouTubeIframeAPIReady() {
                     }, 500);
                 });
 
-                thumbnailElement.addEventListener('mouseleave', function() {
+               /*  thumbnailElement.addEventListener('mouseleave', function() {
                     videoElement.style.display = 'none';
                     player.pauseVideo();
                     thumbnailElement.style.opacity = 1;
+                }); */
+                thumbnailElement.addEventListener('mouseleave',function(){
+                videoElement.style.display = 'none';
+                player.pauseVideo();
+                thumbnailElement.style.opacity = 1; 
                 });
 
                 // 썸네일 클릭 시 URL로 이동
