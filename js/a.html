@@ -1,0 +1,86 @@
+<div class="video-container">
+    <!-- YouTube 비디오를 삽입하는 iframe -->
+    <iframe class="video" id="youtube-player" src="https://www.youtube.com/embed/8z7ZVoSmuB8?enablejsapi=1&autoplay=0&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <!-- 비디오 재생 전 보여줄 썸네일 이미지 -->
+    <img class="thumbnail" src="cat.jpg" alt="Thumbnail" style="cursor: pointer;">
+</div>
+
+<style>
+.video-container {
+    position: relative; /* 비디오 컨테이너의 위치 설정 */
+    width: 640px; /* 비디오 컨테이너의 너비 */
+    height: 360px; /* 비디오 컨테이너의 높이 */
+    overflow: hidden; /* 내용이 컨테이너를 넘칠 경우 숨김 */
+}
+.thumbnail {
+    width: 100%; /* 썸네일을 컨테이너 너비에 맞춤 */
+    height: 100%; /* 썸네일을 컨테이너 높이에 맞춤 */
+    cursor: pointer; /* 커서를 포인터로 변경 */
+    transition: opacity 0.5s ease; /* 투명도 전환 효과 설정 */
+}
+
+.video {
+    position: absolute; /* 비디오 위치를 절대적으로 설정 */
+    top: 0; /* 상단에 위치 */
+    left: 0; /* 좌측에 위치 */
+    width: 100%; /* 비디오를 컨테이너 너비에 맞춤 */
+    height: 100%; /* 비디오를 컨테이너 높이에 맞춤 */
+    display: none; /* 비디오는 기본적으로 숨김 */
+    opacity: 0; /* 비디오의 초기 투명도 설정 */
+    transition: opacity 0.5s ease; /* 투명도 전환 효과 설정 */
+}
+</style>
+
+<script>
+let player; // YouTube 플레이어 객체를 저장할 변수
+
+// YouTube API 스크립트를 동적으로 추가
+var tag = document.createElement('script'); // 스크립트 태그 생성
+tag.src = "https://www.youtube.com/iframe_api"; // YouTube IFrame API의 URL
+var firstScriptTag = document.getElementsByTagName('script')[0]; // 문서의 첫 번째 스크립트 태그
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); // 새 스크립트를 첫 번째 스크립트 앞에 삽입
+
+// YouTube IFrame API가 로드되면 호출되는 함수
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtube-player', { // 플레이어 객체 생성
+        events: {
+            'onReady': function(event) { // 플레이어가 준비되었을 때
+                const videoElement = document.querySelector('.video'); // 비디오 요소 선택
+                const thumbnailElement = document.querySelector('.thumbnail'); // 썸네일 요소 선택
+
+                // 썸네일 위에 마우스가 올라갔을 때
+                thumbnailElement.addEventListener('mouseenter', function() {
+                    thumbnailElement.style.opacity = 0; // 썸네일 서서히 사라짐
+                    videoElement.style.display = 'block'; // 비디오를 보이게 함
+                    videoElement.style.opacity = 1; // 비디오 서서히 나타남
+
+                    // 비디오 재생 시작
+                    player.playVideo(); // YouTube 비디오 재생
+                });
+
+                // 비디오에서 마우스가 나갔을 때
+                videoElement.addEventListener('mouseleave', function() {
+                    player.pauseVideo(); // 비디오를 일시 정지
+
+                    // 비디오 서서히 사라짐
+                    videoElement.style.transition = 'opacity 0.5s'; // 서서히 사라지도록 설정
+                    videoElement.style.opacity = 0; // 비디오의 투명도를 0으로 설정
+
+                    setTimeout(() => {
+                        videoElement.style.display = 'none'; // 비디오 숨기기
+                        thumbnailElement.style.opacity = 1; // 썸네일 다시 나타나게 설정
+                        thumbnailElement.style.display = 'block'; // 썸네일 보이기
+                    }, 500); // 0.5초 후에 숨기기
+                });
+
+                // 썸네일에서 마우스가 나갔을 때
+                thumbnailElement.addEventListener('mouseleave', function() {
+                    videoElement.style.display = 'none'; // 비디오 숨기기
+                    player.pauseVideo(); // 비디오 일시 정지
+                    thumbnailElement.style.opacity = 1; // 썸네일 다시 나타남
+                });
+            }
+        }
+    });
+}
+</script>
