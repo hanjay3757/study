@@ -43,19 +43,27 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-player', { 
-        events: {
-            'onReady': function(event) {
+        events: {'onReady': funvtion(event){
+            /* 'onReady': function(event) { */
+                
+                /* const videoElement = document.querySelector('.video');
+                const thumbnailElement = document.querySelector('.thumbnail'); */
                 const videoElement = document.querySelector('.video');
                 const thumbnailElement = document.querySelector('.thumbnail');
-
+/* 
                 thumbnailElement.addEventListener('mouseenter', function() {
                     thumbnailElement.style.opacity = 0;
                     videoElement.style.display = 'block';
                     videoElement.style.opacity = 1;
                     player.playVideo();
+                }); */
+                thumbnailElement.addEventListener('mouseenter',function(){
+                    thumbnailElement.style.opacity = 0;
+                    videoElement.style.display = 'block';
+                    videoElement.style.opacity = 1;
+                    player.playVideo();
                 });
-
-                videoElement.addEventListener('mouseleave', function() {
+               /*  videoElement.addEventListener('mouseleave', function() {
                     player.pauseVideo();
                     videoElement.style.transition = 'opacity 0.5s';
                     videoElement.style.opacity = 0;
@@ -63,7 +71,19 @@ function onYouTubeIframeAPIReady() {
                     setTimeout(() => {
                         videoElement.style.display = 'none';
                         thumbnailElement.style.opacity = 1;
-                    }, 500);
+                    }, 500); */
+                });
+                videoElement.addEventListener('mouseleave', function(){
+                    player.pauseVideo();
+                    videoElement.style.transition = 'opacity 0.5s';
+                    videoElement.style.opacity = 0;
+
+                    setTimeout(() => {
+                        videoElement.style.display= 'none';
+                        thumbnailElement.style.opacity = 1;
+
+                    },500);
+
                 });
 
                /*  thumbnailElement.addEventListener('mouseleave', function() {
