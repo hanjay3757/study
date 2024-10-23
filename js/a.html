@@ -57,29 +57,29 @@ function onYouTubeIframeAPIReady() {
                 const videoElement = document.querySelector('.video'); // 비디오 요소 선택
                 const thumbnailElement = document.querySelector('.thumbnail'); // 썸네일 요소 선택
 
-                // 썸네일 위에 마우스가 올라갔을 때
+                // 썸네일 위에 마우스가 올라갔을 때 (mouse enter 마우스 올라갔을때)
                 thumbnailElement.addEventListener('mouseenter', function() {
                     thumbnailElement.style.opacity = 0; // 썸네일 서서히 사라짐
                     videoElement.style.display = 'block'; // 비디오를 보이게 함
                     videoElement.style.opacity = 1; // 비디오 서서히 나타남
 
                     // 비디오 재생 시작
-                    player.playVideo(); // YouTube 비디오 재생
+                    player.playVideo(); // YouTube 비디오 재생 PlayVideo는 유튜브 api에 등재되어있는 매서드 
                 });
 
-                // 비디오에서 마우스가 나갔을 때
+                // 비디오에서 마우스가 나갔을 때 (mouse leave 마우스 땟을때)
                 videoElement.addEventListener('mouseleave', function() {
                     player.pauseVideo(); // 비디오를 일시 정지
 
-                    // 비디오 서서히 사라짐
-                    videoElement.style.transition = 'opacity 0.5s'; // 서서히 사라지도록 설정
-                    videoElement.style.opacity = 0; // 비디오의 투명도를 0으로 설정
+                    // 비디오 서서히 사라짐 위에만 뒀는데 작동안되서 사라지는 효과도 넣음
+                    videoElement.style.transition = 'opacity 0.5s'; // 서서히 사라지도록 시간 설정
+                    videoElement.style.opacity = 0; // 비디오의 투명도 결과값을 0으로 설정
 
                     setTimeout(() => {
-                        videoElement.style.display = 'none'; // 비디오 숨기기
-                        thumbnailElement.style.opacity = 1; // 썸네일 다시 나타나게 설정
+                        videoElement.style.display = 'none'; // 비디오 숨기기 ((영상 가리기))
+                        thumbnailElement.style.opacity = 1; // 썸네일 다시 나타나게 설정 ((투명도 1로 걍 다 나오게))
                         thumbnailElement.style.display = 'block'; // 썸네일 보이기
-                    }, 500); // 0.5초 후에 숨기기
+                    }, 500); // 0.5초 후에 숨기기 전환효과를 줘서 좀더 부드럽게 나오게끔 하는 기능 깜빡깜빡거리는 게 짜증나서 넣음
                 });
 
                 // 썸네일에서 마우스가 나갔을 때
