@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube Video Thumbnail</title>
     <style>
-        /* 컨테이너 스타일 설정 */
         .container {
             width: 220px; /* 카드 너비 */
             height: 310px; /* 카드 높이 */
@@ -14,7 +13,6 @@
             overflow: hidden; /* 카드 영역을 넘는 내용 숨기기 */
         }
 
-        /* 오버레이 스타일 설정 */
         .overlay {
             position: absolute; /* 컨테이너에 대해 절대 위치 */
             width: 100%; /* 오버레이 너비: 컨테이너에 맞춤 */
@@ -31,7 +29,6 @@
             transition: all 0.1s; /* 모든 변화에 대해 부드러운 전환 효과 */
         }
 
-        /* 카드 스타일 설정 */
         .card {
             width: 100%; /* 카드 너비: 컨테이너에 맞춤 */
             height: 100%; /* 카드 높이: 컨테이너에 맞춤 */
@@ -40,14 +37,12 @@
             left: 0; /* 왼쪽에 위치 */
         }
 
-        /* YouTube 비디오 iframe 스타일 설정 */
         #youtube-player {
             width: 100%; /* 비디오 너비: 카드에 맞춤 */
             height: 100%; /* 비디오 높이: 카드에 맞춤 */
             display: none; /* 비디오를 처음에 숨김 */
         }
 
-        /* 썸네일 이미지 스타일 설정 */
         .thumbnail {
             width: 100%; /* 썸네일 너비: 카드에 맞춤 */
             height: 100%; /* 썸네일 높이: 카드에 맞춤 */
@@ -60,7 +55,6 @@
     </style>
 </head>
 <body>
-    <!-- 비디오와 썸네일을 포함한 컨테이너 -->
     <div class="container">
         <div class="overlay"></div> <!-- 배경 효과를 위한 오버레이 -->
         <div class="card">
@@ -89,11 +83,23 @@
                         const videoElement = document.getElementById('youtube-player'); // 비디오 요소 선택
                         const thumbnailElement = document.querySelector('.thumbnail'); // 썸네일 요소 선택
 
-                        // 썸네일 클릭 시 비디오 재생
-                        thumbnailElement.addEventListener('click', function() {
+                        // 마우스를 올렸을 때 비디오 재생
+                        container.addEventListener('mouseenter', function() {
                             thumbnailElement.style.opacity = 0; // 썸네일 숨기기
                             videoElement.style.display = 'block'; // 비디오 표시
                             player.playVideo(); // 비디오 재생
+                        });
+
+                        // 마우스가 벗어났을 때 썸네일로 복원
+                        container.addEventListener('mouseleave', function() {
+                            player.pauseVideo(); // 비디오 일시정지
+                            videoElement.style.display = 'none'; // 비디오 숨기기
+                            thumbnailElement.style.opacity = 1; // 썸네일 복원
+                        });
+
+                        // 썸네일 클릭 시 링크로 이동
+                        thumbnailElement.addEventListener('click', function() {
+                            window.location.href = 'https://www.youtube.com/watch?v=8z7ZVoSmuB8'; // 이동할 URL
                         });
 
                         // 비디오가 끝나면 썸네일로 되돌리기
