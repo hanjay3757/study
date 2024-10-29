@@ -51,7 +51,7 @@ header {
 /* 컨테이너 스타일 */
 .container {
     max-width: 2500px; /* 최대 너비 1200px */
-    margin: 2rem auto; /* 상하 여백 및 중앙 정렬 */
+    margin: 0.5rem auto; /* 상하 여백 및 중앙 정렬 */
     padding: 0 1.5rem; /* 좌우 패딩 */
     display: flex; /* 플렉스 박스 레이아웃 사용 */
     flex-direction: column; /* 세로 방향 정렬 */
@@ -74,7 +74,7 @@ header {
     width: 100%; /* 폭을 100%로 설정 */
     margin: 1rem 0; /* 상하 여백 설정 */
 text-align: center;
-justify-content: ;
+/* justify-content: ; 자식들 전부 영향aa */
 }
 
 /* 폼에 마우스 오버 시 효과 */
@@ -145,6 +145,6 @@ footer {
     }
 
     .post-form {
-        padding: 1.5rem; /* 폼의 패딩 조정 */
+        padding: 0.2rem; /* 폼의 패딩 조정 */
     }
 }

@@ -1,6 +1,4 @@
 let posts = [];
-let currentRotateX = 0;
-let currentRotateY = 0;
 
 document.getElementById('post-form').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -9,7 +7,6 @@ document.getElementById('post-form').addEventListener('submit', function(event) 
     const content = document.getElementById('post-content').value;
     const videoUrl = document.getElementById('post-video').value;
     
-    // YouTube URL 변환
     const videoId = getYoutubeVideoId(videoUrl);
     const embedUrl = `https://www.youtube.com/embed/${videoId}`;
     
@@ -26,50 +23,99 @@ function getYoutubeVideoId(url) {
 
 function renderPosts() {
     const container = document.querySelector('.container');
-    const postList = document.getElementById('post-list');
-    
-    // 새로운 포스트 카드 생성
-    const newPost = posts[posts.length - 1];
-    const card = document.createElement('div');
-    card.className = 'post-card';
-    
-    card.innerHTML = `
-        <div class="video-container">
-            <iframe 
-                src="${newPost.videoUrl}"
-                frameborder="0" 
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen
-            ></iframe>
-        </div>
-    `;
-    
-    // 3D 호버 효과 추가
-    addHoverEffect(card);
-    
-    // 컨테이너에 직접 추가
-    container.appendChild(card);
+    container.innerHTML = ''; // 기존 게시물 초기화
+
+    posts.forEach((post, index) => {
+        const card = document.createElement('div');
+        card.className = 'post-card';
+        
+        card.innerHTML = `
+            <div class="video-container">
+                <iframe 
+                    src="${post.videoUrl}"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                ></iframe>
+            </div>
+            <div class="post-content">
+                <button class="delete-btn" onclick="deletePost(${index})">삭제</button>
+            </div>
+        `;
+        
+        addHoverEffect(card); // 3D 호버 효과 추가
+        container.appendChild(card);
+    });
+}
+
+function editPost(index) {
+    const post = posts[index];
+    document.getElementById('post-title').value = post.title;
+    document.getElementById('post-content').value = post.content;
+    document.getElementById('post-video').value = post.videoUrl.replace('https://www.youtube.com/embed/', '');
+
+    deletePost(index); // 수정하기 위해 해당 게시물 삭제
+}
+
+function deletePost(index) {
+    posts.splice(index, 1);
+    renderPosts();
 }
 
 function addHoverEffect(element) {
-    element.addEventListener('mousemove', (e) => {
-        const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const rotateX = 20 * ((y - rect.height / 2) / rect.height);
-        const rotateY = -20 * ((x - rect.width / 2) / rect.width);
-        
+    let requestId;
+    let currentRotateX = 0;
+    let currentRotateY = 0;
+
+    const updateRotation = (targetRotateX, targetRotateY) => {
+        currentRotateY += (targetRotateY - currentRotateY) * 0.1; // 10% 보간
+        currentRotateX += (targetRotateX - currentRotateX) * 0.1; // 10% 보간
+
         element.style.transform = `
-            perspective(1000px) 
-            rotateX(${rotateX}deg) 
-            rotateY(${rotateY}deg)
-            scale(1.02)
+            perspective(350px) 
+            rotateX(${currentRotateX}deg) 
+            rotateY(${currentRotateY}deg)
         `;
-    });
-    
-    element.addEventListener('mouseleave', () => {
-        element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        
+        requestId = requestAnimationFrame(() => updateRotation(targetRotateX, targetRotateY));
+    };
+
+    const handleMouseMove = (e) => {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left; // 마우스 X 좌표
+        const y = e.clientY - rect.top; // 마우스 Y 좌표
+
+        // 회전 각도 계산
+        const targetRotateY = ((x / rect.width) - 0.5) * 40; // Y 축 회전 각도
+        const targetRotateX = ((y / rect.height) - 0.5) * -40; // X 축 회전 각도
+
+        // 회전 업데이트 호출
+        if (!requestId) {
+            updateRotation(targetRotateX, targetRotateY);
+        }
+    };
+
+    element.addEventListener('mousemove', handleMouseMove);
+
+    element.addEventListener('mouseout', () => {
+        cancelAnimationFrame(requestId); // 애니메이션 프레임 취소
+        requestId = null;
+
+        // 회전 초기화 애니메이션
+        const resetAnimation = () => {
+            if (Math.abs(currentRotateX) < 0.1 && Math.abs(currentRotateY) < 0.1) {
+                element.style.transform = `perspective(350px) rotateX(0deg) rotateY(0deg)`;
+                return;
+            }
+
+            currentRotateX += (0 - currentRotateX) * 0.1; // 목표 각도 0으로 설정
+            currentRotateY += (0 - currentRotateY) * 0.1;
+
+            requestAnimationFrame(resetAnimation);
+            element.style.transform = `perspective(350px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg)`;
+        };
+
+        resetAnimation(); // 초기화 애니메이션 시작
     });
 }
 
@@ -124,6 +170,24 @@ style.textContent = `
         left: 0;
         width: 100%;
         height: 100%;
+    }
+
+    .edit-btn, .delete-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .edit-btn {
+        background-color: #4CAF50; /* Green */
+        color: white;
+    }
+
+    .delete-btn {
+        background-color: #f44336; /* Red */
+        color: white;
     }
 
     @media (max-width: 768px) {
