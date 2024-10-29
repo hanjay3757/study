@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header>
         <nav id="top_menu">
@@ -21,36 +23,26 @@
             </div>
         </nav>
     </header>
-<div class="ss">aaada</div>
-    <main class="container">
-        <div id="x">
-aaa
-        </div>
-        <section class="post-form-section">
+    <div class="ss">aaada <section class="post-form-section">
             <form id="post-form" class="post-form">
                 <div class="form-header">
-                    <h2>새 게시물 작성</h2>
-                    <p class="form-description">여러분의 이야기를 공유해주세요</p>
                 </div>
-                
+
                 <div class="form-group">
-                    <label for="post-title">제목</label>
                     <input type="text" id="post-title" placeholder="제목을 입력하세요" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="post-content">내용</label>
-                    <textarea id="post-content" placeholder="내용을 입력하세요" rows="5" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="post-video">유튜브 URL</label>
+                    <textarea id="post-content" placeholder="내용을 입력하세요" rows="1" required></textarea>
                     <input type="url" id="post-video" placeholder="YouTube 영상 URL을 입력하세요" required>
                 </div>
-
                 <button type="submit" class="submit-btn">게시물 등록</button>
             </form>
         </section>
+    </div>
+
+    <main class="container">
+        <div id="x">
+            aaa
+        </div>
+
     </main>
 
     <footer>
@@ -68,4 +60,5 @@ aaa
 
     <script src="script.js"></script>
 </body>
+
 </html>
