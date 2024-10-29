@@ -1,6 +1,7 @@
 let posts = [];
 let currentRotateX = 0; // 현재 X축 회전 값
 let currentRotateY = 0; // 현재 Y축 회전 값
+let activePostDetail = null; // 현재 활성화된 포스트 상세보기
 
 document.getElementById('post-form').addEventListener('submit', function (event) {
     event.preventDefault();
@@ -30,6 +31,10 @@ function renderPosts() {
 }
 
 function viewPost(index) {
+    if (activePostDetail) {
+        activePostDetail.style.display = 'none'; // 기존 포스트 상세보기 숨김
+    }
+
     const post = posts[index];
     const postDetail = document.getElementById('post-detail');
     postDetail.style.display = 'block';
@@ -38,32 +43,37 @@ function viewPost(index) {
     `;
     postDetail.style.height = 'auto';
 
+    currentRotateX = 0; // 초기화
+    currentRotateY = 0; // 초기화
     let targetRotateX = 0;
     let targetRotateY = 0;
 
-    postDetail.addEventListener('mousemove', function (e) {
+    // 이전 포스트의 이벤트 리스너를 제거
+    if (postDetail.mouseMoveListener) {
+        postDetail.removeEventListener('mousemove', postDetail.mouseMoveListener);
+    }
+
+    postDetail.mouseMoveListener = function (e) {
         const x = e.offsetX;
         const y = e.offsetY;
         targetRotateY = (-1 / 5) * x; // 목표 Y축 회전 값
         targetRotateX = (1 / 5) * y;   // 목표 X축 회전 값
-    });
+    };
+
+    postDetail.addEventListener('mousemove', postDetail.mouseMoveListener);
 
     function updateRotation() {
         const rotationSpeed = 0.1; // 회전 속도 조절
-
-        // 부드러운 회전을 위해 보간
         currentRotateX += (targetRotateX - currentRotateX) * rotationSpeed;
         currentRotateY += (targetRotateY - currentRotateY) * rotationSpeed;
 
         postDetail.style.transform = `perspective(350px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg)`;
-
-        requestAnimationFrame(updateRotation); // 다음 프레임 요청
+        requestAnimationFrame(updateRotation);
     }
 
     updateRotation(); // 회전 업데이트 시작
 
     postDetail.addEventListener('mouseout', function () {
-        // 마우스가 나갔을 때 원래 위치로 돌아가도록
         function resetRotation() {
             currentRotateX += (0 - currentRotateX) * 0.1;
             currentRotateY += (0 - currentRotateY) * 0.1;
@@ -76,6 +86,6 @@ function viewPost(index) {
 
         resetRotation(); // 회전 초기화 시작
     });
-}
 
-      
+    activePostDetail = postDetail; // 현재 활성화된 포스트 상세보기 설정
+}

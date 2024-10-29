@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판</title>
     <link rel="stylesheet" href="style.css">
-      
 </head>
-
 <body>
-
     <header>
         <h1 style="font-size: 24px;">게시판</h1>
         <div id="top_menu">
@@ -20,7 +16,6 @@
             <a href="#">JOIN</a>
         </div>
     </header>
-
     <div id="page">
         <div class="container">
             <form id="post-form" class="post-form">
@@ -30,19 +25,17 @@
                 <input type="text" id="post-video" placeholder="YouTube URL" required>
                 <button type="submit">작성</button>
             </form>
-
             <div class="post-list" id="post-list"></div>
-            <div class="post-detail" id="post-detail"></div>
+            <div class="post-detail" id="post-detail" style="display: none;">
+                <div class="video-section">
+                    <iframe src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
         </div>
     </div>
-
     <footer>
         <p>© 2024 게시판. 모든 권리 보유.</p>
     </footer>
-<script src="script.js">
-
-    </script>
-
+    <script src="script.js"></script>
 </body>
-
 </html>
