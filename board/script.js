@@ -34,10 +34,6 @@ function renderPosts() {
     card.className = 'post-card';
     
     card.innerHTML = `
-        <div class="post-content">
-            <h3>${newPost.title}</h3>
-            <p>${newPost.content.slice(0, 100)}${newPost.content.length > 100 ? '...' : ''}</p>
-        </div>
         <div class="video-container">
             <iframe 
                 src="${newPost.videoUrl}"
