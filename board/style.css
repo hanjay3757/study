@@ -65,18 +65,10 @@ background-color: pink;
     display: flex;
     flex-direction: column; /* 위아래로 나누기 위해 세로 방향으로 설정 */
     margin: 20px; /* 여백 추가 */
+    
 }
 
-.post-detail-title {
-    background-color: #f0f0f0; /* 제목 배경색 */
-    padding: 10px; /* 여백 */
-    font-size: 20px; /* 글자 크기 */
-}
 
-.post-detail-content {
-    background-color: #fff; /* 내용 배경색 */
-    padding: 10px; /* 여백 */
-}
 
 .overlay {
     position: absolute; /* 절대 위치 지정 */
