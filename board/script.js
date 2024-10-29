@@ -77,3 +77,5 @@ function viewPost(index) {
         resetRotation(); // 회전 초기화 시작
     });
 }
+
+      
