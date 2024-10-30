@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"> <!-- 문자 인코딩 설정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 웹을 위한 뷰포트 설정 -->
+    <title>게시판</title> <!-- 페이지 제목 -->
+    <style>
+        * {
+            margin: 0; /* 모든 요소의 기본 마진 제거 */
+            padding: 0; /* 모든 요소의 기본 패딩 제거 */
+            box-sizing: border-box; /* 박스 모델을 border-box로 설정 */
+        }
+        body {
+            font-family: 'Arial', sans-serif; /* 기본 폰트 설정 */
+            background-color: #e9ecef; /* 배경 색상 설정 */
+            color: #333; /* 기본 글자 색상 설정 */
+        }
+        header {
+            width: 100%; /* 전체 너비 사용 */
+            height: 70px; /* 높이 설정 */
+            background-color: #343a40; /* 배경 색상 설정 */
+            display: flex; /* 플렉스박스 사용 */
+            align-items: center; /* 수직 중앙 정렬 */
+            padding: 0 30px; /* 좌우 패딩 */
+            color: white; /* 글자 색상 설정 */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+        }
+        #top_menu {
+            margin-left: auto; /* 메뉴를 오른쪽으로 정렬 */
+        }
+        #top_menu a {
+            color: white; /* 링크 색상 설정 */
+            margin-left: 25px; /* 링크 간격 설정 */
+            text-decoration: none; /* 밑줄 제거 */
+            transition: color 0.3s; /* 색상 전환 효과 */
+        }
+        #top_menu a:hover {
+            color: #ffc107; /* 마우스 오버 시 색상 변경 */
+        }
+        #page {
+            max-width: 900px; /* 최대 너비 설정 */
+            margin: 20px auto; /* 상하 간격 및 수평 중앙 정렬 */
+            padding: 20px; /* 내부 패딩 설정 */
+            background: white; /* 배경 색상 설정 */
+            border-radius: 10px; /* 모서리 둥글게 설정 */
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        }
+        .container {
+            display: grid; /* 그리드 레이아웃 사용 */
+            grid-template-columns: 300px 1fr 300px; /* 열 크기 설정 */
+            gap: 20px; /* 열 간격 설정 */
+        }
+        .post-form {
+            background: #f9f9f9; /* 배경 색상 설정 */
+            border: 1px solid #ddd; /* 테두리 설정 */
+            border-radius: 10px; /* 모서리 둥글게 설정 */
+            padding: 20px; /* 내부 패딩 설정 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        }
+        .post-list {
+            background: #fff; /* 배경 색상 설정 */
+            border: 1px solid #ddd; /* 테두리 설정 */
+            border-radius: 10px; /* 모서리 둥글게 설정 */
+            padding: 15px; /* 내부 패딩 설정 */
+            height: calc(100vh - 250px); /* 높이 설정 (뷰포트 높이에서 여백을 뺌) */
+            overflow-y: auto; /* 세로 스크롤 활성화 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+        }
+        .post-detail {
+            background: #fff; /* 배경 색상 설정 */
+            border: 1px solid #ddd; /* 테두리 설정 */
+            border-radius: 10px; /* 모서리 둥글게 설정 */
+            padding: 20px; /* 내부 패딩 설정 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            display: none; /* 초기에는 숨김 */
+            position: relative; /* 위치 설정 */
+            overflow: hidden; /* 내용이 넘칠 경우 숨김 */
+            height: calc(100vh - 250px); /* 높이 설정 (뷰포트 높이에서 여백을 뺌) */
+        }
+        .card {
+            margin-bottom: 15px; /* 카드 간격 설정 */
+            border-radius: 8px; /* 모서리 둥글게 설정 */
+            background: #f1f1f1; /* 배경 색상 설정 */
+            padding: 10px; /* 내부 패딩 설정 */
+            cursor: pointer; /* 마우스 커서 변경 */
+            transition: background-color 0.3s; /* 배경 색상 전환 효과 */
+        }
+        .card:hover {
+            background: #e2e2e2; /* 마우스 오버 시 배경 색상 변경 */
+        }
+        iframe {
+            width: 100%; /* iframe 너비 설정 */
+            height: 300px; /* iframe 높이 설정 */
+            border: none; /* 테두리 제거 */
+            border-radius: 10px; /* 모서리 둥글게 설정 */
+        }
+        button {
+            background-color: #007bff; /* 버튼 배경 색상 설정 */
+            color: white; /* 버튼 글자 색상 설정 */
+            border: none; /* 테두리 제거 */
+            padding: 10px 15px; /* 버튼 패딩 설정 */
+            border-radius: 5px; /* 모서리 둥글게 설정 */
+            cursor: pointer; /* 마우스 커서 변경 */
+            transition: background-color 0.3s, transform 0.2s; /* 전환 효과 설정 */
+            width: 100%; /* 버튼 너비 100% 설정 */
+        }
+        button:hover {
+            background-color: #0056b3; /* 마우스 오버 시 배경 색상 변경 */
+            transform: scale(1.05); /* 마우스 오버 시 크기 확대 */
+        }
+        footer {
+            width: 100%; /* 전체 너비 사용 */
+            height: 60px; /* 높이 설정 */
+            margin-top: 20px; /* 상단 간격 설정 */
+            text-align: center; /* 텍스트 중앙 정렬 */
+            background-color: #f1f1f1; /* 배경 색상 설정 */
+            padding: 20px; /* 내부 패딩 설정 */
+            border-radius: 10px; /* 모서리 둥글게 설정 */
+        }
+        .overlay {
+            position: absolute; /* 절대 위치 설정 */
+            top: 0; /* 상단 맞춤 */
+            left: 0; /* 좌측 맞춤 */
+            width: 100%; /* 너비 100% 설정 */
+            height: 100%; /* 높이 100% 설정 */
+            background: rgba(0, 0, 0, 0.5); /* 반투명 검은 배경 설정 */
+            opacity: 0; /* 초기 불투명도 설정 */
+            transition: opacity 0.3s; /* 불투명도 전환 효과 */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="font-size: 24px;">게시판</h1> <!-- 헤더 제목 -->
+    <div id="top_menu"> <!-- 상단 메뉴 -->
+        <a href="#">HOME</a> <!-- 홈 링크 -->
+        <a href="#">NOTICE</a> <!-- 공지사항 링크 -->
+        <a href="#">LOGIN</a> <!-- 로그인 링크 -->
+        <a href="#">JOIN</a> <!-- 회원가입 링크 -->
+    </div>
+</header>
+
+<div id="page">
+    <div class="container"> <!-- 그리드 레이아웃 컨테이너 -->
+        <form id="post-form" class="post-form"> <!-- 게시물 등록 폼 -->
+            <h2>게시물 등록</h2> <!-- 폼 제목 -->
+            <input type="text" id="post-title" placeholder="제목" required> <!-- 제목 입력 필드 -->
+            <textarea id="post-content" placeholder="내용" required></textarea> <!-- 내용 입력 필드 -->
+            <input type="text" id="post-video" placeholder="YouTube URL" required> <!-- YouTube URL 입력 필드 -->
+            <button type="submit">작성</button> <!-- 제출 버튼 -->
+        </form>
+
+        <div class="post-list" id="post-list"></div> <!-- 게시물 목록 -->
+
+        <div class="post-detail" id="post-detail"> <!-- 게시물 상세 보기 -->
+            <h2>게시물 내용을 선택하세요</h2> <!-- 초기 메시지 -->
+            <div class="overlay"></div> <!-- 오버레이 -->
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2024 게시판. 모든 권리 보유.</p> <!-- 푸터 내용 -->
+</footer>
+
+<script>
+    let posts = []; // 게시물 배열 초기화
+
+    // 게시물 등록 폼 제출 이벤트 리스너
+    document.getElementById('post-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // 기본 제출 동작 방지
+        const title = document.getElementById('post-title').value; // 제목 값 가져오기
+        const content = document.getElementById('post-content').value; // 내용 값 가져오기
+        const videoUrl = document.getElementById('post-video').value; // 비디오 URL 값 가져오기
+
+        posts.push({ title, content, videoUrl }); // 게시물 추가
+        this.reset(); // 폼 초기화
+        renderPosts(); // 게시물 렌더링
+    });
+
+    // 게시물 렌더링 함수
+    function renderPosts() {
+        const postList = document.getElementById('post-list'); // 게시물 목록 요소
+        postList.innerHTML = ''; // 목록 초기화
+        posts.forEach((post, index) => {
+            const card = document.createElement('div'); // 카드 요소 생성
+            card.className = 'card'; // 클래스 이름 설정
+            card.innerHTML = `
+                <div onclick="viewPost(${index})"> <!-- 클릭 시 viewPost 함수 호출 -->
+                    <h3>${post.title}</h3> <!-- 제목 표시 -->
+                    <p>${post.content.slice(0, 50)}...</p> <!-- 내용 일부 표시 -->
+                </div>
+            `;
+            postList.appendChild(card); // 카드 목록에 추가
+        });
+    }
+
+    // 게시물 상세 보기 함수
+    function viewPost(index) {
+        const post = posts[index]; // 선택한 게시물 가져오기
+        const postDetail = document.getElementById('post-detail'); // 게시물 상세 요소
+        const overlay = postDetail.querySelector('.overlay'); // 오버레이 요소
+        postDetail.style.display = 'block'; // 상세 보기 표시
+        postDetail.innerHTML = ` <!-- 상세 내용 설정 -->
+            <h2>${post.title}</h2> <!-- 제목 -->
+            <p>${post.content}</p> <!-- 내용 -->
+            <iframe src="${post.videoUrl}?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe> <!-- 비디오 -->
+        `;
+
+        // 비디오 높이에 맞게 post-detail 높이 조정
+        postDetail.style.height = 'calc(100vh - 250px)'; // container와 같은 높이로 설정
+
+        // 마우스 이벤트 제거
+        overlay.style.opacity = 1; // 오버레이 불투명도 설정
+        postDetail.style.transform = 'none'; // 변형 초기화
+    }
+</script>
+
+</body>
+</html>

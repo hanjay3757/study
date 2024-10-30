@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Thumbnail</title>
+    <style>
+        .video-container {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            overflow: hidden;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+
+        .video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0; /* 비디오가 처음에는 보이지 않음 */
+            transition: opacity 0.5s ease; /* 부드러운 전환 효과 */
+            pointer-events: none; /* 비디오가 클릭 이벤트를 받지 않도록 설정 */
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <iframe class="video" id="youtube-player" 
+            src="https://www.youtube.com/embed/8z7ZVoSmuB8?enablejsapi=1&autoplay=0&mute=1" 
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+        <img class="thumbnail" src="cat.jpg" alt="Thumbnail">
+    </div>
+
+    <script>
+        let player;
+
+        // YouTube API 스크립트를 동적으로 추가
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                events: {
+                    'onReady': function(event) {
+                        const videoElement = document.querySelector('.video');
+                        const thumbnailElement = document.querySelector('.thumbnail');
+
+                        // 썸네일 클릭 시 비디오 재생
+                        thumbnailElement.addEventListener('click', function() {
+                            thumbnailElement.style.opacity = 0; // 썸네일 숨기기
+                            videoElement.style.opacity = 1; // 비디오 보이기
+                            player.playVideo(); // 비디오 재생
+                        });
+
+                        // 비디오가 끝나면 썸네일로 되돌리기
+                        player.addEventListener('onStateChange', function(event) {
+                            if (event.data === YT.PlayerState.ENDED) {
+                                videoElement.style.opacity = 0; // 비디오 숨기기
+                                thumbnailElement.style.opacity = 1; // 썸네일 복원
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

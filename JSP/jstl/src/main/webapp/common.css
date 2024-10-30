@@ -1,0 +1,27 @@
+@charset "UTF-8";
+body{
+	background: pink;
+}
+fieldset{
+	margin:10px;
+}
+legend{
+	background: #D3D5F5;
+	font-size: 18pt;
+	padding: 2px 22px;
+}
+#member{
+	background: red;
+}
+#cookie{
+	background: orange;
+}
+#bean{
+	background: yellow;
+}
+#el{
+	background: green;
+}
+#jstl{
+	background: #C0F2FF;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+<!-- ////////////////////	멤버		///////////////////////// -->
+<fieldset>
+	<legend id="member">멤버(로그인/회원가입)</legend>
+	<ul>
+		<li><a href="reg.html">[q19]회원가입</a></li>
+		<li><a href="login.html">[q20]로그인</a></li>
+	</ul>
+</fieldset>	
+
+<!-- ////////////////////	쿠키		///////////////////////// -->
+<fieldset>
+	<legend id="cookie">쿠키</legend>
+	<ul>
+		<li><a href="cookCookie.jsp">[q21]쿠키 굽기</a></li>
+		<li><a href="countCookie.jsp">[q22]쿠키 카운터</a></li>
+	</ul>
+</fieldset>	
+
+<!-- ////////////////////	자바 빈	///////////////////////// -->
+
+<fieldset>
+	<legend id="bean">자바 빈</legend>
+	<a href="testBean.jsp?name=개&number=1">[q23]테스트 빈</a>
+	<fieldset>
+		<legend>[q24]빈</legend>
+		<form action="testBean.jsp">
+			이름<input name="name">
+			넘버<input name="number">
+			<input type="submit" value="빈 저장">
+		</form>
+	</fieldset>
+	<fieldset>
+		<legend>[q25]빈</legend>
+		<form action="testBean2.jsp">
+			이름<input name="name">
+			넘버<input name="number">
+			<input type="submit" value="빈 저장">
+		</form>
+	</fieldset>
+</fieldset>
+
+<!-- ////////////////////	EL	///////////////////////// -->
+<fieldset>
+	<legend id="el">EL</legend>
+		<a href="el_set_attribute_1.jsp">setAttribute 테스트</a>
+		<fieldset>
+			<legend>[q26]</legend>
+			<form action="elTest.jsp" method="get">
+				이름<input name="name">
+				나이<input name="age">
+				<input type="submit" value="el테스트">
+			</form>
+		</fieldset>
+		
+		<fieldset>
+			<legend>el을 써서 a페이지에서 setAttribute 로 저장 후 b로 보낸 값 꺼내기</legend>
+			<a href="el_temp_1.jsp">확인</a>
+		</fieldset>
+				
+		<fieldset>
+			<legend>el add</legend>
+			<a href="el_add_1.jsp">확인</a>
+		</fieldset>		
+		<fieldset>
+			<legend>el add by form</legend>
+			<a href="el_add_by_form_1.jsp">확인</a>
+		</fieldset>		
+		
+		<fieldset>
+			<legend>el 내장객체 순서</legend>
+			<a href="el_inner_objs_order_1.jsp">확인</a>
+		</fieldset>
+		<fieldset>
+			<legend>el 내장객체 순서2</legend>
+			<a href="el_inner_objs_order_1.jsp?cat=1234">확인</a>
+		</fieldset>
+</fieldset>
+
+<!-- ////////////////////	JSTL	///////////////////////// -->
+<fieldset>
+	<legend id="jstl">JSTL</legend>
+	<fieldset>
+		<legend>[q..]</legend>
+		<a href="jstl_q27.jsp">[q27]</a>
+		<a href="jstl_q28.jsp">[q28]</a>
+		<a href="jstl_q29.jsp">[q29]</a>
+		<a href="jstl_q30.html">[q30]조건문</a>
+		<a href="jstl_q31.jsp">[q31]</a>
+		<a href="jstl_q32.jsp">[q32]</a>
+		<a href="jstl_q33.jsp">[q33]</a>
+	</fieldset>
+	<fieldset>
+		<legend>반복문 추가</legend>
+		<a href="jstl_foreach_1.jsp">test_foreach</a>
+	</fieldset>
+	<fieldset>
+		<legend>test</legend>
+		<a href="jstl_test.jsp">test</a>
+	</fieldset>
+</fieldset>
+</body>
+</html>
