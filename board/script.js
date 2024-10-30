@@ -1,4 +1,14 @@
-let posts = [];
+// 각 게시판별 게시물을 저장할 객체
+let boardPosts = {
+    'index': [],
+    'dog': [], 
+    'cat': []
+};
+
+// 현재 페이지의 게시판 타입 확인
+let currentBoard = window.location.pathname.split('/').pop().replace('.html','');
+if (currentBoard === '') currentBoard = 'index';
+
 let currentRotateX = 0;
 let currentRotateY = 0;
 
@@ -13,9 +23,29 @@ document.getElementById('post-form').addEventListener('submit', function(event) 
     const videoId = getYoutubeVideoId(videoUrl);
     const embedUrl = `https://www.youtube.com/embed/${videoId}`;
     
-    posts.push({ title, content, videoUrl: embedUrl });
+    // 현재 게시판에만 게시물 추가
+    boardPosts[currentBoard].push({ 
+        title, 
+        content, 
+        videoUrl: embedUrl,
+        timestamp: new Date().getTime(), // 정렬을 위한 타임스탬프 추가
+        board: currentBoard // 게시판 정보 추가
+    });
+
+    // localStorage에 저장
+    localStorage.setItem('boardPosts', JSON.stringify(boardPosts));
+    
     this.reset();
     renderPosts();
+});
+
+// 페이지 로드시 저장된 게시물 불러오기
+window.addEventListener('load', function() {
+    const savedPosts = localStorage.getItem('boardPosts');
+    if (savedPosts) {
+        boardPosts = JSON.parse(savedPosts);
+        renderPosts();
+    }
 });
 
 function getYoutubeVideoId(url) {
@@ -26,29 +56,50 @@ function getYoutubeVideoId(url) {
 
 function renderPosts() {
     const container = document.querySelector('.container');
-    const postList = document.getElementById('post-list');
+    container.innerHTML = ''; // 기존 게시물 초기화
     
-    // 새로운 포스트 카드 생성
-    const newPost = posts[posts.length - 1];
-    const card = document.createElement('div');
-    card.className = 'post-card';
+    let postsToRender = [];
     
-    card.innerHTML = `
-        <div class="video-container">
-            <iframe 
-                src="${newPost.videoUrl}"
-                frameborder="0" 
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen
-            ></iframe>
-        </div>
-    `;
+    // admin.html인 경우 모든 게시판의 게시물 표시
+    if (currentBoard === 'admin') {
+        Object.values(boardPosts).forEach(posts => {
+            postsToRender = postsToRender.concat(posts);
+        });
+    } else {
+        // 일반 게시판의 경우 해당 게시판 게시물만 표시
+        postsToRender = boardPosts[currentBoard];
+    }
     
-    // 3D 호버 효과 추가
-    addHoverEffect(card);
+    // 최신 게시물이 위로 오도록 정렬
+    postsToRender.sort((a, b) => b.timestamp - a.timestamp);
     
-    // 컨테이너에 직접 추가
-    container.appendChild(card);
+    postsToRender.forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'post-card';
+        
+        // admin 페이지에서는 게시판 정보도 표시
+        const boardInfo = currentBoard === 'admin' ? 
+            `<div class="board-tag">${post.board}</div>` : '';
+        
+        card.innerHTML = `
+            ${boardInfo}
+            <div class="video-container">
+                <iframe 
+                    src="${post.videoUrl}"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                ></iframe>
+            </div>
+            <div class="post-content">
+                <h3>${post.title}</h3>
+                <p>${post.content}</p>
+            </div>
+        `;
+        
+        addHoverEffect(card);
+        container.appendChild(card);
+    });
 }
 
 function addHoverEffect(element) {
@@ -92,6 +143,18 @@ style.textContent = `
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         cursor: pointer;
+        position: relative;
+    }
+
+    .board-tag {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        z-index: 1;
     }
 
     .post-content {
