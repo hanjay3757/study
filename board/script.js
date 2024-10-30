@@ -66,6 +66,13 @@ function getYoutubeVideoId(url) {
     return (match && match[2].length === 11) ? match[2] : null;
 }
 
+// 게시물 삭제 함수 추가
+function deletePost(postIndex, board) {
+    boardPosts[board].splice(postIndex, 1);
+    localStorage.setItem('boardPosts', JSON.stringify(boardPosts));
+    renderPosts();
+}
+
 function renderPosts() {
     const container = document.querySelector('.container');
     container.innerHTML = ''; // 기존 게시물 초기화
@@ -85,16 +92,19 @@ function renderPosts() {
     // 최신 게시물이 위로 오도록 정렬
     postsToRender.sort((a, b) => b.timestamp - a.timestamp);
     
-    postsToRender.forEach(post => {
+    postsToRender.forEach((post, index) => {
         const card = document.createElement('div');
         card.className = 'post-card';
         
-        // admin 페이지에서는 게시판 정보도 표시
-        const boardInfo = currentBoard === 'admin' ? 
-            `<div class="board-tag">${post.board}</div>` : '';
+        // admin 페이지에서는 게시판 정보와 삭제 버튼 표시
+        const adminControls = currentBoard === 'admin' ? 
+            `<div class="admin-controls">
+                <div class="board-tag">${post.board}</div>
+                <button onclick="deletePost(${index}, '${post.board}')" class="delete-btn">삭제</button>
+             </div>` : '';
         
         card.innerHTML = `
-            ${boardInfo}
+            ${adminControls}
             <div class="video-container">
                 <iframe 
                     src="${post.videoUrl}"
@@ -158,15 +168,33 @@ style.textContent = `
         position: relative;
     }
 
-    .board-tag {
+    .admin-controls {
         position: absolute;
         top: 10px;
         right: 10px;
+        z-index: 1;
+        display: flex;
+        gap: 10px;
+    }
+
+    .board-tag {
         background: rgba(0,0,0,0.7);
         color: white;
         padding: 4px 8px;
         border-radius: 4px;
-        z-index: 1;
+    }
+
+    .delete-btn {
+        background: #ff4444;
+        color: white;
+        border: none;
+        padding: 4px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .delete-btn:hover {
+        background: #cc0000;
     }
 
     .post-content {
