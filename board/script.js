@@ -23,6 +23,18 @@ document.getElementById('post-form').addEventListener('submit', function(event) 
     const videoId = getYoutubeVideoId(videoUrl);
     const embedUrl = `https://www.youtube.com/embed/${videoId}`;
     
+    // 중복 게시물 체크
+    const isDuplicate = Object.values(boardPosts).some(posts => 
+        posts.some(post => 
+            post.title === title || post.videoUrl === embedUrl
+        )
+    );
+
+    if (isDuplicate) {
+        alert('이미 동일한 제목이나 동영상 URL을 가진 게시물이 존재합니다.');
+        return;
+    }
+    
     // 현재 게시판에만 게시물 추가
     boardPosts[currentBoard].push({ 
         title, 
