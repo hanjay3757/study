@@ -45,5 +45,6 @@
 <!--     <button type="submit" style="padding:10px; border-radius:5px; background-color:#28a745; color:white;">방명록 보기</button> -->
 <!-- </form> -->
 <a href="${cp}/guest/write">새글 쓰기</a>
+<a href="${cp}/weather/w">새글 쓰기</a>
 </body>
 </html>
