@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.peisia.java">
+	<logger name="com.peisia.spring">
 		<level value="info" />
 	</logger>
 	
@@ -37,7 +37,9 @@
 		<priority value="info" />
 		<appender-ref ref="console" />
 	</root>
-		<!-- 내가 추가한거 -->
+	
+	
+	<!-- 내가 추가한거 -->
 	<logger name="jdbc.audit">
 		<level value="warn" />
 	</logger>
@@ -47,8 +49,7 @@
 	<logger name="jdbc.connection">
 		<level value="warn" />
 	</logger>	
-<!-- 	unitest 쪽 패키지 = 패키지만 대상으로 함 
-개발한 내용 함수단위 작은 단위 자잘하게 테스트 -->
+	
 	
 	
 </log4j:configuration>

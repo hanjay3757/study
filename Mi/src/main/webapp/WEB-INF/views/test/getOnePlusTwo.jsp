@@ -8,6 +8,5 @@
 </head>
 <body>
 <p>1 더하기 2 는 ${sum } </p>
-<a href="http://localhost:8080/">홈으로 돌아가기</a>
 </body>
 </html>

@@ -15,10 +15,11 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class TestMapperTests {
-
+	
 	@Setter(onMethod_ = @Autowired)
 	private TestMapper mapper;
-
+//	private TestMapper mapper = new TestMapperImpl();
+	
 	@Test
 	public void testGetList() {
 		TestDto sData1 = mapper.getData1();
@@ -32,5 +33,5 @@ public class TestMapperTests {
 		int sum = n1 + n2;
 		log.info("1+2 는 ==============:" + sum);
 	}
-
+	
 }
