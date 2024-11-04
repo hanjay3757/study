@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peisia.mapper.GuestMapper">
+	<!-- resultType 에 복수형(ArrayList 등)을 적는게 아님. 
+	그냥 dto 단수의 경로를 적어야됨. -->
+	
+	<!-- 방명록 목록을 조회하는 SQL -->
+	<select id="getList" resultType="com.peisia.dto.GuestDto">
+		<!-- tbl_guest 테이블에서 모든 데이터를 조회 -->
+		SELECT * from tbl_guest
+	</select>
+	
+	<!-- 특정 방명록 게시글을 조회하는 SQL -->
+	<select id="read" resultType="com.peisia.dto.GuestDto">
+		<!-- #{bno}는 매개변수로 넘어온 bno 값을 쿼리 내에서 사용 -->
+		<!--
+			매퍼 인터페이스의 read 함수의 매개변수로 넘어오는 값을 받아 처리하는 SQL문임.
+			매개변수로 넘어온 값을 SQL에 삽입하려면 #{bno} 형태로 사용합니다.
+			이렇게 하면 매퍼가 해당 값을 적절하게 바인딩하여 쿼리에 삽입합니다.
+		-->
+		select * from tbl_guest where bno = #{bno}
+	</select>	
+	
+	<!-- 방명록 게시글을 삭제하는 SQL -->
+	<delete id="del">
+		<!-- bno 값에 해당하는 게시글을 삭제 -->
+		<!-- #{bno}는 매개변수로 넘어온 bno 값을 쿼리 내에서 사용 -->
+		delete from tbl_guest where bno = #{bno}
+	</delete>
+	
+	<!-- 새로운 방명록 게시글을 추가하는 SQL -->
+	<insert id="write">
+		<!-- #{btext}는 매개변수로 넘어온 GuestDto 객체에서 btext 값을 사용 -->
+		<!--
+			GuestDto 객체의 btext 멤버변수가 매개변수로 넘어옵니다.
+			#{btext}는 해당 값을 SQL 쿼리로 전달하여, tbl_guest 테이블에 새로운 데이터를 삽입합니다.
+			주의할 점은, MyBatis가 자동으로 객체의 getter 메서드를 호출하여 값을 가져옵니다. (즉, getBtext())
+		-->
+		insert into tbl_guest (btext) values (#{btext})
+	</insert>
+	
+	<!-- 방명록 게시글을 수정하는 SQL -->
+	<update id="modify">
+		<!-- bno 값에 해당하는 게시글을 찾아서 btext를 수정 -->
+		<!-- #{btext}와 #{bno}는 매개변수로 넘어온 값들을 쿼리 내에서 사용 -->
+		update tbl_guest
+		set btext = #{btext}  <!-- 게시글 내용 수정 -->
+		where bno = #{bno}  <!-- 해당 bno에 맞는 게시글을 찾아서 수정 -->
+	</update>	
+					
+</mapper>
