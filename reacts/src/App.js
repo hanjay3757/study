@@ -105,23 +105,23 @@ function Battle({ playerParty, enemyParty }) {
   const [currentTurn, setCurrentTurn] = useState(1);  // 현재 턴
   const [isBattling, setIsBattling] = useState(false);  // 전투 진행 여부
 
-  // 카드의 스탯 계산 함수 (등급과 직업에 따른 스탯 계산)
+  // 카드의 스탯 계산 함수 수정 - 더 균형잡힌 스탯
   const getCardStats = (card) => {
     const baseStats = {
-      SSR: { hp: 100, atk: 25, def: 20 },
-      SR: { hp: 80, atk: 20, def: 15 },
-      S: { hp: 60, atk: 15, def: 12 },
-      R: { hp: 50, atk: 12, def: 10 },
-      H: { hp: 40, atk: 10, def: 8 },
-      N: { hp: 30, atk: 8, def: 5 }
+      SSR: { hp: 100, atk: 20, def: 15 },
+      SR: { hp: 85, atk: 17, def: 13 },
+      S: { hp: 70, atk: 15, def: 11 },
+      R: { hp: 60, atk: 13, def: 9 },
+      H: { hp: 50, atk: 11, def: 7 },
+      N: { hp: 40, atk: 9, def: 5 }
     };
 
     const jobMultipliers = {
-      전사: { hp: 1.3, atk: 1.0, def: 1.2 },
+      전사: { hp: 1.2, atk: 0.9, def: 1.3 },
       마법사: { hp: 0.8, atk: 1.4, def: 0.7 },
       궁수: { hp: 0.9, atk: 1.2, def: 0.8 },
       도적: { hp: 0.7, atk: 1.3, def: 0.6 },
-      사제: { hp: 1.0, atk: 0.8, def: 1.0 }
+      사제: { hp: 1.1, atk: 0.7, def: 1.0 }
     };
 
     const base = baseStats[card.grade];
@@ -135,12 +135,53 @@ function Battle({ playerParty, enemyParty }) {
     };
   };
 
-  // 전투 시작 함수
+  // 데미지 계산 함수 추가 - 크리티컬과 회피 시스템 추가
+  const calculateDamage = (attacker, defender) => {
+    // 크리티컬 확률 (15%)
+    const isCritical = Math.random() < 0.15;
+    // 회피 확률 (10%)
+    const isEvaded = Math.random() < 0.10;
+
+    if (isEvaded) {
+      return { damage: 0, isCritical: false, isEvaded: true };
+    }
+
+    let damage = Math.max(1, attacker.atk - defender.def);
+    if (isCritical) {
+      damage = Math.floor(damage * 1.5);
+    }
+
+    return { damage, isCritical, isEvaded: false };
+  };
+
+  // 로그 메시지 생성 함수 수정
+  const createLogMessage = (attacker, target, damageInfo, isPlayerAttack) => {
+    if (damageInfo.isEvaded) {
+      return {
+        text: `${target.job}(${target.grade})가 ${attacker.job}(${attacker.grade})의 공격을 회피했습니다!`,
+        type: isPlayerAttack ? 'evaded-by-enemy' : 'evaded-by-player'
+      };
+    }
+
+    let message = `${attacker.job}(${attacker.grade})가 ${target.job}(${target.grade})에게 ${damageInfo.damage} 데미지를 입혔습니다!`;
+    if (damageInfo.isCritical) {
+      message = `크리티컬! ${message}`;
+    }
+    message += ` (${target.hp}/${target.maxHp})`;
+
+    return {
+      text: message,
+      type: isPlayerAttack ? 
+        (damageInfo.isCritical ? 'critical-dealt' : 'damage-dealt') : 
+        (damageInfo.isCritical ? 'critical-taken' : 'damage-taken')
+    };
+  };
+
+  // 전투 시작 함수 수정
   const startBattle = async () => {
     setIsBattling(true);
-    setBattleLog(['전투 시작!']);  // 전투 시작 로그
+    setBattleLog([{ text: '전투 시작!', type: 'battle-start' }]);
 
-    // 플레이어와 적 카드의 스탯 계산
     const playerCards = playerParty.map(card => ({
       ...card,
       ...getCardStats(card),
@@ -154,36 +195,45 @@ function Battle({ playerParty, enemyParty }) {
     }));
 
     let turn = 1;
-    while (playerCards.some(card => card.hp > 0) && enemyCards.some(card => card.hp > 0)) {
-      await new Promise(resolve => setTimeout(resolve, 1000));  // 1초 대기
+    const maxTurns = 30; // 최대 턴 수 제한
 
-      // 공격자와 방어자 설정 (홀수 턴은 플레이어, 짝수 턴은 적)
-      const attacker = turn % 2 === 1 ? playerCards : enemyCards;
-      const defender = turn % 2 === 1 ? enemyCards : playerCards;
+    while (playerCards.some(card => card.hp > 0) && 
+           enemyCards.some(card => card.hp > 0) && 
+           turn <= maxTurns) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // 공격 실행
+      const isPlayerTurn = turn % 2 === 1;
+      const attacker = isPlayerTurn ? playerCards : enemyCards;
+      const defender = isPlayerTurn ? enemyCards : playerCards;
+
+      setBattleLog(prev => [...prev, { 
+        text: `${isPlayerTurn ? '플레이어' : '적'} 턴 시작!`, 
+        type: 'turn-start' 
+      }]);
+
       for (let card of attacker.filter(c => c.hp > 0)) {
         const target = defender.find(c => c.hp > 0);
         if (target) {
-          const damage = Math.max(1, card.atk - target.def);  // 데미지 계산 (방어력 고려)
-          target.hp = Math.max(0, target.hp - damage);  // HP 차감
+          const damageInfo = calculateDamage(card, target);
+          target.hp = Math.max(0, target.hp - damageInfo.damage);
 
           setBattleLog(prev => [...prev, 
-            `${card.job}(${card.grade})가 ${target.job}(${target.grade})에게 ${damage} 데미지를 입혔습니다! (${target.hp}/${target.maxHp})`
+            createLogMessage(card, target, damageInfo, isPlayerTurn)
           ]);
         }
       }
 
-      setCurrentTurn(turn);  // 현재 턴 갱신
+      setCurrentTurn(turn);
       turn++;
     }
 
     // 승패 판정
     const playerWon = playerCards.some(card => card.hp > 0);
-    setBattleLog(prev => [...prev, 
-      playerWon ? '플레이어의 승리!' : '적의 승리!'
-    ]);
-    setIsBattling(false);  // 전투 종료
+    setBattleLog(prev => [...prev, { 
+      text: playerWon ? '플레이어의 승리!' : '적의 승리!',
+      type: playerWon ? 'victory' : 'defeat'
+    }]);
+    setIsBattling(false);
   };
 
   return (
@@ -214,7 +264,9 @@ function Battle({ playerParty, enemyParty }) {
 
       <div className="battle-log">
         {battleLog.map((log, index) => (
-          <div key={index} className="log-entry">{log}</div>
+          <div key={index} className={`log-entry ${log.type}`}>
+            {log.text}
+          </div>
         ))}
       </div>
     </div>
@@ -244,26 +296,71 @@ function App() {
   
   const [isGachaAnimating, setIsGachaAnimating] = useState(false);  // 가챠 애니메이션 상태
 
-  // 가챠 연출과 카드 추가 함수
+  // 가챠 연출과 카드 추가 함수를 수정
   async function gacha() {
     setIsGachaAnimating(true);
     
-    const j = jobs[dice(0,4)];  // 랜덤 직업
-    const g = grade[getLuck()];  // 랜덤 등급
+    try {
+      // 로컬 가챠 (기존 방식)
+      const j = jobs[dice(0, 4)];
+      const g = grade[getLuck()];
+      
+      const newCard = {
+        job: j,
+        grade: g,
+        isFlipped: true
+      };
+      
+      setMy(prev => [...prev, newCard]);
+      
+      // 카드 뒤집기 애니메이션
+      setTimeout(() => {
+        setMy(prev => prev.map((card, idx) => 
+          idx === prev.length - 1 ? {...card, isFlipped: false} : card
+        ));
+      }, 500);
+      
+    } catch (error) {
+      console.error('가챠 실패:', error);
+      alert('카드 뽑기에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsGachaAnimating(false);
+    }
+  }
+
+  // API를 통한 가챠 함수 추가
+  async function gachaApi() {
+    setIsGachaAnimating(true);
     
-    await new Promise(resolve => setTimeout(resolve, 1000));  // 1초 딜레이
-    
-    const newCard = { job: j, grade: g, isFlipped: true };  // 새로운 카드 추가
-    setMy(prev => [...prev, newCard]);
-    
-    // 카드 뒤집기 애니메이션
-    setTimeout(() => {
-      setMy(prev => prev.map((card, idx) => 
-        idx === prev.length - 1 ? {...card, isFlipped: false} : card
-      ));
-    }, 500);  // 0.5초 후 뒤집기
-    
-    setIsGachaAnimating(false);  // 가챠 애니메이션 종료
+    try {
+      const response = await axios.get('http://localhost:8080/spring/api/gacha');
+      
+      const newCard = {
+        ...response.data,
+        isFlipped: true
+      };
+      
+      setMy(prev => [...prev, newCard]);
+      
+      // 카드 뒤집기 애니메이션
+      setTimeout(() => {
+        setMy(prev => prev.map((card, idx) => 
+          idx === prev.length - 1 ? {...card, isFlipped: false} : card
+        ));
+      }, 500);
+      
+    } catch (error) {
+      console.error('API 가챠 실패:', error);
+      alert('API를 통한 카드 뽑기에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsGachaAnimating(false);
+    }
+  }
+
+  // 카드 클릭 이벤트 핸들러 추가
+  function handleCardClick(index) {
+    console.log(`보유카드 ��호: ${index}`);
+    alert(`보유카드 번호: ${index}`);
   }
 
   return (
@@ -294,7 +391,14 @@ function App() {
           disabled={isGachaAnimating}
           className={`gacha-button ${isGachaAnimating ? 'animating' : ''}`}
         >
-          카드 뽑기
+          로컬 가챠
+        </button>
+        <button 
+          onClick={gachaApi} 
+          disabled={isGachaAnimating}
+          className={`gacha-button ${isGachaAnimating ? 'animating' : ''}`}
+        >
+          API 가챠
         </button>
       </div>
 
@@ -307,11 +411,7 @@ function App() {
               job={character.job} 
               grade={character.grade}
               isFlipped={character.isFlipped}
-              onFlip={() => {
-                setMy(prev => prev.map((card, idx) => 
-                  idx === index ? {...card, isFlipped: !card.isFlipped} : card
-                ));
-              }}
+              onFlip={() => handleCardClick(index)}
             />
           ))}
         </CardArea>
