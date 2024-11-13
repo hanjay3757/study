@@ -37,17 +37,11 @@ public class ProcBoard {
 				System.out.println("==========================================");
 				System.out.println("글번호 글제목 작성자id 작성시간");
 				try {
-					// todo:
-					// 임시로 페이지당 3개 글 리스트 출력하겠음.
-					// 1페이지 고정
-//					select * from board limit 6,3;
-//					select * from board limit 0,3;	<<<<
 					String sql = "select * from board limit " + startIndex + "," + PER_PAGE;
 					System.out.println("전송한sql문:" + sql);
 					result = st.executeQuery(sql);
 
-//					result = st.executeQuery("select * from board");
-					while (result.next()) { // 결과를 하나씩 빼기. 더 이상 없으면(행 수가 끝나면) false 리턴됨.
+					while (result.next()) {
 						String no = result.getString("b_no");
 						String title = result.getString("b_title");
 						String id = result.getString("b_id");
@@ -55,7 +49,7 @@ public class ProcBoard {
 						System.out.println(no + " " + title + " " + id + " " + datetime);
 					}
 				} catch (SQLException e) {
-					e.printStackTrace();
+					System.out.println("SQL 오류: " + e.getMessage());
 				}
 				break;
 			case "2": // 글읽기
@@ -63,29 +57,36 @@ public class ProcBoard {
 				String readNo = sc.next();
 				try {
 					result = st.executeQuery("select * from board where b_no =" + readNo);
-					result.next(); // 결과를 하나씩 빼기. 더 이상 없으면(행 수가 끝나면) false 리턴됨.
-					String title = result.getString("b_title"); // p_name 필드(열) 의 데이터 꺼내기(1개 꺼낸거에서)
-					String content = result.getString("b_text"); // p_name 필드(열) 의 데이터 꺼내기(1개 꺼낸거에서)
-					System.out.println("글제목: " + title);
-					System.out.println("글내용: " + content);
+					if(result.next()) {
+						String title = result.getString("b_title");
+						String content = result.getString("b_text");
+						System.out.println("글제목: " + title);
+						System.out.println("글내용: " + content);
+					} else {
+						System.out.println("해당 글이 존재하지 않습니다.");
+					}
 				} catch (SQLException e) {
-					e.printStackTrace();
+					System.out.println("SQL 오류: " + e.getMessage());
 				}
 				break;
 			case "3": // 글쓰기
-				sc.nextLine(); // 위에 sc.next() 쓴거 때문에 추가함.
+				sc.nextLine();
 				System.out.println("제목을 입력해주세요:");
 				String title = sc.nextLine();
 				System.out.println("글내용을 입력해주세요:");
-				String content = sc.nextLine(); // 이거 전에는 쓸 필요 없음. 바로 전에서 쓰인건 nextLine() 이기 때문.
+				String content = sc.nextLine();
 				System.out.println("작성자id를 입력해주세요:");
 				String id = sc.next();
 				try {
-					st.executeUpdate("insert into board (b_title,b_id,b_datetime,b_text,b_hit)" + " values ('" + title
-							+ "','" + id + "',now(),'" + content + "',0)");
+					String sql = "insert into board (b_title,b_id,b_datetime,b_text,b_hit) values (?,?,now(),?,0)";
+					java.sql.PreparedStatement pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, title);
+					pstmt.setString(2, id);
+					pstmt.setString(3, content);
+					pstmt.executeUpdate();
 					System.out.println("글등록 완료");
 				} catch (SQLException e) {
-					e.printStackTrace();
+					System.out.println("SQL 오류: " + e.getMessage());
 				}
 				break;
 			case "4": // 글삭제
@@ -97,19 +98,26 @@ public class ProcBoard {
 				System.out.println("수정할 글번호를 입력해주세요:");
 				String editNo = sc.next();
 				System.out.println("제목을 입력해주세요:");
-				// 주의. 이전에 sc.next() 등을 호출한적이 있으면 엔터 문자열이 남게 되는데 이거 때문에 다음에 나오는 nextLine()가
-				// 입력을 이미 한것으로 인식하고 입력처리를 해버림(공백 입력이 된걸로 인식)
-				// 그래서 sc.nextLine()을 한번 더 추가해주어 이 내용이 없는 엔터 문자열을 입력처리 하게끔하고
 				sc.nextLine();
-				String edTitle = sc.nextLine(); // << 여기에서 다시 정상적으로 쓰면됨.
+				String edTitle = sc.nextLine();
 				System.out.println("작성자id를 입력해주세요:");
 				String edId = sc.next();
 				System.out.println("글내용을 입력해주세요:");
-				sc.nextLine(); // 위에 sc.next() 쓴거 때문에 추가함.
+				sc.nextLine();
 				String edContent = sc.nextLine();
 
-				dbExecuteUpdate("update board set b_title='" + edTitle + "',b_id='" + edId
-						+ "',b_datetime=now(),b_text='" + edContent + "' where b_no=" + editNo);
+				try {
+					String sql = "update board set b_title=?, b_id=?, b_datetime=now(), b_text=? where b_no=?";
+					java.sql.PreparedStatement pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, edTitle);
+					pstmt.setString(2, edId);
+					pstmt.setString(3, edContent);
+					pstmt.setString(4, editNo);
+					pstmt.executeUpdate();
+					System.out.println("글수정 완료");
+				} catch (SQLException e) {
+					System.out.println("SQL 오류: " + e.getMessage());
+				}
 				break;
 			case "0": // 관리자
 				break;
@@ -122,11 +130,13 @@ public class ProcBoard {
 
 	private void dbInit() {
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cat", "root", "root");
-			st = con.createStatement(); // Statement는 정적 SQL문을 실행하고 결과를 반환받기 위한 객체다. Statement하나당 한개의 ResultSet 객체만을 열
-										// 수있다.
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cat?serverTimezone=UTC", "root", "root");
+			st = con.createStatement();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("SQL 연결 오류: " + e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println("JDBC 드라이버 로드 오류: " + e.getMessage());
 		}
 	}
 
@@ -135,18 +145,18 @@ public class ProcBoard {
 			int resultCount = st.executeUpdate(query);
 			System.out.println("처리된 행 수:" + resultCount);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("SQL 오류: " + e.getMessage());
 		}
 	}
 
 	private void dbPostCount() {
 		try {
-			result = st.executeQuery("select count(*) from board");
+			result = st.executeQuery("select count(*) as count from board");
 			result.next();
-			String count = result.getString("count(*)");
+			String count = result.getString("count");
 			System.out.println("글 수:" + count);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("SQL 오류: " + e.getMessage());
 		}
 	}
 }

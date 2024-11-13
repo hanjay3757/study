@@ -1,0 +1,287 @@
+/* import './App.css';
+/* css 필요할떄 사용 */
+//function App() {
+//return (
+//<div>헬로월드</div>
+//);
+//}
+
+//export default App; *///
+/* import "./App.css";
+function App() {
+  var cat = "헬로월드! (변수선언으로 찍었음)";
+  return <div>
+            {cat}
+        </div>;
+}
+export default App; */
+
+/* import './App.css';
+function App() {
+  var cat='헬로월드! (변수로 찍었음)';
+  return (
+    <div className="App">
+      {cat}
+      <Cat />
+    </div>
+  );
+}
+
+function Cat(){
+  return <p>고양이 컴포넌트의 야옹
+    좀더 복잡한걸 쉽게할려고
+     </p>
+}
+
+export default App;
+
+import './App.css';
+function App() {
+  var cat='헬로키티월드! (변수로 찍었음)';
+  return (
+    <div className="App">
+      {cat}
+      <Cat />
+      <Dog />
+    </div>
+  );
+}
+ */
+/* import './App.css';
+function Cat(){
+  return <p>야옹</p>
+}
+
+function Dog(){
+  return(
+    <p>멍</p>
+  )
+}
+export default App; */
+/* import './App.css';
+function App() {
+  var cat='헬로키티월드! (변수로 찍었음)';
+  return (
+    <div className="App">
+      {cat}
+      <Animal />
+    </div>
+  );
+}
+
+function Animal(){
+  return(
+    <div>
+      <Cat />
+      <Dog />
+    </div>
+  )
+}
+
+function Cat(){
+  return <p>야옹</p>
+}
+
+function Dog(){
+  return(
+    <p>멍</p>
+  )
+}
+export default App; */
+
+
+/* import './App.css';
+function App() {
+  var cat='헬로키티월드! (변수로 찍었음)';
+  var a=1;
+  var b=2;
+  return (
+    <div className="App">
+      1+2는{a+b}
+    </div>
+  );
+}
+
+export default App;
+ */
+
+/* import './App.css';
+function App() {
+  var cat='헬로키티월드! (변수로 찍었음)';
+  var a=1;
+  var b=2;
+  return (
+    <div className="App">
+      오늘은 {new Date().toLocaleDateString()}
+    </div>
+  );
+}
+
+export default App; */
+
+/* import './App.css';
+function App() {
+  var cat='헬로키티월드! (변수로 찍었음)';
+  var a=1;
+  var b=2;
+  return (
+    <div className="App">
+      오늘은 {new Date().toLocaleDateString()}
+      <hr></hr>
+      <LocaleDateExample />
+    </div>
+  );
+}
+
+function LocaleDateExample() {
+  const today = new Date();
+
+  // 기본 'ko-KR' 형식 (한국 기준)
+  const formattedDate = today.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+
+  return (
+    <div>
+      <p>오늘은 {formattedDate}</p>
+    </div>
+  );
+}
+
+
+export default App; */
+/* import './App.css';
+function App() {
+  return (
+    <div className="App">
+      <Dice />
+    </div>
+  );
+}
+
+function Dice() {
+  var r=Math.floor(Math.random()*10)+1;
+  return (
+    <div>
+      <p>오늘의 행운의 숫자는 {r}</p>
+    </div>
+  );
+}
+
+export default App;
+import './App.css';
+function App() {
+  return (
+    <div className="App">
+      <SimpleList />
+    </div>
+  );
+}
+
+function SimpleList() {
+  // 출력할 배열
+  const fruits = ['Apple', 'Banana', 'Orange'];
+
+  return (
+    <div>
+      <h2>Fruits List:</h2>
+      <ul>
+        {/* 배열의 각 요소를 직접 출력 */}
+        //<li>{fruits[0]}</li>
+       // <li>{fruits[1]}</li>
+        //<li>{fruits[2]}</li>
+      //</ul>
+    //</div>
+ // );
+//}
+
+
+
+//export default App; */
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <SimpleList />
+    </div>
+  );
+}
+
+function SimpleList() {
+  const animals = [
+    <li>고양이</li>
+    ,<li>개</li>
+    ,<li>너굴맨</li>
+  ];
+
+  return (
+    <div>
+      <h2>동물들</h2>
+      <ul>
+        <li>{animals}</li>
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+
+import './App.css';
+
+function App() {
+  var ns = [1, 2, 3];
+  var r = ns.map((n)=>n*2);  
+  return (
+    <div className="App">
+      {r}
+    </div>
+  );
+}
+
+export default App;
+
+import './App.css';
+import React, { useState } from 'react';
+
+function X(){
+  return(
+    <>
+      <h1 style={ {backgroundColor : 'green'} }>야옹</h1>
+    </>
+  )
+}
+
+function App() {
+  return(
+    <>
+      <X />
+    </>
+  );
+}
+
+export default App;
+
+
+import './App.css';
+
+function App() {
+
+  var ns = [1, 1, 1, 1, 1, 1];
+  // var ns = Array(6).fill(0); // 0으로 채운 6개의 배열
+
+  var r = ns.map(() => (Math.floor(Math.random()*45)+1)+' ');  
+
+  // Array.from()을 사용해 6개의 숫자(0, 1, 2, ...)로 배열을 생성
+  // var r = Array.from({ length: 6 }, () => Math.floor(Math.random() * 45) + 1 + ' ');  
+
+  return (
+    <div className="App">
+      {r}
+    </div>
+  );
+}
+
+export default App;

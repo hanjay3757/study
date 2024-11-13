@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="basic/Array"/>
+	<classpathentry kind="src" path="basic/colors/src"/>
+	<classpathentry kind="src" path="basic/com.string"/>
+	<classpathentry kind="src" path="basic/FOR"/>
+	<classpathentry kind="src" path="basic/HashSet/src"/>
+	<classpathentry kind="src" path="basic/inherited/src"/>
+	<classpathentry kind="src" path="basic/OBj/src"/>
+	<classpathentry kind="src" path="basic/String/src"/>
+	<classpathentry kind="src" path="basic/Time/src"/>
+	<classpathentry kind="src" path="practice/practice_board_SQL/src"/>
+	<classpathentry kind="src" path="practice/practice_board/practice_board_v2/src"/>
+	<classpathentry kind="src" path="practice/practice_board/practice_board_v3/src"/>
+	<classpathentry kind="src" path="practice/practice_board/src"/>
+	<classpathentry kind="src" path="practice/Practice_Mysql/JavaMysqlBoard/src"/>
+	<classpathentry kind="src" path="practice/Practice_Mysql/practice_board_SQL/src"/>
+	<classpathentry kind="src" path="practice/Practice_Mysql/Practice_Mysql/src"/>
+	<classpathentry kind="src" path="practice/Practice_Mysql/src"/>
+	<classpathentry kind="src" path="practice/practice/src"/>
+	<classpathentry excluding="lotto/|boards/verson/src/|Game/|kiosks/kiosk_catcafe/src/com/peisia/kiosk/catcafe/|boards/JavaMysqlBoard/src/|boards/JavaMysqlBoard/src/com/peisia/c/mysqltest/|boards/practice/src/|Game/RpcSource/|Time/src/|kiosks/kiosk/com/peisia/kiosk/catcafe/|boards/src/|kiosks/kiosk/com/test/|kiosks/kiosk/|kiosks/kiosk_catcafe/src/" kind="src" path="program_test"/>
+	<classpathentry excluding="com/peisia/c/mysqltest/" kind="src" path="program_test/boards/JavaMysqlBoard/src"/>
+	<classpathentry kind="src" path="program_test/boards/JavaMysqlBoard/src/com/peisia/c/mysqltest"/>
+	<classpathentry kind="src" path="program_test/boards/practice/src"/>
+	<classpathentry kind="src" path="program_test/boards/src"/>
+	<classpathentry kind="src" path="program_test/boards/verson/src"/>
+	<classpathentry excluding="RpcSource/" kind="src" path="program_test/Game"/>
+	<classpathentry kind="src" path="program_test/Game/RpcSource"/>
+	<classpathentry excluding="com/peisia/kiosk/catcafe/|com/test/" kind="src" path="program_test/kiosks/kiosk"/>
+	<classpathentry excluding="com/peisia/kiosk/catcafe/" kind="src" path="program_test/kiosks/kiosk_catcafe/src"/>
+	<classpathentry kind="src" path="program_test/kiosks/kiosk_catcafe/src/com/peisia/kiosk/catcafe"/>
+	<classpathentry kind="src" path="program_test/kiosks/kiosk/com/peisia/kiosk/catcafe"/>
+	<classpathentry kind="src" path="program_test/kiosks/kiosk/com/test"/>
+	<classpathentry kind="src" path="program_test/lotto"/>
+	<classpathentry kind="src" path="program_test/Time/src"/>
+	<classpathentry kind="src" path="tosql/connection/src"/>
+	<classpathentry excluding="com/peisia/c/mysqltest/" kind="src" path="tosql/JavaMysqlBoard/src"/>
+	<classpathentry kind="src" path="tosql/JavaMysqlBoard/src/com/peisia/c/mysqltest"/>
+	<classpathentry kind="src" path="tosql/javaSQL/src"/>
+	<classpathentry kind="src" path="tosql/Practice_Mysql/src"/>
+	<classpathentry kind="src" path="tutorial/etc/Array"/>
+	<classpathentry kind="src" path="tutorial/etc/board_etc/src"/>
+	<classpathentry kind="src" path="tutorial/etc/board_etc/Tests/src"/>
+	<classpathentry kind="src" path="tutorial/etc/com.string"/>
+	<classpathentry kind="src" path="tutorial/etc/FOR"/>
+	<classpathentry kind="src" path="tutorial/etc/Game"/>
+	<classpathentry kind="src" path="tutorial/etc/games"/>
+	<classpathentry kind="src" path="tutorial/etc/HashSet/src"/>
+	<classpathentry excluding="com/peisia/kiosk/catcafe/|com/test/" kind="src" path="tutorial/etc/kiosk"/>
+	<classpathentry kind="src" path="tutorial/etc/kiosk/com/peisia/kiosk/catcafe"/>
+	<classpathentry kind="src" path="tutorial/etc/kiosk/com/test"/>
+	<classpathentry kind="src" path="tutorial/etc/lotto"/>
+	<classpathentry kind="src" path="tutorial/etc/RpcSource"/>
+	<classpathentry kind="src" path="tutorial/etc/src"/>
+	<classpathentry kind="src" path="tutorial/src"/>
+	<classpathentry kind="lib" path="practice/practice_board_SQL/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="lib" path="practice/Practice_Mysql/JavaMysqlBoard/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="lib" path="practice/Practice_Mysql/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="lib" path="practice/Practice_Mysql/practice_board_SQL/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="lib" path="practice/Practice_Mysql/Practice_Mysql/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="lib" path="tosql/connection/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="lib" path="tosql/JavaMysqlBoard/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="lib" path="tosql/javaSQL/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="lib" path="tosql/Practice_Mysql/mysql-connector-j-8.0.33.jar"/>
+	<classpathentry kind="output" path="basic/HashSet/bin"/>
+</classpath>

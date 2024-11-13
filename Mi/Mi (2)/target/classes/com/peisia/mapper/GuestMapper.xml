@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peisia.mapper.GuestMapper">
+	<!-- resultType 에 복수형(ArrayList 등)을 적는게 아님. 
+	그냥 dto 단수의 경로를 적어야됨. -->
+	<select id="getList" resultType="com.peisia.dto.GuestDto">
+		SELECT * from tbl_guest limit #{limitIndex} , 5
+	</select>	
+	
+	
+	<select id="read" resultType="com.peisia.dto.GuestDto">
+		<!-- #{bno} << 마이바티스 문법임. -->
+		<!--
+			매퍼 인터페이스의 read 함수의 매개변수로 넘어오는 값을 받아 처리하는 sql문임.
+			
+			매개변수로 넘어온 값을 sql 에 삽입하려면
+			
+			해당 매개변수명을 #{ } 로 묶으면 안에 값이 뿅 나옴.
+		-->
+		select * from tbl_guest where bno = #{bno}
+	</select>	
+	
+	<delete id="del">
+		delete from tbl_guest where bno = #{bno}
+	</delete>
+	
+	
+	<!-- #{btext} << 마이바티스 문법임. -->
+	<!--
+		매퍼 인터페이스의 write 함수의 매개변수로 넘어오는 값을 받아 처리하는 sql문임.
+		
+		주의할 부분이 GuestDto 객체가 매개변수로 넘어오는데
+		
+		마이바티스 변수 #{btext} 를 써도 해당 값을 뽑아옴.
+		
+		해당 값은 btext 멤버변수 값을 말함.
+		(내부적으론 getBtext 함수를 호출해서 얻어옴)		
+	-->	
+	<insert id="write">
+		insert into tbl_guest (btext) values (#{btext})
+	</insert>
+	
+	
+	<update id="modify">
+		update tbl_guest
+		set btext = #{btext}
+		where bno = #{bno}
+	</update>	
+					
+</mapper>
