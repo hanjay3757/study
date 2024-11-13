@@ -94,7 +94,7 @@ function Card({ job, grade, isFlipped, onFlip, draggable, onDragStart, onDragOve
   );
 }
 
-// CardArea 컴포넌트: 카드들의 컨테이너 ㅋ
+// CardArea 컴포넌트: 카드들의 컨테이너 
 function CardArea({ children, type, handleDrop }) {
   const [isDragOver, setIsDragOver] = useState(false);
 
