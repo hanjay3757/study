@@ -40,7 +40,7 @@ function dice(s, e) {
 // =========================================
 
 // Card 컴포넌트: 개별 카드의 표시와 상호작용을 담당
-function Card({ job, grade, isFlipped, onFlip, draggable, onDragStart, onDragOver, onDrop, index, isActive, isAttacker, isTarget }) {
+function Card({ job, grade, isFlipped, onFlip, draggable, onDragStart, onDragOver, onDrop, index, isActive, isAttacker, isTarget, onClick }) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
 
@@ -73,7 +73,14 @@ function Card({ job, grade, isFlipped, onFlip, draggable, onDragStart, onDragOve
         transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) ${isFlipped ? 'rotateY(180deg)' : ''}`,
         transition: 'transform 0.6s'
       }}
-      onClick={onFlip}
+      onClick={(e) => {
+        if (onClick) {
+          onClick(e);
+        }
+        if (onFlip) {
+          onFlip(e);
+        }
+      }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       draggable={draggable}
@@ -125,7 +132,7 @@ function CardArea({ children, type, handleDrop }) {
   );
 }
 
-// Battle 컴포넌트: 전 시스템 구현
+// Battle 컴포넌트: 전투 시스템 구현
 function Battle({ playerParty, enemyParty, onBattleEnd }) {
   const [battleLog, setBattleLog] = useState([]);  // 전투 로그
   const [currentTurn, setCurrentTurn] = useState(1);  // 현재 턴
@@ -463,7 +470,32 @@ function App() {
       isFlipped: false
     }));
   });
-  
+  // getMyCardsApi 함수 수정
+  function getMyCardsApi() {
+    axios.get('http://localhost:8080/spring/card/getMyCards')			
+      .then(response => {		
+        // 서버로부터 받은 데이터를 카드 형식에 맞게 변환
+        const cards = response.data.map(cardData => ({
+          job: cardData.job || jobs[dice(0, 4)], // 서버 데이터에 job이 없으면 랜덤 생성
+          grade: cardData.grade || grade[getLuck()], // 서버 데이터에 grade가 없으면 랜덤 생성
+          isFlipped: false,
+          id: cardData.id // 서버에서 제공하는 고유 ID가 있다면 저장
+        }));
+        
+        // 상태 업데이트
+        setMy(prevCards => [...prevCards, ...cards]);
+      })		
+      .catch(error => {		
+        console.error('카드 정보 가져오기 실패:', error);
+        alert('카드 정보를 가져오는데 실패했습니다.');
+      });		
+  }
+
+  // useEffect를 사용하여 컴포넌트 마운트 시 카드 정보 가져오기
+  useEffect(() => {
+    getMyCardsApi();
+  }, []); // 빈 배열을 전달하여 컴포넌트 마운트 시 한 번만 실행
+
   const [isGachaAnimating, setIsGachaAnimating] = useState(false);
 
   // =========================================
@@ -517,7 +549,7 @@ function App() {
           const newTargetArray = [...targetArray];
           
           if (targetType === 'party') {
-            // 보유 카드에 파티로 이동
+            // 보유 카드에서 파티로 이동
             if (newTargetArray[targetIndex]) {
               // 기존 파티 카드를 보유 카드로 이동
               newSourceArray.push(newTargetArray[targetIndex]);
@@ -548,7 +580,7 @@ function App() {
         }
       }
     } catch (error) {
-      console.error('드래그 앤 드롭 처리 중 오류:', error);
+      console.error('드래그 앤 드롭 처리 오류:', error);
     }
   };
 
@@ -581,7 +613,7 @@ function App() {
       
     } catch (error) {
       console.error('가챠 실패:', error);
-      alert('카드 기에 실패했습니. 다시 시도해주세요.');
+      alert('카드 뽑기에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsGachaAnimating(false);
     }
@@ -651,7 +683,19 @@ function App() {
       });
   };
 
-  // 그룹화된 카드 렌더링 함수
+  // cat 함수 추가
+  const cat = (index, job, grade) => {
+    console.log(`보유카드 번호: ${index}`);
+    alert(`보유카드 번호: ${index} 직업:${job} 등급:${grade}`);
+    // 파티 최대 인원 체크
+    if (party.length >= 5) {
+      alert('파티 인원이 최대입니다.');
+      return;
+    }
+    setParty([...party, { job: job, grade: grade, isFlipped: false }]);
+  };
+
+  // renderGroupedCards 함수 수정
   const renderGroupedCards = () => {
     const sortedGroupedCards = groupCards(my);
     return sortedGroupedCards.map((card, index) => {
@@ -672,6 +716,8 @@ function App() {
             onDragStart={(e) => handleDragStart(e, 'my', originalIndex)}
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => handleDrop(e, 'my', originalIndex)}
+            index={index}
+            onClick={() => cat(originalIndex, card.job, card.grade)}
           />
           {card.count > 1 && (
             <div className="card-count">
