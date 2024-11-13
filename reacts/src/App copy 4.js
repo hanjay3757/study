@@ -234,7 +234,7 @@ function Battle({ playerParty, enemyParty, onBattleEnd }) {
     }
 
     // 직업별 특수 효과 (적군 버전은 더 강화)
-    if (attacker.job === '') {
+    if (attacker.job === '전사') {
       const warriorChance = isEnemyAttacking ? 0.15 : 0.10;
       if (Math.random() < warriorChance) {
         const bonusMultiplier = isEnemyAttacking ? 1.4 : 1.3;
@@ -475,7 +475,7 @@ function App() {
   function getMyCardsApi() {
     axios.get('http://localhost:8080/spring/card/getMyCards')			
       .then(response => {		
-        // 서버로부터 받은 데이터를 카 형식에 맞게 변환
+        // 서버로부터 받은 데이터를 카드 형식에 맞게 변환
         const cards = response.data.map(cardData => ({
           job: cardData.job || jobs[dice(0, 4)], // 서버 데이터에 job이 없으면 랜덤 생성
           grade: cardData.grade || grade[getLuck()], // 서버 데이터에 grade가 없으면 랜덤 생성
@@ -544,11 +544,6 @@ function App() {
           const newArray = [...sourceArray];
           [newArray[sourceIndex], newArray[targetIndex]] = [newArray[targetIndex], newArray[sourceIndex]];
           setSourceArray(newArray);
-          
-          // 파티 영역 내 이동일 경우 DB 업데이트
-          if (targetType === 'party') {
-            sendPartyToServer(newArray);
-          }
         } else {
           // 다른 영역 간 이동
           const newSourceArray = [...sourceArray];
@@ -557,37 +552,27 @@ function App() {
           if (targetType === 'party') {
             // 보유 카드에서 파티로 이동
             if (newTargetArray[targetIndex]) {
+              // 기존 파티 카드를 보유 카드로 이동
               newSourceArray.push(newTargetArray[targetIndex]);
             }
             newTargetArray[targetIndex] = draggedCard;
             newSourceArray.splice(sourceIndex, 1);
-            
-            setSourceArray(newSourceArray);
-            setTargetArray(newTargetArray);
-            
-            // 파티 정보 DB 업데이트
-            sendPartyToServer(newTargetArray);
           } else {
             // 파티에서 보유 카드로 이동
             newSourceArray[sourceIndex] = newTargetArray[targetIndex];
             newTargetArray[targetIndex] = draggedCard;
-            
-            setSourceArray(newSourceArray);
-            setTargetArray(newTargetArray);
           }
+          
+          setSourceArray(newSourceArray);
+          setTargetArray(newTargetArray);
         }
       } else {
         // 영역에 드롭
         if (targetType === 'party' && targetArray.length < 5) {
           const newSourceArray = [...sourceArray];
           newSourceArray.splice(sourceIndex, 1);
-          const newTargetArray = [...targetArray, draggedCard];
-          
           setSourceArray(newSourceArray);
-          setTargetArray(newTargetArray);
-          
-          // 파티 정보 DB 업데이트
-          sendPartyToServer(newTargetArray);
+          setTargetArray(prev => [...prev, draggedCard]);
         } else if (targetType === 'my') {
           const newSourceArray = [...sourceArray];
           newSourceArray.splice(sourceIndex, 1);
@@ -598,30 +583,6 @@ function App() {
     } catch (error) {
       console.error('드래그 앤 드롭 처리 오류:', error);
     }
-  };
-
-  // 파티 정보를 서버로 전송하는 함수
-  const sendPartyToServer = (partyArray) => {
-    // 현재 파티에 있는 모든 카드들의 정보를 전송
-    partyArray.forEach((card, index) => {
-      const cardData = {
-        job: card.job,        // 각 카드의 실제 직업
-        grade: card.grade,    // 각 카드의 실제 등급
-        partyNumber: 1,       // 파티 번호
-        position: index + 1   // 파티 내 위치 (1부터 시작)
-      };
-
-      console.log(`전송되는 카드 정보:`, cardData); // 디버깅용 로그
-
-      axios.post('http://localhost:8080/spring/card/partyAdd', cardData)
-        .then(response => {
-          console.log(`카드 ${index + 1} 추가 성공:`, response.data);
-        })
-        .catch(error => {
-          console.error(`카드 ${index + 1} 추가 실패:`, error);
-          alert('파티원 추가에 실패했습니다.');
-        });
-    });
   };
 
   // =========================================
@@ -723,35 +684,16 @@ function App() {
       });
   };
 
-  // cat 함수도 동일한 형식으로 수정
+  // cat 함수 추가
   const cat = (index, job, grade) => {
     console.log(`보유카드 번호: ${index}`);
     alert(`보유카드 번호: ${index} 직업:${job} 등급:${grade}`);
-    
     // 파티 최대 인원 체크
     if (party.length >= 5) {
       alert('파티 인원이 최대입니다.');
       return;
     }
-
-    const cardData = {
-      job: job,              // 선택된 카드의 실제 직업
-      grade: grade,          // 선택된 카드의 실제 등급
-      partyNumber: 1,        // 파티 번호
-      position: party.length + 1  // 현재 파티 크기 + 1 위치에 추가
-    };
-
-    // DB에 파티원 추가 요청
-    axios.post('http://localhost:8080/spring/card/partyAdd', cardData)
-      .then(response => {
-        console.log('파티원 추가 성공:', response.data);
-        // DB 저장 성공 후 로컬 상태 업데이트
-        setParty(prev => [...prev, { job: job, grade: grade, isFlipped: false }]);
-      })
-      .catch(error => {
-        console.error('파티원 추가 실패:', error);
-        alert('파티원 추가에 실패했습니다.');
-      });
+    setParty([...party, { job: job, grade: grade, isFlipped: false }]);
   };
 
   // renderGroupedCards 함수 수정
