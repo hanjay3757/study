@@ -680,35 +680,35 @@ h2 {
 
 /* 직업별 배경 이미지 경로 수정 */
 .전사 {
-  background-image: url('/src/images/warrior.webp');  /* src 폴더 기준 상대 경로 */
+  background-image: url('/src/images/전사.avif');  /* src 폴더 기준 상대 경로 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .마법사 {
-  background-image: url('/src/images/mage.webp');
+  background-image: url('/src/images/마법사.avif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .궁수 {
-  background-image: url('./images/archer.webp');
+  background-image: url('./images/궁수.avif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .도적 {
-  background-image: url('./images/theif.webp');
+  background-image: url('./images/도적.avif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .사제 {
-  background-image: url('/src/images/priest.webp');
+  background-image: url('/src/images/사제.avif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
