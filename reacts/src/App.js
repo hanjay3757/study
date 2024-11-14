@@ -471,25 +471,35 @@ function App() {
       isFlipped: false
     }));
   });
-  // getMyCardsApi 함수 수정
+  // Axios 기본 설정
+  axios.defaults.baseURL = 'http://localhost:8080/spring';
+  axios.defaults.withCredentials = true;
+
+  // API 호출 함수 수정
   function getMyCardsApi() {
-    axios.get('http://localhost:8080/spring/card/getMyCards')			
-      .then(response => {		
-        // 서버로부터 받은 데이터를 카 형식에 맞게 변환
-        const cards = response.data.map(cardData => ({
-          job: cardData.job || jobs[dice(0, 4)], // 서버 데이터에 job이 없으면 랜덤 생성
-          grade: cardData.grade || grade[getLuck()], // 서버 데이터에 grade가 없으면 랜덤 생성
-          isFlipped: false,
-          id: cardData.id // 서버에서 제공하는 고유 ID가 있다면 저장
-        }));
-        
-        // 상태 업데이트
-        setMy(prevCards => [...prevCards, ...cards]);
-      })		
-      .catch(error => {		
-        console.error('카드 정보 가져오기 실패:', error);
-        alert('카드 정보를 가져오는데 실패했습니다.');
-      });		
+    axios.get('/card/getMyCards', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      const cards = response.data.map(cardData => ({
+        job: cardData.job || jobs[dice(0, 4)],
+        grade: cardData.grade || grade[getLuck()],
+        isFlipped: false,
+        id: cardData.id
+      }));
+      setMy(prevCards => [...prevCards, ...cards]);
+    })
+    .catch(error => {
+      console.error('카드 정보 가져오기 실패:', error);
+      if (error.response) {
+        console.error('응답 데이터:', error.response.data);
+        console.error('상태 코드:', error.response.status);
+      }
+      alert('카드 정보를 가져오는데 실패했습니다.');
+    });
   }
 
   // useEffect를 사용하여 컴포넌트 마운트 시 카드 정보 가져오기
@@ -516,6 +526,8 @@ function App() {
       // 파티에서 보유 카드함으로 드래그할 때
       if (sourceType === 'party' && targetType === 'my') {
         const movedCard = party[sourceIndex];
+        // DB에서 파티원 제거
+        removeFromParty(sourceIndex + 1); // position은 1부터 시작하므로 +1
         // 파티에서 제거
         setParty(prev => prev.filter((_, idx) => idx !== sourceIndex));
         // 보유 카드함에 추가
@@ -600,28 +612,49 @@ function App() {
     }
   };
 
-  // 파티 정보를 서버로 전송하는 함수
-  const sendPartyToServer = (partyArray) => {
-    // 현재 파티에 있는 모든 카드들의 정보를 전송
-    partyArray.forEach((card, index) => {
-      const cardData = {
-        job: card.job,        // 각 카드의 실제 직업
-        grade: card.grade,    // 각 카드의 실제 등급
-        partyNumber: 1,       // 파티 번호
-        position: index + 1   // 파티 내 위치 (1부터 시작)
-      };
-
-      console.log(`전송되는 카드 정보:`, cardData); // 디버깅용 로그
-
-      axios.post('http://localhost:8080/spring/card/partyAdd', cardData)
-        .then(response => {
-          console.log(`카드 ${index + 1} 추가 성공:`, response.data);
-        })
-        .catch(error => {
-          console.error(`카드 ${index + 1} 추가 실패:`, error);
-          alert('파티원 추가에 실패했습니다.');
-        });
+  // 파티에서 카드를 제거하는 함수 추가
+  const removeFromParty = (position) => {
+    axios.delete(`http://localhost:8080/spring/card/partyRemove`, {
+      params: {
+        partyNumber: 1,
+        position: position
+      }
+    })
+    .then(response => {
+      console.log('파티원 제거 성공:', response.data);
+    })
+    .catch(error => {
+      console.error('파티원 제거 실패:', error);
+      alert('파티원 제거에 실패했습니다.');
     });
+  };
+
+  // 파티 정보를 서버로 전송하는 함수
+  const sendPartyToServer = async (partyArray) => {
+    try {
+      // 기존 파티원 모두 제거
+      await axios.delete('http://localhost:8080/spring/card/partyRemoveAll', {
+        params: { partyNumber: 1 }
+      });
+
+      // 새로운 파티원 추가
+      for (let index = 0; index < partyArray.length; index++) {
+        const card = partyArray[index];
+        const cardData = {
+          job: card.job,
+          grade: card.grade,
+          partyNumber: 1,
+          position: index + 1
+        };
+
+        await axios.post('http://localhost:8080/spring/card/partyAdd', cardData);
+      }
+      
+      console.log('파티 정보 업데이트 완료');
+    } catch (error) {
+      console.error('파티 정보 업데이트 실패:', error);
+      alert('파티 정보 업데이트에 실패했습니다.');
+    }
   };
 
   // =========================================
@@ -707,7 +740,7 @@ function App() {
       return acc;
     }, {});
 
-    // 2. 그룹화된 카드를 배열로 변환하고 정렬
+    // 2. 그룹화된 카드를 배열로 변환하고 정
     return Object.entries(grouped)
       .map(([key, card]) => card)
       .sort((a, b) => {
