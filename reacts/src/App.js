@@ -152,30 +152,34 @@ function App() {
   }, []);
 
   var getMyWealth = useCallback(() => {
-    axios.get('http://localhost:8080/card/shop/getWealth')			
+    axios.get('http://localhost:8080/card/pay/buy')			
     .then(response => {		
       console.log(response.data);  // 서버로부터 받은 데이터 출력	
-      setGold(response.data.gold);
-      setDice(response.data.dice);
+      setGold(response.data.gold);// response.data.gold api 연결 골드값 전송받기
+      setDice(response.data.dice);//
     })		
     .catch(error => {		
       console.error('에러:', error);  // 에러 처리	
     });		
   }, []);
 
-  function buyGold(){
-    axios.get('http://localhost:8080/card/shop/buyGold')			
-    .then(response => {		
-      console.log(response.data);  // 서버로부터 받은 데이터 출력	
-      getMyWealth(); 
-    })		
-    .catch(error => {		
-      console.error('Error fetching data:', error);  // 에러 처리	
-    });		
+  function buyGold() {
+    // 새 창에서 결제 페이지 열기
+    window.open('http://localhost:8080/card/pay/buy', '_blank', 'width=800,height=600');
+    
+    // 결제 완료 후 골드 정보 갱신
+    const checkPaymentStatus = setInterval(() => {
+      getMyWealth();
+    }, 2000); // 2초마다 확인
+
+    // 30초 후 체크 중단
+    setTimeout(() => {
+      clearInterval(checkPaymentStatus);
+    }, 30000);
   }
 
   function buyDice(){
-    axios.get('http://localhost:8080/card/shop/buyDice')			
+    axios.get('http://localhost:8080/card/pay/buyDice')			
     .then(response => {		
       console.log(response.data);  // 서버로부터 받은 데이터 출력	
       getMyWealth();
