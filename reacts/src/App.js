@@ -217,7 +217,7 @@ function App() {
         <p>{gold}💰</p>
         <button onClick={buyDice}>주사위상자 구매</button>
         <button onClick={buyGold}>골드 충전(만원)</button>
-        
+        {/* ㅁ */}
       </fieldset>
     </>
   );
