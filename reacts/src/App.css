@@ -12,19 +12,19 @@ body{
 }
 
 .전사{
-  background-image: url('전사.webp');
+  background-image: url('./images/전사.avif');
 }
 .마법사{
-  background-image: url('마법사.webp');
+  background-image: url('./images/마법사.avif');
 }
 .궁수{
-  background-image: url('궁수.webp');
+  background-image: url('./images/궁수.avif');
 }
 .도적{
-  background-image: url('도적.webp');
+  background-image: url('./images/도적.avif');
 }
 .사제{
-  background-image: url('사제.webp');
+  background-image: url('./images/사제.avif');
 }
 
 .card{
