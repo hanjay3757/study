@@ -1,12 +1,51 @@
 import axios from 'axios';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
 import Clock from './Clock.js';
 
 function Card({ job, grade, xxx}) {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const cardRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = -((y - centerY) / 10) * 1.5;
+    const rotateY = ((x - centerX) / 10) * 1.5;
+
+    setRotation({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseLeave = () => {
+    setRotation({ x: 0, y: 0 });
+  };
+
   return (
-    <div className={`card ${job} ${grade}`} onClick={xxx}>
-      {job} - {grade} {/* job과 grade를 표시 */}
+    <div 
+      ref={cardRef}
+      className={`card ${job} ${grade}`} 
+      onClick={xxx}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `
+          perspective(1000px) 
+          rotateX(${rotation.x}deg) 
+          rotateY(${rotation.y}deg) 
+          translateZ(20px)
+        `,
+        transition: 'transform 0.3s ease'
+      }}
+    >
+      {job} - {grade}
     </div>
   );
 }
