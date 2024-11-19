@@ -2,13 +2,12 @@ import axios from 'axios';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
 import Clock from './Clock.js';
-import Stars from './Stars.js';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-function Card({ job, grade, xxx, draggable, onDragStart }) {
+function Card({ job, grade, xxx}) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
 
@@ -40,8 +39,6 @@ function Card({ job, grade, xxx, draggable, onDragStart }) {
       onClick={xxx}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      draggable={draggable}
-      onDragStart={onDragStart}
       style={{
         transform: `
           perspective(1000px) 
@@ -57,23 +54,15 @@ function Card({ job, grade, xxx, draggable, onDragStart }) {
   );
 }
 
-function CardArea({ children, pjId, onDrop }) {
-  function handleDragOver(e) {
-    e.preventDefault();
-  }
-
-  function handleDrop(e) {
-    e.preventDefault();
-    const cardData = JSON.parse(e.dataTransfer.getData('card'));
-    onDrop && onDrop(cardData, pjId);
+function CardArea({ children, pjId }) {
+  function pjClick(pjId){
+    if(pjId > 0){
+      alert(pjId);
+    }
   }
 
   return (
-    <div 
-      id='card_area' 
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-    >
+    <div id='card_area' onClick={()=>pjClick(pjId)}>
       {children}
     </div>
   );
@@ -84,7 +73,6 @@ function App() {
   var [gold,setGold] = useState(0);  
   var [my,setMy] = useState([]);
   const [pj,setPj] = useState([]);
-  const [pjList, setPjList] = useState([]);
 
   var getMyWealth = useCallback(() => {
     axios.get('http://localhost:8080/card/pay/getWealth', {
@@ -126,18 +114,11 @@ function App() {
     });		
   }, []);
 
-  function getPjListApi() {
-    axios.get('http://localhost:8080/card/pj/getPjList')			
-      .then(response => setPjList(response.data))		
-      .catch(error => console.error('에러:', error));
-  }
-
   useEffect(() => {	
     console.log('컴포넌트가 생성됨(마운트됨)');
     getMyWealth();
     getMyCardsApi();
     getPjApi();
-    getPjListApi();
     return () => {
       console.log('컴포넌트가 언마운트됨');
     };
@@ -229,65 +210,12 @@ function App() {
     });		
   }  
 
-  function handleCardDrop(cardData, targetPjId) {
-    if (!targetPjId) return; // 내 카드 영역으로는 드롭 불가
-    
-    if (pj.length >= 5) {
-      alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
-      return;
-    }
-
-    const d = { id: 'cat', no: cardData.no };
-    pjMemberAdd(d);
-  }
-
   return (
     <>
       <Clock />
       <fieldset>
-        <legend>
-          {pjList && pjList.length > 0 && pjList[0] ? 
-            <>
-              {pjList[0].no} {pjList[0].name} <Stars amount={pjList[0].level} /> {pjList[0].gold}💰 {pjList[0].content}
-            </>
-          : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={clearPj}>참여인원 비우기</button>
-        </legend>
-        <CardArea pjId={3} onDrop={handleCardDrop}>
-          {pj.map((character, index) => (
-            <Card 
-              key={index} 
-              job={character.job} 
-              grade={character.grade}
-              draggable={false}
-            />
-          ))}
-        </CardArea>
-      </fieldset>
-      <fieldset>
-        <legend>
-          {pjList && pjList.length > 1 && pjList[1] ? 
-            <>
-              {pjList[1].no} {pjList[1].name} <Stars amount={pjList[1].level} /> {pjList[1].gold}💰 {pjList[1].content}
-            </>
-          : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={clearPj}>참여인원 비우기</button>
-        </legend>
-        <CardArea pjId={2}>
-          {pj.map((character, index) => (
-            <Card key={index} job={character.job} grade={character.grade} />
-          ))}
-        </CardArea>
-      </fieldset>
-      <fieldset>
-        <legend>
-          {pjList && pjList.length > 2 && pjList[2] ? 
-            <>
-              {pjList[2].no} {pjList[2].name} <Stars amount={pjList[2].level} /> {pjList[2].gold}💰 {pjList[2].content}
-            </>
-          : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={clearPj}>참여인원 비우기</button>
-        </legend>
+        <legend>pj 1</legend>
+        <button onClick={clearPj}>참여인원 비우기</button>
         <CardArea pjId={1}>
           {pj.map((character, index) => (
             <Card key={index} job={character.job} grade={character.grade} />
@@ -296,20 +224,8 @@ function App() {
       </fieldset>
       <CardArea>
         {my.map((character, index) => (
-          <Card 
-            key={index} 
-            job={character.job} 
-            grade={character.grade}
-            xxx={() => cat(index, character.no)}
-            draggable={true}
-            onDragStart={(e) => {
-              e.dataTransfer.setData('card', JSON.stringify({
-                index: index,
-                no: character.no,
-                job: character.job,
-                grade: character.grade
-              }));
-            }}
+          <Card key={index} job={character.job} grade={character.grade} 
+            xxx={()=>cat(index,character.job,character.grade,character.no)}
           />
         ))}
       </CardArea>
