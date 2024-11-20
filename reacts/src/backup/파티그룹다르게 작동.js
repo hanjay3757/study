@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
-import Clock from './Clock.js';
-import Stars from './Stars.js';
+import Clock from '../Clock.js';
+import Stars from '../Stars.js';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept'] = 'application/json';
