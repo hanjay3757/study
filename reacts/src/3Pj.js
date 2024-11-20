@@ -80,11 +80,10 @@ function CardArea({ children, pjId, onDrop }) {
 }
 
 function App() {
-  var [dice, setDice] = useState(0);
-  var [gold, setGold] = useState(0);  
-  var [my, setMy] = useState([]);
-  const [pj1, setPj1] = useState([]); // pjId 1에 대한 상태
-  const [pj3, setPj3] = useState([]); // pjId 3에 대한 상태
+  var [dice,setDice] = useState(0);
+  var [gold,setGold] = useState(0);  
+  var [my,setMy] = useState([]);
+  const [pj,setPj] = useState([]);
   const [pjList, setPjList] = useState([]);
 
   var getMyWealth = useCallback(() => {
@@ -120,7 +119,7 @@ function App() {
     axios.get('http://localhost:8080/card/card/getPjMember?no=1')			
     .then(response => {		
       console.log(response.data);
-      setPj1(response.data);
+      setPj(response.data);
     })		
     .catch(error => {		
       console.error('에러:', error);
@@ -128,7 +127,7 @@ function App() {
   }, []);
 
   function getPjListApi() {
-    axios.get('http://localhost:8080/card/card/pj/getPjList')			
+    axios.get('http://localhost:8080/card/pj/getPjList')			
       .then(response => setPjList(response.data))		
       .catch(error => console.error('에러:', error));
   }
@@ -145,13 +144,12 @@ function App() {
   }, [getMyWealth, getMyCardsApi, getPjApi]);
 
   function clearPj(){
-    setPj1([]);
-    setPj3([]);
+    setPj([]);
     clearPjApi();
   }
 
   function cat(index,job,grade,no){
-    if (pj1.length >= 5) {
+    if (pj.length >= 5) {
       alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
       return; // 추가 중단
     }    
@@ -234,19 +232,13 @@ function App() {
   function handleCardDrop(cardData, targetPjId) {
     if (!targetPjId) return; // 내 카드 영역으로는 드롭 불가
     
-    if (targetPjId === 1) {
-      if (pj1.length >= 5) {
-        alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
-        return;
-      }
-      setPj1([...pj1, cardData]);
-    } else if (targetPjId === 3) {
-      if (pj3.length >= 5) {
-        alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
-        return;
-      }
-      setPj3([...pj3, cardData]);
+    if (pj.length >= 5) {
+      alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
+      return;
     }
+
+    const d = { id: 'cat', no: cardData.no };
+    pjMemberAdd(d);
   }
 
   return (
@@ -259,10 +251,10 @@ function App() {
               {pjList[0].no} {pjList[0].name} <Stars amount={pjList[0].level} /> {pjList[0].gold}💰 {pjList[0].content}
             </>
           : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={() => setPj3([])}>참여인원 비우기</button>
+          &nbsp;&nbsp;<button onClick={clearPj}>참여인원 비우기</button>
         </legend>
         <CardArea pjId={3} onDrop={handleCardDrop}>
-          {pj3.map((character, index) => (
+          {pj.map((character, index) => (
             <Card 
               key={index} 
               job={character.job} 
@@ -276,19 +268,29 @@ function App() {
         <legend>
           {pjList && pjList.length > 1 && pjList[1] ? 
             <>
-              {pjList[1].no} {pjList[1].name} <Stars amount={pjList[1].level} /> {pjList[1].gold}💰 {pjList[0].content}
+              {pjList[1].no} {pjList[1].name} <Stars amount={pjList[1].level} /> {pjList[1].gold}💰 {pjList[1].content}
             </>
           : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={() => setPj1([])}>참여인원 비우기</button>
+          &nbsp;&nbsp;<button onClick={clearPj}>참여인원 비우기</button>
         </legend>
-        <CardArea pjId={1} onDrop={handleCardDrop}>
-          {pj1.map((character, index) => (
-            <Card 
-              key={index} 
-              job={character.job} 
-              grade={character.grade}
-              draggable={false}
-            />
+        <CardArea pjId={2}>
+          {pj.map((character, index) => (
+            <Card key={index} job={character.job} grade={character.grade} />
+          ))}
+        </CardArea>
+      </fieldset>
+      <fieldset>
+        <legend>
+          {pjList && pjList.length > 2 && pjList[2] ? 
+            <>
+              {pjList[2].no} {pjList[2].name} <Stars amount={pjList[2].level} /> {pjList[2].gold}💰 {pjList[2].content}
+            </>
+          : '프로젝트 정보 없음'}
+          &nbsp;&nbsp;<button onClick={clearPj}>참여인원 비우기</button>
+        </legend>
+        <CardArea pjId={1}>
+          {pj.map((character, index) => (
+            <Card key={index} job={character.job} grade={character.grade} />
           ))}
         </CardArea>
       </fieldset>
