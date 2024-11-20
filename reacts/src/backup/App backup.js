@@ -1,11 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
-import Clock from './Clock.js';
-
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common['Accept'] = 'application/json';
-axios.defaults.headers.common['Content-Type'] = 'application/json';
+import Clock from '../Clock.js';
 
 function Card({ job, grade, xxx}) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
@@ -71,48 +67,10 @@ function CardArea({ children, pjId }) {
 function App() {
   var [dice,setDice] = useState(0);
   var [gold,setGold] = useState(0);  
-  var [my,setMy] = useState([]);
-  const [pj,setPj] = useState([]);
-
-  var getMyWealth = useCallback(() => {
-    axios.get('http://localhost:8080/card/pay/getWealth', {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })			
-    .then(response => {		
-      console.log(response.data);  
-      setGold(response.data.gold);
-      setDice(response.data.dice);
-    })		
-    .catch(error => {		
-      console.error('에러:', error);	
-    });		
-  }, []);
-
-  var getMyCardsApi = useCallback(() => {
-    axios.get('http://localhost:8080/card/card/getMyCards')			
-    .then(response => {		
-      console.log(response.data);
-      setMy(response.data);
-    })		
-    .catch(error => {		
-      console.error('에러:', error);
-    });		
-  }, []);
-
-  var getPjApi = useCallback(() => {
-    axios.get('http://localhost:8080/card/card/getPjMember?no=1')			
-    .then(response => {		
-      console.log(response.data);
-      setPj(response.data);
-    })		
-    .catch(error => {		
-      console.error('에러:', error);
-    });		
-  }, []);
+  function clearPj(){
+    setPj([]);
+    clearPjApi();
+  }
 
   useEffect(() => {	
     console.log('컴포넌트가 생성됨(마운트됨)');
@@ -122,12 +80,7 @@ function App() {
     return () => {
       console.log('컴포넌트가 언마운트됨');
     };
-  }, [getMyWealth, getMyCardsApi, getPjApi]);
-
-  function clearPj(){
-    setPj([]);
-    clearPjApi();
-  }
+  }, []); // []로 비우기	 
 
   function cat(index,job,grade,no){
     if (pj.length >= 5) {
@@ -176,39 +129,68 @@ function App() {
     });		
   }
 
+  var getMyCardsApi = useCallback(() => {
+    axios.get('http://localhost:8080/card/card/getMyCards')			
+    .then(response => {		
+      console.log(response.data);  // 서버로부터 받은 데이터 출력	
+      setMy(response.data);
+    })		
+    .catch(error => {		
+      console.error('에러:', error);  // 에러 처리	
+    });		
+  }, []);
+
+  var getPjApi = useCallback(() => {
+    axios.get('http://localhost:8080/card/card/getPjMember?no=1')			
+    .then(response => {		
+      console.log(response.data);  // 서버로부터 받은 데이터 출력	
+      setPj(response.data);
+    })		
+    .catch(error => {		
+      console.error('에러:', error);  // 에러 처리	
+    });		
+  }, []);
+
+  var getMyWealth = useCallback(() => {
+    axios.get('http://localhost:8080/card/pay/buy')			
+    .then(response => {		
+      console.log(response.data);  // 서버로부터 받은 데이터 출력	
+      setGold(response.data.gold);// response.data.gold api 연결 골드값 전송받기
+      setDice(response.data.dice);//
+    })		
+    .catch(error => {		
+      console.error('에러:', error);  // 에러 처리	
+    });		
+  }, []);
+
   function buyGold() {
     // 새 창에서 결제 페이지 열기
-    const popup = window.open('http://localhost:8080/card/pay/buy', '_blank', 'width=800,height=600');
+    window.open('http://localhost:8080/card/pay/buy', '_blank', 'width=800,height=600');
     
-    // 팝업 창이 닫힐 때 데이터 갱신
-    const checkClosed = setInterval(() => {
-      if (popup.closed) {
-        clearInterval(checkClosed);
-        // 약간의 지연 후 데이터 갱신 (서버 처리 시간 고려)
-        setTimeout(() => {
-          getMyWealth();
-        }, 1000);
-      }
-    }, 500);
+    // 결제 완료 후 골드 정보 갱신
+    const checkPaymentStatus = setInterval(() => {
+      getMyWealth();
+    }, 2000); // 2초마다 확인
+
+    // 30초 후 체크 중단
+    setTimeout(() => {
+      clearInterval(checkPaymentStatus);
+    }, 30000);
   }
 
   function buyDice(){
-    axios.get('http://localhost:8080/card/pay/buyDice', {
-        withCredentials: true,
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })			
+    axios.get('http://localhost:8080/card/pay/buyDice')			
     .then(response => {		
-        console.log(response.data);
-        getMyWealth();  // 성공 후 잔액 갱신
+      console.log(response.data);  // 서버로부터 받은 데이터 출력	
+      getMyWealth();
     })		
     .catch(error => {		
-        console.error('Error:', error);
-        alert('주사위 구매에 실패했습니다.');	
+      console.error('Error fetching data:', error);  // 에러 처리	
     });		
   }  
+
+  var [my,setMy] = useState([]);
+  const [pj,setPj] = useState([]);
 
   return (
     <>
