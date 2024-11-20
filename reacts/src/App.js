@@ -127,7 +127,7 @@ function App() {
   }, []);
 
   function getPjListApi() {
-    axios.get('http://localhost:8080/card/pj/getPjList')			
+    axios.get('http://localhost:8080/card/card/pj/getPjList')			
       .then(response => setPjList(response.data))		
       .catch(error => console.error('에러:', error));
   }
