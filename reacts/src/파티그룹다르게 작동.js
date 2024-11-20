@@ -197,8 +197,10 @@ function App() {
     
     if (targetPjId === 1 && pj1.length < 5) {
       setPj1(prev => [...prev, cardData]);
+      setMy(prev => prev.filter((_, index) => index !== cardData.index));
     } else if (targetPjId === 3 && pj3.length < 5) {
       setPj3(prev => [...prev, cardData]);
+      setMy(prev => prev.filter((_, index) => index !== cardData.index));
     } else {
       alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
     }
