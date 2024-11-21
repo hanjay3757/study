@@ -233,6 +233,7 @@ function App() {
                 grade={character.grade}
                 deployment={character.deployment}
                 draggable={false}
+                //R
               />
             ))}
           </CardArea>
