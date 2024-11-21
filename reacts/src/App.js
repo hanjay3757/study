@@ -92,9 +92,8 @@ function App() {
   const [dice, setDice] = useState(0);
   const [gold, setGold] = useState(0);
   const [my, setMy] = useState([]);
-  const [pj1, setPj1] = useState([]);
-  const [pj3, setPj3] = useState([]);
   const [pjList, setPjList] = useState([]);
+  const [pjMembers, setPjMembers] = useState({});
 
   const getMyWealth = useCallback(() => {
     axios.get('http://localhost:8080/card/pay/getWealth')
@@ -107,29 +106,20 @@ function App() {
       });
   }, []);
 
-  const getPj3Api = useCallback(() => {
-    axios.get('http://localhost:8080/card/card/getPjMember?no=3')
+  const getPjMembersApi = useCallback((pjId) => {
+    axios.get(`http://localhost:8080/card/card/getPjMember?no=${pjId}`)
       .then(response => {
-        setPj3(response.data);
-      })
-      .catch(error => {
-        console.error('에러:', error);
-      });
-  }, []);
-  const getMyCardsApi = useCallback(() => {
-    axios.get('http://localhost:8080/card/card/getMyCards')
-      .then(response => {
-        setMy(response.data);
+        setPjMembers(prev => ({ ...prev, [pjId]: response.data }));
       })
       .catch(error => {
         console.error('에러:', error);
       });
   }, []);
 
-  const getPjApi = useCallback(() => {
-    axios.get('http://localhost:8080/card/card/getPjMember?no=1')
+  const getMyCardsApi = useCallback(() => {
+    axios.get('http://localhost:8080/card/card/getMyCards')
       .then(response => {
-        setPj1(response.data);
+        setMy(response.data);
       })
       .catch(error => {
         console.error('에러:', error);
@@ -145,10 +135,14 @@ function App() {
   useEffect(() => {
     getMyWealth();
     getMyCardsApi();
-    getPjApi();
-    getPj3Api();
     getPjListApi();
-  }, [getMyWealth, getMyCardsApi, getPjApi, getPj3Api, getPjListApi]);
+  }, [getMyWealth, getMyCardsApi, getPjListApi]);
+
+  useEffect(() => {
+    pjList.forEach(pj => {
+      getPjMembersApi(pj.no);
+    });
+  }, [pjList, getPjMembersApi]);
 
   function gachaApi() {
     axios.get('http://localhost:8080/card/api/gacha')
@@ -165,6 +159,7 @@ function App() {
     axios.get('http://localhost:8080/card/card/clearPjMember?PjId=' + a)
       .then(() => {
         getMyCardsApi();
+        getPjMembersApi(a);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -191,73 +186,58 @@ function App() {
         alert('주사위 구매에 실패했습니다.');
       });
   }
+
   function handleDrop(cardData, targetPjId) {
     if (!targetPjId) return;
 
     const updatedCardData = { ...cardData, deployment: targetPjId };
 
-    if (targetPjId === 1 && pj1.length < 5) {
-      setPj1(prev => [...prev, updatedCardData]);
+    if (pjMembers[targetPjId]?.length < 5) {
+      setPjMembers(prev => ({
+        ...prev,
+        [targetPjId]: [...(prev[targetPjId] || []), updatedCardData]
+      }));
       setMy(prev => prev.filter((_, index) => index !== cardData.index));
-      getPjApi();
-      getMyCardsApi();
-    } else if (targetPjId === 3 && pj3.length < 5) {
-      setPj3(prev => [...prev, updatedCardData]);
-      setMy(prev => prev.filter((_, index) => index !== cardData.index));
-      getPj3Api();
+      getPjMembersApi(targetPjId);
       getMyCardsApi();
     } else {
       alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
     }
   }
 
+  function createPj() {
+    axios.post('http://localhost:8080/card/card/pj/create')
+      .then(() => {
+        getPjListApi();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
   return (
     <>
       <Clock />
-      <fieldset>
-        <legend>
-          {pjList?.[0] ?
-            <>
-              {pjList[0].no} {pjList[0].name} <Stars amount={pjList[0].level} /> {pjList[0].gold}💰 {pjList[0].content}
-            </>
-            : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={() => { setPj3([]); clearPjApi(3); }}>참여인원 비우기1</button>
-        </legend>
-        <CardArea pjId={3} onDrop={(cardData) => handleDrop(cardData, 3)}>
-          {pj3.map((character, index) => (
-            <Card
-              key={index}
-              job={character.job}
-              no={character.no}
-              grade={character.grade}
-              deployment={character.deployment}
-              draggable={false}
-            />
-          ))}
-        </CardArea>
-      </fieldset>
-      <fieldset>
-        <legend>
-          {pjList?.[1] ?
-            <>
-              {pjList[1].no} {pjList[1].name} <Stars amount={pjList[1].level} /> {pjList[1].gold}💰 {pjList[1].content}
-            </>
-            : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={() => { setPj1([]); clearPjApi(1); }}>참여인원 비우기2</button>
-        </legend>
-        <CardArea pjId={1} onDrop={(cardData) => handleDrop(cardData, 1)}>
-          {pj1.map((character, index) => (
-            <Card
-              key={index}
-              job={character.job}
-              no={character.no}
-              grade={character.grade}
-              deployment={character.deployment}
-              draggable={false}
-            />
-          ))}
-        </CardArea>
-      </fieldset>
+      {pjList.map((pj, index) => (
+        <fieldset key={index}>
+          <legend>
+            {pj.no} {pj.name} <Stars amount={pj.level} /> {pj.gold}💰 {pj.content}
+            &nbsp;&nbsp;<button onClick={() => { setPjMembers(prev => ({ ...prev, [pj.no]: [] })); clearPjApi(pj.no); }}>참여인원 비우기</button>
+          </legend>
+          <CardArea pjId={pj.no} onDrop={(cardData) => handleDrop(cardData, pj.no)}>
+            {pjMembers[pj.no]?.map((character, index) => (
+              <Card
+                key={index}
+                job={character.job}
+                no={character.no}
+                grade={character.grade}
+                deployment={character.deployment}
+                draggable={false}
+              />
+            ))}
+          </CardArea>
+        </fieldset>
+      ))}
       <CardArea>
         {my.map((character, index) => (
           <Card
@@ -290,6 +270,7 @@ function App() {
         <button onClick={buyDice}>주사위상자 구매</button>
         <button onClick={buyGold}>골드 충전(만원)</button>
       </fieldset>
+      <button onClick={createPj}>프로젝트 생성</button>
     </>
   );
 }
