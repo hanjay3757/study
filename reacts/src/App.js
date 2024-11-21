@@ -66,7 +66,7 @@ function CardArea({ children, pjId, onDrop }) {
     e.preventDefault();
     const cardData = JSON.parse(e.dataTransfer.getData('card'));
     onDrop && onDrop({ ...cardData, pjId }, pjId);
-    var d= {id:'cat',no:cardData.no};
+    var d= {id:'cat',no:cardData.no,deployment:pjId};
     axios.post('http://localhost:8080/card/card/pjMemberAdd', d)			
     .then(() => {		
    
@@ -139,16 +139,7 @@ function App() {
     getPjListApi();
   }, [getMyWealth, getMyCardsApi, getPjApi, getPjListApi]);
 
-  function cat(index, no ,deployment){
-    if (deployment === 1 &&   pj1.length >= 5) {
-      alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
-      return;
-    }    
-    console.log(deployment);
-    pjMemberAdd({id:'cat', no: no, deployment: deployment});
-  }
-
-  function pjMemberAdd(d){
+ /*  function pjMemberAdd(d){
     axios.post('http://localhost:8080/card/card/pjMemberAdd', d)			
     .then(() => {		
       getPjApi();
@@ -157,7 +148,7 @@ function App() {
     .catch(error => {		
       console.error('Error:', error);
     });		
-  }
+  } */
 
   function gachaApi(){
     axios.get('http://localhost:8080/card/api/gacha')			
@@ -200,8 +191,7 @@ function App() {
         alert('주사위 구매에 실패했습니다.');	
     });		
   }  
-
-  function handleCardDrop(cardData, targetPjId) {
+  function handleCard(cardData, targetPjId) {
     if (!targetPjId) return;
     
     const updatedCardData = { ...cardData, deployment: targetPjId };
@@ -209,16 +199,18 @@ function App() {
     if (targetPjId === 1 && pj1.length < 5) {
       setPj1(prev => [...prev, updatedCardData]);
       setMy(prev => prev.filter((_, index) => index !== cardData.index));
-
+      getPjApi();
+      getMyCardsApi();
     } else if (targetPjId === 3 && pj3.length < 5) {
       setPj3(prev => [...prev, updatedCardData]);
       setMy(prev => prev.filter((_, index) => index !== cardData.index));
-
+      getPjApi(); 
+      getMyCardsApi();
     } else {
       alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
     }
   }
-
+//정보 표시임
   return (
     <>
       <Clock />
@@ -229,9 +221,9 @@ function App() {
               {pjList[0].no} {pjList[0].name} <Stars amount={pjList[0].level} /> {pjList[0].gold}💰 {pjList[0].content}
             </>
           : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={() => { setPj3([]); clearPjApi(); }}>참여인원 비우기</button>
+          &nbsp;&nbsp;<button onClick={() => { setPj3([]); clearPjApi(); }}>참여인원 비우기1</button>
         </legend>
-        <CardArea pjId={3} onDrop={(cardData) => handleCardDrop(cardData, 3)}>
+        <CardArea pjId={3} onDrop={(cardData) => handleCard(cardData, 3)}>
           {pj3.map((character, index) => (
             <Card 
               key={index} 
@@ -251,9 +243,9 @@ function App() {
               {pjList[1].no} {pjList[1].name} <Stars amount={pjList[1].level} /> {pjList[1].gold}💰 {pjList[1].content}
             </>
           : '프로젝트 정보 없음'}
-          &nbsp;&nbsp;<button onClick={() => { setPj1([]); clearPjApi(); }}>참여인원 비우기</button>
+          &nbsp;&nbsp;<button onClick={() => { setPj1([]); clearPjApi(); }}>참여인원 비우기2</button>
         </legend>
-        <CardArea pjId={1} onDrop={(cardData) => handleCardDrop(cardData, 1)}>
+        <CardArea pjId={1} onDrop={(cardData) => handleCard(cardData, 1)}>
           {pj1.map((character, index) => (
             <Card 
             key={index} 
@@ -274,7 +266,6 @@ function App() {
             no = {character.no}
             grade={character.grade}
             deployment={character.deployment}
-            xxx={() => cat(index, character.no)}
             draggable={true}
             onDragStart={(e) => {
               e.dataTransfer.setData('card', JSON.stringify({
