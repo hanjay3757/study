@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-function Card({ job, grade, xxx, draggable, onDragStart }) {
+function Card({  no,job, grade, xxx, draggable, onDragStart }) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
 
@@ -36,7 +36,7 @@ function Card({ job, grade, xxx, draggable, onDragStart }) {
   return (
     <div 
       ref={cardRef}
-      className={`card ${job} ${grade}`} 
+      className={`card ${job} ${grade} ${no} `} 
       onClick={xxx}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -52,7 +52,7 @@ function Card({ job, grade, xxx, draggable, onDragStart }) {
         transition: 'transform 0.3s ease'
       }}
     >
-      {job} - {grade}
+      {job} - {grade} - {no}
     </div>
   );
 }
@@ -65,7 +65,15 @@ function CardArea({ children, pjId, onDrop }) {
   function handleDrop(e) {
     e.preventDefault();
     const cardData = JSON.parse(e.dataTransfer.getData('card'));
-    onDrop && onDrop(cardData, pjId);
+    onDrop && onDrop({ ...cardData, pjId }, pjId);
+    var d= {id:'cat',no:cardData.no};
+    axios.post('http://localhost:8080/card/card/pjMemberAdd', d)			
+    .then(() => {		
+   
+    })		
+    .catch(error => {		
+      console.error('Error:', error);
+    });		
   }
 
   return (
@@ -131,12 +139,13 @@ function App() {
     getPjListApi();
   }, [getMyWealth, getMyCardsApi, getPjApi, getPjListApi]);
 
-  function cat(index, no){
-    if (pj1.length >= 5) {
+  function cat(index, no ,deployment){
+    if (deployment === 1 &&   pj1.length >= 5) {
       alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
       return;
     }    
-    pjMemberAdd({id:'cat', no: no});
+    console.log(deployment);
+    pjMemberAdd({id:'cat', no: no, deployment: deployment});
   }
 
   function pjMemberAdd(d){
@@ -195,10 +204,16 @@ function App() {
   function handleCardDrop(cardData, targetPjId) {
     if (!targetPjId) return;
     
+    const updatedCardData = { ...cardData, deployment: targetPjId };
+
     if (targetPjId === 1 && pj1.length < 5) {
-      setPj1(prev => [...prev, cardData]);
+      setPj1(prev => [...prev, updatedCardData]);
+      setMy(prev => prev.filter((_, index) => index !== cardData.index));
+
     } else if (targetPjId === 3 && pj3.length < 5) {
-      setPj3(prev => [...prev, cardData]);
+      setPj3(prev => [...prev, updatedCardData]);
+      setMy(prev => prev.filter((_, index) => index !== cardData.index));
+
     } else {
       alert('참여 인원은 최대 5명까지만 추가할 수 있습니다.');
     }
@@ -216,12 +231,14 @@ function App() {
           : '프로젝트 정보 없음'}
           &nbsp;&nbsp;<button onClick={() => { setPj3([]); clearPjApi(); }}>참여인원 비우기</button>
         </legend>
-        <CardArea pjId={3} onDrop={handleCardDrop}>
+        <CardArea pjId={3} onDrop={(cardData) => handleCardDrop(cardData, 3)}>
           {pj3.map((character, index) => (
             <Card 
               key={index} 
               job={character.job} 
+              no= {character.no}
               grade={character.grade}
+              deployment={character.deployment}
               draggable={false}
             />
           ))}
@@ -236,13 +253,15 @@ function App() {
           : '프로젝트 정보 없음'}
           &nbsp;&nbsp;<button onClick={() => { setPj1([]); clearPjApi(); }}>참여인원 비우기</button>
         </legend>
-        <CardArea pjId={1} onDrop={handleCardDrop}>
+        <CardArea pjId={1} onDrop={(cardData) => handleCardDrop(cardData, 1)}>
           {pj1.map((character, index) => (
             <Card 
-              key={index} 
-              job={character.job} 
-              grade={character.grade}
-              draggable={false}
+            key={index} 
+            job={character.job} 
+            no= {character.no}
+            grade={character.grade}
+            deployment={character.deployment}
+            draggable={false}
             />
           ))}
         </CardArea>
@@ -252,7 +271,9 @@ function App() {
           <Card 
             key={index} 
             job={character.job} 
+            no = {character.no}
             grade={character.grade}
+            deployment={character.deployment}
             xxx={() => cat(index, character.no)}
             draggable={true}
             onDragStart={(e) => {
@@ -260,7 +281,8 @@ function App() {
                 index: index,
                 no: character.no,
                 job: character.job,
-                grade: character.grade
+                grade: character.grade,
+                deployment: character.deployment
               }));
             }}
           />
