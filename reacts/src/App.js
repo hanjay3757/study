@@ -206,12 +206,15 @@ function App() {
   }
 
   function createPj() {
-    axios.post('http://localhost:8080/card/card/pj/create')
-      .then(() => {
+    console.log('프로젝트 생성 시도 중...');
+    axios.get('http://localhost:8080/card/card/pj/create')
+      .then((response) => {
+        console.log('프로젝트 생성 성공:', response);
         getPjListApi();
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('프로젝트 생성 실패:', error);
+        alert('프로젝트 생성에 실패했습니다.');
       });
   }
 
@@ -271,7 +274,12 @@ function App() {
         <button onClick={buyDice}>주사위상자 구매</button>
         <button onClick={buyGold}>골드 충전(만원)</button>
       </fieldset>
-      <button onClick={createPj}>프로젝트 생성</button>
+      <button onClick={() => {
+        console.log('버튼 클릭됨');
+        createPj();
+      }}>
+        프로젝트 생성
+      </button>
     </>
   );
 }
