@@ -1,12 +1,8 @@
-import axios from 'axios';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
 import Clock from './Clock.js';
 import Stars from './Stars.js';
-
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common['Accept'] = 'application/json';
-axios.defaults.headers.common['Content-Type'] = 'application/json';
+import { API } from './API';
 
 function Card({ no, job, grade, xxx, draggable, onDragStart }) {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
@@ -67,9 +63,8 @@ function CardArea({ children, pjId, onDrop }) {
     const cardData = JSON.parse(e.dataTransfer.getData('card'));
     onDrop && onDrop({ ...cardData, pjId }, pjId);
     var d = { id: 'cat', no: cardData.no, deployment: pjId };
-    axios.post('http://localhost:8080/card/card/pjMemberAdd', d)
+    API.addPjMember(d)
       .then(() => {
-        // 화면 업데이트를 위해 상태를 변경
         onDrop({ ...cardData, pjId });
       })
       .catch(error => {
@@ -96,7 +91,7 @@ function App() {
   const [pjMembers, setPjMembers] = useState({});
 
   const getMyWealth = useCallback(() => {
-    axios.get('http://localhost:8080/card/pay/getWealth')
+    API.getWealth()
       .then(response => {
         setGold(response.data.gold);
         setDice(response.data.dice);
@@ -107,7 +102,7 @@ function App() {
   }, []);
 
   const getPjMembersApi = useCallback((pjId) => {
-    axios.get(`http://localhost:8080/card/card/getPjMember?no=${pjId}`)
+    API.getPjMembers(pjId)
       .then(response => {
         setPjMembers(prev => ({ ...prev, [pjId]: response.data }));
       })
@@ -117,7 +112,7 @@ function App() {
   }, []);
 
   const getMyCardsApi = useCallback(() => {
-    axios.get('http://localhost:8080/card/card/getMyCards')
+    API.getMyCards()
       .then(response => {
         setMy(response.data);
       })
@@ -127,7 +122,7 @@ function App() {
   }, []);
 
   const getPjListApi = useCallback(() => {
-    axios.get('http://localhost:8080/card/card/pj/getPjList')
+    API.getPjList()
       .then(response => setPjList(response.data))
       .catch(error => console.error('에러:', error));
   }, []);
@@ -145,7 +140,7 @@ function App() {
   }, [pjList, getPjMembersApi]);
 
   function gachaApi() {
-    axios.get('http://localhost:8080/card/api/gacha')
+    API.gacha()
       .then(response => {
         setMy(prev => [...prev, response.data]);
         getMyWealth();
@@ -156,7 +151,7 @@ function App() {
   }
 
   function clearPjApi(a) {
-    axios.get('http://localhost:8080/card/card/clearPjMember?PjId=' + a)
+    API.clearPjMember(a)
       .then(() => {
         getMyCardsApi();
         getPjMembersApi(a);
@@ -167,7 +162,7 @@ function App() {
   }
 
   function buyGold() {
-    const popup = window.open('http://localhost:8080/card/pay/buy', '_blank', 'width=800,height=600');
+    const popup = window.open(API.getBuyGoldUrl(), '_blank', 'width=800,height=600');
 
     const checkClosed = setInterval(() => {
       if (popup.closed) {
@@ -178,7 +173,7 @@ function App() {
   }
 
   function buyDice() {
-    axios.get('http://localhost:8080/card/pay/buyDice')
+    API.buyDice()
       .then(() => {
         getMyWealth();
       })
@@ -207,7 +202,7 @@ function App() {
 
   function createPj() {
     console.log('프로젝트 생성 시도 중...');
-    axios.get('http://localhost:8080/card/card/pj/create')
+    API.createPj()
       .then((response) => {
         console.log('프로젝트 생성 성공:', response);
         getPjListApi();
