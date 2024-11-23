@@ -28,7 +28,7 @@
 	
 	<!-- 문제 3 -->
 	<delete id="delTest">	
-		delete from tbl_test_del where no = 1
+		delete from tbl_test_del where no = 3
 	</delete>		
 		
 </mapper>

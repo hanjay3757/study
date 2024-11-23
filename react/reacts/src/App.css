@@ -1,0 +1,55 @@
+body{
+  background-color: pink;
+}
+
+#card_area{
+  /* background-color: aqua; */
+  display: flex;
+  
+  height: 166px;
+  padding: 4px;
+  border: 4px solid gray;
+}
+
+.전사{
+  background-image: url('./images/전사.avif');
+}
+.마법사{
+  background-image: url('./images/마법사.avif');
+}
+.궁수{
+  background-image: url('./images/궁수.avif');
+}
+.도적{
+  background-image: url('./images/도적.avif');
+}
+.사제{
+  background-image: url('./images/사제.avif');
+}
+
+.card{
+  background-size: cover; /* 비율에 맞춰 영역을 꽉 채웁니다 */
+  background-position: center; /* 이미지를 중앙에 위치 */
+  background-repeat: no-repeat; /* 반복하지 않음 */  
+  width:100px;
+  height:158px;
+}
+
+.SSR{
+  border: 4px solid red;  
+}
+.SR{
+  border: 4px solid gold;  
+}
+.S{
+  border: 4px solid yellow;  
+}
+.R{
+  border: 4px solid purple;  
+}
+.H{
+  border: 4px solid green;  
+}
+.N{
+  border: 4px solid gray;  
+}

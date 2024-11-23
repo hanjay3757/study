@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peisia.mapper.VideoMapper">
+    <select id="getList" resultType="com.peisia.dto.VideoVO">
+        SELECT * FROM tbl_video
+    </select>
+    
+    <select id="read" resultType="com.peisia.dto.VideoVO">
+        SELECT * FROM tbl_video WHERE vno = #{vno}
+    </select>
+    
+    <insert id="insert" >
+        INSERT INTO tbl_video (title, content, writer)
+        VALUES (#{title}, #{content}, #{writer})
+    </insert>
+    
+    <delete id="delete" >
+        DELETE FROM tbl_video WHERE vno = #{vno}
+    </delete>
+    
+    <update id="update" >
+        UPDATE tbl_video
+        SET title = #{title},
+            content = #{content},
+            writer = #{writer},
+            updateDate = now()
+        WHERE vno = #{vno}
+    </update>
+</mapper>

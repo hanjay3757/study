@@ -1,0 +1,4 @@
+const enemyParty = Array.from({ length: 5 }, () => {
+    const job = jobs[dice(0, jobs.length - 1)];
+    const grade = grade[dice(0, grade.length - 1)];
+}); 

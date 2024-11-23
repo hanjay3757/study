@@ -1,0 +1,125 @@
+/* 기본 배경색을 핑크색으로 설정 */
+body{
+  background-color: pink;
+}
+
+/* 카드 영역의 기본 레이아웃 설정 */
+#card_area{
+  display: flex;
+  height: 316px;
+  padding: 4px;
+  perspective: 1000px; /* 3D 효과를 위한 원근감 설정 */
+}
+
+/* 각 직업별 배경 이미지 설정 */
+.전사, .마법사, .궁수, .도적, .사제 {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  filter: contrast(1.1) brightness(1.1);
+  background-blend-mode: normal;
+}
+
+.전사 { background-image: url('./전사.webp'); }
+.마법사 { background-image: url('./마법사.webp'); }
+.궁수 { background-image: url('./궁수.webp'); }
+.도적 { background-image: url('./도적.webp'); }
+.사제 { background-image: url('./사제.webp'); }
+
+/* 카드의 기본 스타일 개선 */
+.card {
+  width: 200px;
+  height: 308px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border-radius: 10px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  font-weight: bold;
+  margin: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  padding: 10px;
+  
+  /* 엠보싱과 레이어 효과 */
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    /* 레이어 1: 가장 깊은 그림자 */
+    inset 0 2px 3px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    
+    /* 레이어 2: 중간 깊이의 그림자 */
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    
+    /* 레이어 3: 얕은 그림자 */
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    
+    /* 레이어 4: 미세한 하이라이트 */
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    
+    /* 레이어 5: 엠보싱 효과 */
+    inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+    
+  /* 엠보싱 질감을 위한 그라데이션 */
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(0, 0, 0, 0.05) 51%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+/* 등급별 기본 테두리 색상 설정 */
+.SSR, .SR, .S, .R, .H, .N {
+  position: relative;
+  border-width: 4px;
+  border-style: solid;
+}
+
+.SSR { border-color: red; }
+.SR { border-color: gold; }
+.S { border-color: yellow; }
+.R { border-color: purple; }
+.H { border-color: green; }
+.N { border-color: gray; }
+
+/* SSR 카드의 고급 스타일 설정 */
+.card.SSR {
+  border: 4px solid gold;
+  background-color: rgba(255, 215, 0, 0.15);
+  box-shadow: 
+    /* 기존 레이어에 추가적인 골드 효과 */
+    inset 0 2px 3px rgba(255, 215, 0, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
+    0 8px 16px rgba(255, 215, 0, 0.4),
+    0 4px 8px rgba(255, 215, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* 나머지 코드는 동일하게 유지... */
+
+/* 카드 호버 효과 강화 */
+.card:hover {
+  transform: scale(1.08) translateY(-10px) translateZ(20px);
+  box-shadow: 
+    /* 호버 시 더 강한 레이어 효과 */
+    inset 0 3px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -3px 4px rgba(0, 0, 0, 0.4),
+    0 12px 24px rgba(0, 0, 0, 0.5),
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 2px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* 나머지 스타일은 그대로 유지 */
