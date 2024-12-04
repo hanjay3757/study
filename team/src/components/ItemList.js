@@ -6,10 +6,31 @@ function ItemList() {
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
+  const fetchItems = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/mvc/stuff/item/list', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('서버 응답이 실패했습니다');
+      }
+      
+      const data = await response.json();
+      setItems(data.filter(item => item.stock > 0 && !item.deleted));
+      setError(null);
+    } catch (error) {
+      console.error('물건 목록을 가져오는데 실패했습니다:', error);
+      setError('물건 목록을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  };
+
   useEffect(() => {
     let mounted = true;
 
-    // 로그인 상태 확인
     const checkLoginStatus = async () => {
       try {
         const response = await axios.get('http://localhost:8080/mvc/staff/check-login');
@@ -18,32 +39,6 @@ function ItemList() {
         }
       } catch (error) {
         console.error('로그인 상태 확인 실패:', error);
-      }
-    };
-
-    const fetchItems = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/mvc/stuff/item/list', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-        
-        if (!response.ok) {
-          throw new Error('서버 응답이 실패했습니다');
-        }
-        
-        const data = await response.json();
-        if (mounted) {
-          setItems(data);
-          setError(null);
-        }
-      } catch (error) {
-        if (mounted) {
-          console.error('물건 목록을 가져오는데 실패했습니다:', error);
-          setError('물건 목록을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
-        }
       }
     };
 
@@ -67,14 +62,15 @@ function ItemList() {
         }
       });
 
-      if (response.data.success) {
-        alert('장바구니에 추가되었습니다.');
+      if (response.data.status === 'success') {
+        alert(response.data.message);
+        fetchItems();
       } else {
-        throw new Error(response.data.message || '장바구니 추가에 실패했습니다.');
+        throw new Error(response.data.message);
       }
     } catch (error) {
       console.error('장바구니 추가 중 오류:', error);
-      alert(error.message || '장바구니에 추가하는 중 오류가 발생했습니다.');
+      alert(error.response?.data?.message || error.message || '장바구니에 추가하는 중 오류가 발생했습니다.');
     }
   };
 
