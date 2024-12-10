@@ -216,9 +216,10 @@ function App() {
         <button onClick={handleLogout}>로그아웃</button>
       )}
 
-      {/* 라우트 설정 추가 */}
+      {/* 라우트 설정 수정 */}
       <Routes>
-        <Route path="/" element={<StaffTable />} />
+        {/* 메인 페이지에 ItemList 표시 */}
+        <Route path="/" element={<ItemList />} />
         <Route path="/staff/edit" element={<StaffEdit />} />
         <Route path="/stuff/item/list" element={<ItemList />} />
         <Route path="/stuff/item/register" element={<ItemRegister />} />
@@ -226,6 +227,9 @@ function App() {
         <Route path="/stuff/cart" element={<Cart />} />
         <Route path="/staff/removelist" element={<RemovedStaff />} />
       </Routes>
+
+      {/* 관리자일 경우에만 StaffTable 표시 */}
+      {isAdmin && <StaffTable />}
     </div>
   );
 }
