@@ -1,83 +1,95 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function DeletedItems() {
-  const [items, setItems] = useState([]);
+  const [deletedItems, setDeletedItems] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDeletedItems = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/mvc/stuff/item/deleted', {
-          withCredentials: true
-        });
-        if (response.data && response.data.items) {
-          setItems(response.data.items);
-        } else if (Array.isArray(response.data)) {
-          setItems(response.data);
-        } else {
-          setItems([]);
-          console.error('서버 응답이 예상된 형식이 아닙니다:', response.data);
-        }
-      } catch (error) {
-        console.error('삭제된 물건 목록 조회 실패:', error);
-        setError('삭제된 물건 목록을 불러오는데 실패했습니다.');
-        setItems([]);
-      }
-    };
-
-    fetchDeletedItems();
+    loadDeletedItems();
   }, []);
+
+  const loadDeletedItems = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/mvc/stuff/item/deleted', {
+        withCredentials: true
+      });
+
+      if (response.data.success) {
+        setDeletedItems(response.data.data || []);
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      console.error('삭제된 물건 목록 로딩 실패:', error);
+      setError(error.response?.data?.message || '삭제된 물건 목록을 불러오는데 실패했습니다.');
+    }
+  };
 
   const handleRestore = async (itemId) => {
     try {
       const params = new URLSearchParams();
       params.append('itemId', itemId);
-      
-      await axios.post(`http://localhost:8080/mvc/stuff/item/restore`, params, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+
+      const response = await axios.post(
+        'http://localhost:8080/mvc/stuff/item/restore',
+        params,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
         }
-      });
-      
-      const response = await axios.get('http://localhost:8080/mvc/stuff/item/deleted', {
-        withCredentials: true
-      });
-      if (Array.isArray(response.data)) {
-        setItems(response.data);
-      } else if (response.data && response.data.items) {
-        setItems(response.data.items);
+      );
+
+      if (response.data.success) {
+        alert('물건이 복구되었습니다.');
+        loadDeletedItems();
+      } else {
+        throw new Error(response.data.message);
       }
-      
-      alert('물건이 복구되었습니다.');
     } catch (error) {
       console.error('물건 복구 실패:', error);
       alert(error.response?.data?.message || '물건 복구에 실패했습니다.');
     }
   };
 
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
   return (
-    <div className="deleted-items-container">
+    <div className="deleted-items">
       <h2>삭제된 물건 목록</h2>
-      {error ? (
-        <div className="error-message">{error}</div>
+      {deletedItems.length === 0 ? (
+        <p>삭제된 물건이 없습니다.</p>
       ) : (
-        <div className="item-grid">
-          {Array.isArray(items) && items.length > 0 ? (
-            items.map(item => (
-              <div key={item.itemId} className="item-card">
-                <h3>{item.itemName}</h3>
-                <p>{item.price?.toLocaleString()}원</p>
-                <p>재고: {item.stock}개</p>
-                <button onClick={() => handleRestore(item.itemId)}>복구</button>
-              </div>
-            ))
-          ) : (
-            <p>삭제된 물건이 없습니다.</p>
-          )}
+        <div className="items-container">
+          {deletedItems.map(item => (
+            <div key={item.item_id} className="item-card">
+              <h3>{item.item_name}</h3>
+              <p>가격: {item.item_price}원</p>
+              <p>재고: {item.item_stock}개</p>
+              <p>{item.item_description}</p>
+              <p>삭제일: {new Date(item.delete_date).toLocaleDateString()}</p>
+              <button 
+                onClick={() => handleRestore(item.item_id)}
+                className="restore-button"
+              >
+                복구
+              </button>
+            </div>
+          ))}
         </div>
       )}
+      <button 
+        onClick={() => navigate('/stuff/item/list')}
+        className="back-button"
+      >
+        목록으로 돌아가기
+      </button>
     </div>
   );
 }
