@@ -21,11 +21,36 @@ function ItemList({ onAddToCart, isLoggedIn, isAdmin }) {
         !item.item_delete && 
         (!item.member_delete || item.member_delete === 0)
       );
+
+      // 재고가 0인 아이템 자동 삭제 처리
+      activeItems.forEach(async (item) => {
+        if (item.item_stock === 0) {
+          const params = new URLSearchParams();
+          params.append('itemId', item.item_id);
+          
+          try {
+            await axios.post(
+              'http://localhost:8080/mvc/stuff/item/delete',
+              params,
+              {
+                withCredentials: true,
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                }
+              }
+            );
+          } catch (error) {
+            console.error('재고 0 아이템 삭제 실패:', error);
+          }
+        }
+      });
       
-      setItems(activeItems);
+      // 재고가 있는 아이템만 표시
+      const itemsWithStock = activeItems.filter(item => item.item_stock > 0);
+      setItems(itemsWithStock);
       
       const initialQuantities = {};
-      activeItems.forEach(item => {
+      itemsWithStock.forEach(item => {
         initialQuantities[item.item_id] = 1;
       });
       setQuantities(initialQuantities);
@@ -80,6 +105,40 @@ function ItemList({ onAddToCart, isLoggedIn, isAdmin }) {
     }));
   };
 
+  const handleAddToCart = async (itemId, quantity) => {
+    try {
+      if (!isLoggedIn) {
+        alert('로그인이 필요합니다.');
+        return;
+      }
+
+      const params = new URLSearchParams();
+      params.append('itemId', itemId);
+      params.append('quantity', quantity);
+
+      const response = await axios.post(
+        'http://localhost:8080/mvc/stuff/api/cart/add',
+        params,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+      );
+
+      if (response.data.status === 'success') {
+        alert(response.data.message);
+        loadItems();
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      console.error('장바구니 추가 중 오류:', error);
+      alert(error.response?.data?.message || '장바구니 추가에 실패했습니다.');
+    }
+  };
+
   return (
     <div className="item-list">
       <h2>물건 목록</h2>
@@ -87,8 +146,8 @@ function ItemList({ onAddToCart, isLoggedIn, isAdmin }) {
         {items.map(item => (
           <div key={item.item_id} className="item-card">
             <h3>{item.item_name}</h3>
-            <p>가격: {item.item_price}원</p>
-            <p>재고: {item.item_stock}개</p>
+            <p>가격: {item.item_price.toLocaleString()}원</p>
+            <p>재고: {item.item_stock.toLocaleString()}개</p>
             <p>{item.item_description}</p>
             
             {isAdmin && (
@@ -114,13 +173,12 @@ function ItemList({ onAddToCart, isLoggedIn, isAdmin }) {
                   type="number"
                   min="1"
                   max={item.item_stock}
-                  value={quantities[item.item_id]}
+                  value={quantities[item.item_id] || 1}
                   onChange={(e) => handleQuantityChange(item.item_id, parseInt(e.target.value))}
-                  aria-label={`${item.item_name} 수량`}
+                  className="quantity-input"
                 />
                 <button 
-                  onClick={() => onAddToCart(item.item_id, quantities[item.item_id])}
-                  disabled={item.item_stock === 0}
+                  onClick={() => handleAddToCart(item.item_id, quantities[item.item_id] || 1)}
                   className="add-to-cart-button"
                 >
                   장바구니에 추가

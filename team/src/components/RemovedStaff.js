@@ -69,7 +69,7 @@ function RemovedStaff() {
               {Array.isArray(staffList) && staffList.length > 0 ? (
                 staffList.map(staff => (
                   <tr key={staff.member_no}>
-                    <td>{staff.member_no}</td>
+                    <td>{staff.member_no.toLocaleString()}</td>
                     <td>{staff.member_id}</td>
                     <td>{staff.member_nick}</td>
                     <td>{staff.admins === 1 ? '관리자' : '일반 직원'}</td>
