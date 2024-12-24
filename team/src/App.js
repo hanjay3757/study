@@ -171,6 +171,8 @@ function App() {
   function confirmDelete(member_no) {
     if (window.confirm('이 직원을 삭제하시겠습니까?')) {
       const params = new URLSearchParams();
+      //GET 요청이나 폼 제출에서 사용되는 쿼리 파라미터를 생성하거나 
+      // 수정할 때 사용되는 urlsearchparams
       params.append('member_no', member_no);
 
       axios.post('http://localhost:8080/mvc/staff/remove', params, {
