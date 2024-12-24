@@ -32,6 +32,7 @@ function DeletedItems() {
     try {
       const params = new URLSearchParams();
       params.append('itemId', itemId);
+      params.append('itemStock', 1);
 
       const response = await axios.post(
         'http://localhost:8080/mvc/stuff/item/restore',
@@ -44,15 +45,15 @@ function DeletedItems() {
         }
       );
 
-      if (response.data.success) {
+      if (response.data === 'redirect:/stuff/item/list' || response.status === 200) {
         alert('물건이 복구되었습니다.');
         loadDeletedItems();
       } else {
-        throw new Error(response.data.message);
+        throw new Error('복구에 실패했습니다.');
       }
     } catch (error) {
       console.error('물건 복구 실패:', error);
-      alert(error.response?.data?.message || '물건 복구에 실패했습니다.');
+      alert('물건 복구에 실패했습니다.');
     }
   };
 
