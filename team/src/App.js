@@ -173,6 +173,7 @@ function App() {
       const params = new URLSearchParams();
       //GET 요청이나 폼 제출에서 사용되는 쿼리 파라미터를 생성하거나 
       // 수정할 때 사용되는 urlsearchparams
+      //자동 인코딩: URLSearchParams는 값에 특수 문자가 포함될 경우 자동으로 URL 인코딩
       params.append('member_no', member_no);
 
       axios.post('http://localhost:8080/mvc/staff/remove', params, {
@@ -200,6 +201,7 @@ function App() {
   function editStaff(member_no) {
     navigate(`/staff/edit?member_no=${member_no}`);
   }
+  //같은 설명이기에 생략
 
   // TopMenu 컴포넌트 - 모든 사용자용 공통 메뉴
   const TopMenu = () => {
@@ -213,8 +215,10 @@ function App() {
       e.preventDefault();
       handleLogin(e, localLoginForm);  // 부모의 handleLogin 함수 호출
     };
-
-    return (
+//localLoginForm: 로그인 폼의 상태(아이디, 비밀번호)를 관리
+//handleLocalSubmit: 로그인 폼이 제출될 때 호출되는 함수, 폼 제출 시 기본 동작을 방지하고 handleLogin 함수에 입력된 값을 전달하여 로그인
+    
+return (
       <div className="top-menu">
         <div className="menu-buttons">
           <button onClick={() => navigate('/stuff/item/list')}>물건 목록</button>
@@ -274,41 +278,68 @@ function App() {
     <div className="App">
       <TopMenu />
       <AdminMenu />
-      
-      {/* 라우트 설정 수정 */}
-      <Routes>
-        {/* 메인 페이지에 ItemList 표시 */}
-        <Route path="/" element={<ItemList isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
-        <Route path="/staff/edit" element={<StaffEdit onUpdate={loadStaffList} />} />
-        <Route path="/stuff/item/list" element={<ItemList isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
-        <Route path="/staff/register" element={<StaffRegister />} />
-        <Route path="/stuff/item/register" element={<ItemRegister />} />
-        <Route path="/stuff/item/edit" element={<ItemEdit />} />
-        <Route path="/stuff/item/deleted" element={<DeletedItems />} />
-        <Route path="/stuff/cart" element={<Cart />} />
-        <Route path="/staff/removelist" element={<RemovedStaff />} />
-        <Route path="/board/list" element={<BoardList isLoggedIn={isLoggedIn} isAdmin={isAdmin}/> } />
-        <Route path="/board/read" element={<ReadContent /> } />
-        <Route path="/staff/list" element={
-          <StaffTable 
-            staffList={staffList}
-            onDelete={confirmDelete}
-            onEdit={editStaff}
-          />
-        } />
-      </Routes>
+       {/* 라우트 설정 - 경로에 맞는 컴포넌트를 렌더링 */}
+    <Routes>
+      {/* "/" 경로에 ItemList 컴포넌트를 렌더링 */}
+      {/* isLoggedIn과 isAdmin 값을 props로 전달하여 로그인 상태와 관리자 여부를 전달 */}
+      <Route path="/" element={<ItemList isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
 
-      {/* 관리자일 경우에만 StaffTable 표시하고 목록도 새로고침 */}
-      {isAdmin && (
+      {/* "/staff/edit" 경로에 StaffEdit 컴포넌트를 렌더링 */}
+      {/* onUpdate 속성으로 loadStaffList 함수 전달 - 목록 업데이트를 처리 */}
+      <Route path="/staff/edit" element={<StaffEdit onUpdate={loadStaffList} />} />
+
+      {/* "/stuff/item/list" 경로에 ItemList 컴포넌트를 렌더링 */}
+      <Route path="/stuff/item/list" element={<ItemList isLoggedIn={isLoggedIn} isAdmin={isAdmin} />} />
+
+      {/* "/staff/register" 경로에 StaffRegister 컴포넌트를 렌더링 */}
+      <Route path="/staff/register" element={<StaffRegister />} />
+
+      {/* "/stuff/item/register" 경로에 ItemRegister 컴포넌트를 렌더링 */}
+      <Route path="/stuff/item/register" element={<ItemRegister />} />
+
+      {/* "/stuff/item/edit" 경로에 ItemEdit 컴포넌트를 렌더링 */}
+      <Route path="/stuff/item/edit" element={<ItemEdit />} />
+
+      {/* "/stuff/item/deleted" 경로에 DeletedItems 컴포넌트를 렌더링 */}
+      <Route path="/stuff/item/deleted" element={<DeletedItems />} />
+
+      {/* "/stuff/cart" 경로에 Cart 컴포넌트를 렌더링 */}
+      <Route path="/stuff/cart" element={<Cart />} />
+
+      {/* "/staff/removelist" 경로에 RemovedStaff 컴포넌트를 렌더링 */}
+      <Route path="/staff/removelist" element={<RemovedStaff />} />
+
+      {/* "/board/list" 경로에 BoardList 컴포넌트를 렌더링 */}
+      {/* isLoggedIn과 isAdmin 값을 props로 전달 */}
+      <Route path="/board/list" element={<BoardList isLoggedIn={isLoggedIn} isAdmin={isAdmin}/> } />
+
+      {/* "/board/read" 경로에 ReadContent 컴포넌트를 렌더링 */}
+      <Route path="/board/read" element={<ReadContent />} />
+
+      {/* "/staff/list" 경로에 StaffTable 컴포넌트를 렌더링 */}
+      {/* staffList를 전달하여 직원 목록을 표시 */}
+      {/* onDelete와 onEdit을 통해 삭제 및 수정 기능을 처리 */}
+      <Route path="/staff/list" element={
         <StaffTable 
           staffList={staffList}
           onDelete={confirmDelete}
           onEdit={editStaff}
-          key={JSON.stringify(staffList)}
         />
-      )}
-    </div>
-  );
+      } />
+    </Routes>
+
+    {/* 관리자일 경우만 StaffTable을 다시 렌더링 */}
+    {/* key를 JSON.stringify(staffList)로 설정하여 목록이 변경될 때마다 새로고침이 되도록 함 */}
+    {isAdmin && (
+      <StaffTable 
+        staffList={staffList}
+        onDelete={confirmDelete}
+        onEdit={editStaff}
+        key={JSON.stringify(staffList)} // 목록 변경 시 컴포넌트를 리렌더링
+      />
+    )}
+  </div>
+);
 }
 
 export default App;
