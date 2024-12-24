@@ -12,12 +12,13 @@ import RemovedStaff from './components/RemovedStaff';
 import ItemEdit from './components/ItemEdit';
 import BoardList from './components/BoardList';
 import ReadContent from './components/ReadContent';
-
+//ㄴ 로딩되는 변수지정 폴더 위치 적어놓음
 // axios 기본 설정
 axios.defaults.withCredentials = true;
 
 // StaffTable을 별도의 컴포넌트로 분리
 const StaffTable = ({ staffList, onDelete, onEdit }) => {
+  /* 리스트 삭제 수정 에대한 테이블 설정 */
   return (
     <>
       <h2 className="section-title">직원 목록</h2>
@@ -38,6 +39,7 @@ const StaffTable = ({ staffList, onDelete, onEdit }) => {
               <td>{staff.member_id}</td>
               <td>{staff.member_nick}</td>
               <td>{staff.delete_right_no === 1 ? '관리자' : '일반 직원'}</td>
+              {/* 관리자인지 아닌지 표시하는 테이블 만약 0인경우 일반 직원 */}
               <td>
                 <button onClick={() => onDelete(staff.member_no)}>삭제</button>
                 <button onClick={() => onEdit(staff.member_no)}>수정</button>
@@ -54,57 +56,72 @@ const StaffTable = ({ staffList, onDelete, onEdit }) => {
 function App() {
   // 상태 변수들
   const [isAdmin, setIsAdmin] = useState(false);
+  //사용자가 관리자일때 상태를 관리하는 변수
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // 사용자가 로그인 상태인지 확인함 
   // const [userInfo, setUserInfo] = useState(null); //사용자 정보를 저장
   const [staffList, setStaffList] = useState([]);
+  //직원 목록을 저장배열
   const [loading , setLoading] = useState(true);
+  //데이터를 로드 중인지 여부를 관리
   const navigate = useNavigate();
-
+//페이지 네비게이션을 위한 축 지정
   useEffect(() => {
 
 
     async function fetchData() {
       await checkLoginStatus();
-      setLoading(false); //로딩 완료
+      setLoading(false); //로딩 완료 로그인 상태를 확인
     }
     fetchData();
     loadStaffList();
   }, []);
+  //로그인 상태를 확인후 직원 목록을 불러오는것 빈배열로 하나를 만든건 한번만 실행되게끔 하기 위해서
+
 
   // 로그인 상태 확인
   function checkLoginStatus() {
     return axios.get('http://localhost:8080/mvc/staff/check-login')
       .then(response => {
-        setIsLoggedIn(response.data.isLoggedIn);
-        setIsAdmin(response.data.isAdmin);
+        //서버에서 변환된 데이터를 이용해 로그인 상태와 관리자 여부를 확인 함 
+        setIsLoggedIn(response.data.isLoggedIn); //로그인 상태 확인
+        setIsAdmin(response.data.isAdmin);//관리자가 맞는 지 확인
+        //response.data는 axios가 요청을 보내고 응답 받을때 반환된 데이터를 포함
       })
       .catch(error => {
+        //로그인 상태 확인 후 이를 실패 했을때의 기본 설정
         console.error('로그인 상태 확인 실패:', error);
-        setIsLoggedIn(false);
-        setIsAdmin(false);
+        setIsLoggedIn(false); //로그인 아니네?
+        setIsAdmin(false);//관리자는 당연히 아니군 라고 지정
       });
   }
   if(loading){
+    //그냥 데이터 불러올때 그 기간동안 로딩중임을 표시
     return <p>초기 데이터를 불러오는 중입니다.</p>
   }
 
   // 로그인 처리
   function handleLogin(e, formData) {
     e.preventDefault();
+    /* 기본적으로 페이지 새로고침을 막는것 */
     const params = new URLSearchParams();
+    /* 새로운 파라미터를 지정 이를 urlsearchparams로 만듬 
+    (application/x-www-form-urlencoded 형식으로 서버에 제출)*/
     params.append('staffId', formData.username);
     params.append('password', formData.password);
-
+    /* 폼데이터를 지정하는건데 1번은 파라미터 이름, 2번은 파라미터 값을 지정
+    파라미터는 같은 이름에 여러 다른 값을 지정하는게 가능 */
     axios.post('http://localhost:8080/mvc/staff/login', params, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
       .then(response => {
+        /* 서버가 응답한 데이터가 성공적인 로그인인지 확인함 */
         if (response.data.success) {
-          setIsLoggedIn(true);
-          setIsAdmin(response.data.isAdmin);
-          navigate('/stuff/item/list');
+          setIsLoggedIn(true); //로그인 상태를 true로 설정
+          setIsAdmin(response.data.isAdmin); // isadmin 값으로 관리자여부를 설정함
+          navigate('/stuff/item/list'); // 해당 페이지로 이동하는 함수
         } else {
           alert(response.data.message || '로그인에 실패했습니다.');
         }
@@ -113,7 +130,7 @@ function App() {
         console.error('로그인 요청 실패:', error);
         alert('로그인에 실패했습니다. 서버에 문제가 있습니다.');
       });
-  }
+  }//실패시 메시지는 스킵
 
   // 로그아웃 처리
   function handleLogout() {
@@ -128,14 +145,22 @@ function App() {
       .catch(error => {
         console.error('로그아웃 실패:', error);
       });
-  }
+  }//하드코딩 로그아웃일때 
 
  // 직원 목록 불러오기 함수
   async function loadStaffList() {
     try {
+      //서버로부터 직원 목록을 get 방식으로 요청함
+      // 쿼리 파라미터 _t는 캐싱을 방지하기 위해서 현재시간을 추가
       const response = await axios.get(`http://localhost:8080/mvc/staff/list?_t=${Date.now()}`);
+
+      //서버에서 받은 응답에서 meber_delete가 0인 직원만 보이게함 
       const filteredList = response.data.filter(staff => !staff.member_delete);
+
+      //직원목록을 meber no 값을 기준으로 오름차순 정렬
+      //... = 스프레드 연산자 = 배열이나 객체를 복사하거나 확장할때 사용
       const sortedStaffList = [...filteredList].sort((a, b) => a.member_no - b.member_no);
+      //정렬된 직원 목록을 상태로 설정
       setStaffList(sortedStaffList);
     } catch (error) {
       console.error('직원 목록 조회 실패:', error);
