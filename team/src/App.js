@@ -8,26 +8,41 @@ import ItemRegister from './components/ItemRegister';
 import DeletedItems from './components/DeletedItems';
 import Cart from './components/Cart';
 import RemovedStaff from './components/RemovedStaff';
-
+//ㄴ 해당 변수명 불러올때 위치 지정 
 // axios 기본 설정
 axios.defaults.withCredentials = true;
 
 // App 컴포넌트
 function App() {
   // 상태 변수들
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
-  const [staffList, setStaffList] = useState([]);
-  const navigate = useNavigate();
-  const location = useLocation();
+ // 관리자인지 여부를 나타내는 상태 (false로 초기화)
+const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
-    checkLoginStatus();
-    loadStaffList();
-  }, []);
+// 로그인 여부를 나타내는 상태 (false로 초기화)
+const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // 로그인 상태 확인
+// 로그인 폼 데이터를 저장하는 상태 (username, password 초기화)
+const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+
+// 직원 목록을 저장하는 상태 (빈 배열로 초기화)
+const [staffList, setStaffList] = useState([]);
+
+// 페이지 이동을 위한 함수 (페이지 변경 시 사용)
+const navigate = useNavigate();
+
+// 현재 페이지의 URL 정보 (현재 경로와 쿼리 파라미터 등 포함)
+const location = useLocation();
+
+  // 컴포넌트가 마운트될 때 한 번만 실행되는 useEffect
+useEffect(() => {
+  // 로그인 상태를 확인하는 함수 호출
+  checkLoginStatus();
+
+  // 직원 목록을 불러오는 함수 호출
+  loadStaffList();
+}, []); // 빈 배열을 넣어서 한 번만 실행되도록 설정 안하면 진짜 계속 로딩걸림
+
+  // 로그인 상태 확인 
   function checkLoginStatus() {
     axios.get('http://localhost:8080/mvc/staff/check-login')
       .then(response => {
@@ -40,32 +55,42 @@ function App() {
         setIsAdmin(false);
       });
   }
+//axios 에서 응답을 받을때 실제 데이터가 포함된 부분을 response.data ((axios는 http에 요청을 보내고 
+// 이를 서버에서 응답하는걸 response로 변환))
 
-  // 로그인 처리
-  function handleLogin(e) {
-    e.preventDefault();
-    const params = new URLSearchParams();
-    params.append('staffId', loginForm.username);
-    params.append('password', loginForm.password);
+// 로그인 요청을 처리하는 함수
+function handleLogin(e) {
+  // 폼 제출 시 페이지가 새로고침 되는 것을 방지
+  e.preventDefault();
 
-    axios.post('http://localhost:8080/mvc/staff/login', params, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+  // 로그인 정보를 URLSearchParams로 포맷팅
+  const params = new URLSearchParams();
+  params.append('staffId', loginForm.username); // 폼에서 입력한 사용자 이름을 'staffId' 파라미터로 추가
+  params.append('password', loginForm.password); // 폼에서 입력한 비밀번호를 'password' 파라미터로 추가
+
+  // 서버에 POST 요청을 보내서 로그인 처리
+  axios.post('http://localhost:8080/mvc/staff/login', params, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded' // 서버가 받는 콘텐츠 타입을 지정
+    }
+  })
+    .then(response => {
+      // 응답이 성공적이면 로그인 상태와 관리자 여부를 업데이트하고, 지정된 경로로 이동
+      if (response.data.success) {
+        setIsLoggedIn(true); // 로그인 상태를 true로 설정
+        setIsAdmin(response.data.isAdmin); // 응답에서 관리자 여부를 가져와 상태 설정
+        navigate('/stuff/item/list'); // 로그인 성공 시 이동할 페이지로 이동
+      } else {
+        // 로그인 실패 시 서버에서 보낸 메시지 출력
+        alert(response.data.message || '로그인에 실패했습니다.');
       }
     })
-      .then(response => {
-        if (response.data.success) {
-          setIsLoggedIn(true);
-          setIsAdmin(response.data.isAdmin);
-          navigate('/stuff/item/list'); // 수정된 경로
-        } else {
-          alert(response.data.message || '로그인에 실패했습니다.'); // 메시지 개선
-        }
-      })
-      .catch(error => {
-        console.error('로그인 요청 실패:', error); // 콘솔에 에러 로그 추가
-        alert('로그인에 실패했습니다. 서버에 문제가 있습니다.'); // 에러 메시지 개선
-      });
+    .catch(error => {
+      // 요청 실패 시 에러 메시지와 함께 콘솔에 에러 로그 출력
+      console.error('로그인 요청 실패:', error);
+      alert('로그인에 실패했습니다. 서버에 문제가 있습니다.');
+    });
+
   }
 
   // 로그아웃 처리
