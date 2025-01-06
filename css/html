@@ -1,0 +1,122 @@
+<!--@layout(/layout/basic/layout.html)-->
+<!--@js(/layout/basic/js/main.js)-->
+<!--@css(/layout/basic/css/main.css)-->
+<section class="section main_text ez-textsize-medium ez-align-left" data-ez-module="text/1" data-ez-role="style.background" data-ez-align="left" data-ez-textsize="medium" style="background-color: rgb(15, 85, 53); margin-bottom: 6px; padding: 0;" data-ez="contents-1kb9spx-1">
+	<div class="main_long_banner" style="width: 100%; height: auto; min-height: 200px;"><!-- 메인 롱배너 -->
+		<div class="main_long_banner_txt" style="width: 100%; padding: 20px;">
+			<div class="main_long_banner_txt01" data-ez-role="title" style="color: rgb(255, 255, 255);"></div>
+			<div class="main_long_banner_txt02" data-ez-role="desc" style="color: rgb(119, 119, 119);"></div>
+			<div class="main_text_link" style="display: none;"><a data-ez-role="a" href="#" target="_self"></a></div>
+		</div><!-- //main_long_banner_txt -->
+	</div><!-- //main_long_banner -->
+</section>
+<!--@import(/smart-banner/shop1/smart-banner-admin-RES00003.html)-->
+<section class="section main_image_text_gallery" data-ez-module="image-gallery/2" data-ez-role="style.background" data-ez-item-length="3" data-ez="contents-1oe6nys-1" style="margin-bottom: 120px;">
+	<ez-prop data-version="1.0.0" type="layout">
+		<ez-var data-prop="image" data-namespace="ez.module.image-gallery.image">
+			<ez-item data-id="size" data-pc="480 480" data-mobile="480 480"></ez-item>
+		</ez-var>
+		<ez-var data-prop="display" data-namespace="ez.module.image-gallery.display">
+			<ez-item data-id="item" data-max="10"></ez-item>
+			<ez-item data-id="column" data-default="3" data-min="1" data-max="5"></ez-item>
+		</ez-var>
+		<ez-var data-prop="layout" data-namespace="ez.module.image-gallery.layout">
+			<ez-item data-id="mobile" data-default="slide">
+				<ez-item data-id="options" data-type="array">
+					<ez-item data-id="slide" data-name="슬라이드"></ez-item>
+					<ez-item data-id="more" data-name="더보기"></ez-item>
+					<ez-item data-id="none" data-name="사용안함"></ez-item>
+				</ez-item>
+			</ez-item>
+		</ez-var>
+	</ez-prop>
+	<div class="main_title ez-align-center" data-ez-role="ez-align" data-ez-align="center"><!-- 라이프스타일 타이틀 수정하는곳 -->
+		<div class="main_title_txt01" data-ez-role="title">대표 메뉴</div>
+		<div class="main_title_txt02" data-ez-role="desc"></div>
+	</div><!-- //main_title -->
+
+    <div class="main_3dan_banner ez-mobile-layout-none" data-ez-role="ez-mobile-layout" data-ez-mobile-layout="none"><!-- 메인 3단배너 수정하는곳 -->
+         <ul data-ez-role="image-list ez-column" class="ez-column-3" data-ez-column="3"><li data-ez-role="image-item ez-align">
+				<a data-ez-role="a" href="#" target="_self">
+					<picture>
+						<source srcset="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-0x2nw4a-4.jpg?v=1736146664370" media="(max-width: 1024px)" data-ez-role="img-pc" data-ez-eb="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-0x2nw4a-4.edibotbanner.json">
+						<img src="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-0x2nw4a-4.jpg?v=1736146664370" data-ez-role="img-mobile">
+					</picture>
+					<div class="main_3dan_banner_txt">
+						<div class="main_3dan_banner_txt01" data-ez-role="title" style="color: rgb(0, 0, 0);">소고기 전골</div>
+						<div class="main_banner_more" data-ez-role="desc" style="color: rgb(136, 136, 136);"></div>
+					</div><!--//main_3dan_banner_txt-->
+				</a>
+            </li><li data-ez-role="image-item ez-align">
+				<a data-ez-role="a" href="#" target="_self">
+					<picture>
+						<source srcset="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-1qcrirm-4.jpg?v=1736146647585" media="(max-width: 1024px)" data-ez-role="img-pc" data-ez-eb="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-1qcrirm-4.edibotbanner.json">
+						<img src="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-1qcrirm-4.jpg?v=1736146647585" data-ez-role="img-mobile">
+					</picture>
+					<div class="main_3dan_banner_txt">
+						<div class="main_3dan_banner_txt01" data-ez-role="title" style="color: rgb(0, 0, 0);">치즈 감자전</div>
+						<div class="main_banner_more" data-ez-role="desc" style="color: rgb(136, 136, 136);"></div>
+					</div><!--//main_3dan_banner_txt-->
+				</a>
+            </li><li data-ez-role="image-item ez-align">
+				<a data-ez-role="a" href="#" target="_self">
+					<picture>
+						<source srcset="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-190ug3j-4.jpg?v=1736146622198" media="(max-width: 1024px)" data-ez-role="img-pc" data-ez-eb="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-190ug3j-4.edibotbanner.json">
+						<img src="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-190ug3j-4.jpg?v=1736146622198" data-ez-role="img-mobile">
+					</picture>
+					<div class="main_3dan_banner_txt">
+						<div class="main_3dan_banner_txt01" data-ez-role="title" style="color: rgb(0, 0, 0);">수육</div>
+						<div class="main_banner_more" data-ez-role="desc" style="color: rgb(136, 136, 136);"></div>
+					</div><!--//main_3dan_banner_txt-->
+				</a>
+            </li></ul>
+		<div class="main_image_text_gallery_more"><a href="#none" class="main_image_text_gallery_more_btn">더보기</a></div>
+	</div><!-- //main_3dan_banner -->
+</section>
+<!--@import(/smart-banner/shop1/smart-banner-admin-RES00004.html)-->
+<section class="section main_video ez-align-center" data-ez-module="video/1" data-ez-role="style.background" data-ez-align="center" data-ez="contents-0kyd1y9-1" style="margin-bottom: 132px; display: none;" data-ez-display="hidden">
+	<div class="background_video"></div>
+	<div class="margin_video_box">
+		<div class="wrap_video_box">
+			<div class="main_video_box"><iframe data-ez-role="video" id="ytplayer" type="text/html" src="https://m-img.cafe24.com/images/ec/sde/video/espresso_1280x720.mp4" frameborder="0" allowfullscreen data-ez-rawsrc="https://m-img.cafe24.com/images/ec/sde/video/espresso_1280x720.mp4"></iframe></div>
+
+			<div class="main_video_title"><!-- 비디오 타이틀 수정하는곳 -->
+				<div class="main_title_txt01" data-ez-role="title">홈 카페의 시작과 끝</div>
+				<div class="main_title_txt02" data-ez-role="desc">나만의 홈 카페를 즐겨 보세요</div>
+			</div><!-- //main_video_title -->
+		</div>
+	</div>
+</section>
+<section class="section main_text ez-textsize-small ez-align-center" data-ez-module="text/1" data-ez-role="style.background" data-ez-align="center" data-ez-textsize="small" style="background-color: rgb(15, 85, 53); margin-bottom: 0px;" data-ez="contents-021dqxk-1" data-ez-display="visible">
+	<div class="main_long_banner" style="width: 100%; height: auto; min-height: 200px;"><!-- 메인 롱배너 -->
+		<div class="main_long_banner_txt" style="width: 100%; padding: 20px;">
+			<div class="main_long_banner_txt01" data-ez-role="title" style="color: rgb(255, 255, 255);">주감</div>
+			<div class="main_long_banner_txt02" data-ez-role="desc" style="color: rgb(119, 119, 119);"><p><span style="color: rgb(255, 255, 255);">대전 갈마동에서 4년째 '웨이팅'되는 인기 한식주점, '주감'. VIP 출신 메뉴 개발팀이 선보이는 차별화된 메뉴로 20대부터 50대까지 모두에게 사랑받는 대전 대표 맛집으로 손꼽히고 있어요. 계절과 날씨를 초월한 독보적인 맛으로 손님들을 매료시키는 '주감'을 지금 경험해보세요!</span></p></div>
+			<div class="main_text_link" style="display: none;"><a data-ez-role="a" href="#" target="_self"></a></div>
+		</div><!-- //main_long_banner_txt -->
+	</div><!-- //main_long_banner -->
+</section>
+<section class="section main_map ez-align-left" data-ez-module="map/1" data-ez-align="left" data-ez="contents-09jby7h-1" style="margin-bottom: 39px;">
+	<ez-prop data-version="1.0.0" type="layout">
+		<ez-var data-prop="image" data-namespace="ez.module.map.image">
+			<ez-item data-id="size" data-pc="830 520" data-mobile="830 520"></ez-item>
+		</ez-var>
+	</ez-prop>
+	<div class="main_map_banner"><!-- 메인 지도 -->
+		<div class="wrap_banner_txt">
+			<div class="main_map_banner_txt01" data-ez-role="title" style="color: rgb(255, 255, 255);"></div>
+		</div>
+		<picture>
+			<source srcset="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-09jby7h-1-4.jpg?v=1736146817678" media="(max-width: 1024px)" data-ez-role="img-pc" data-ez-eb="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-09jby7h-1-4.edibotbanner.json">
+			<img src="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-09jby7h-1-4.jpg?v=1736146817678" data-ez-role="img-mobile">
+		</picture>
+		<div class="main_map_banner_txt_box">
+			<div class="main_map_banner_txt">
+				<div class="map_txt" data-ez-role="desc" style="color: rgb(118, 118, 118);"><p><strong><span style="color: rgb(0, 0, 0);">주소 </span></strong></p>대전광역시 서구 갈마역로 25번길 17-17 1층 주감<p><br></p><p><strong><span style="color: rgb(0, 0, 0);">운영시간</span></strong></p><p>운영시간 : 오전 10시 ~ 오후 06시</p><p>점심시간 : 오후 12시 ~ 오후 01시</p></div><!-- //map_txt -->
+				<div class="main_long_banner_link"><span class="displaynone" data-ez-role="address">대전광역시 서구 갈마역로25번길 17-17 1층 주감</span><a data-ez-role="a" href="https://www.google.com/maps/dir/대전광역시%20서구%20갈마역로25번길%2017-17%201층%20주감" target="_blank">바로가기</a></div>
+			</div><!-- //main_map_banner_txt -->
+		</div><!-- //main_long_banner_txt -->
+	</div><!-- //main_map_banner -->
+</section>
+<!--@define(cmc_log)-->
+<!--#ez="1/55"-->
