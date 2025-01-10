@@ -1,0 +1,13 @@
+   <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-0gwmzgt-1-16o333t-4.jpg?v=1736476157006');
+        background-repeat: repeat;
+        background-size: 50px 50px;
+        opacity: 0.15;
+        pointer-events: none;
+        z-index: 0;
+    "&gt;</path></div>
