@@ -1,0 +1,1 @@
+<div class="smart-banner-bx-wrapper"> = 스마트배너 사진 바뀌는거에 사진 부분
