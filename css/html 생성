@@ -1,0 +1,293 @@
+<!--@layout(/layout/basic/layout.html)-->
+<!--@js(/layout/basic/js/main.js)-->
+<!--@css(/layout/basic/css/main.css)-->
+<!--@import(/smart-banner/shop1/smart-banner-admin-RES00020.html)-->
+<!--@import(/smart-banner/shop1/smart-banner-admin-RES00014.html)-->
+<div app4you-smart-banner="smart-banner-admin-RES00020" app4you-smart-banner-html="true" class="xans-element- xans-smart-banner-admin xans-smart-banner-admin-RES00020 section section_full parallax-container" data-ez="module-0csghml-1" data-ez-layoutsize="full" data-ez-module="user-defined/1" data-ez-name="USER DEFINED" data-ez-type="plain" style="margin-bottom: 0px;">
+    <style>
+ 
+    </style>
+  
+    <div class="parallax-layer parallax-bg"></div>
+    <div class="parallax-layer parallax-content">
+      <div>
+        <h1 class="parallax-title">ㅈㅜ ㄱㅏㅁ</h1>
+        <p class="parallax-text">맛있는 한식과 함께하는 즐거운 시간</p>
+      </div>
+    </div>
+  
+    <script>
+      (() => {
+        const parallaxContainer = document.querySelector('.parallax-container');
+        const parallaxBg = document.querySelector('.parallax-bg');
+        const parallaxContent = document.querySelector('.parallax-content');
+        
+        let ticking = false;
+        
+        const updateParallax = () => {
+          const scrolled = window.pageYOffset;
+          const containerRect = parallaxContainer.getBoundingClientRect();
+          
+          if (containerRect.top <= window.innerHeight && containerRect.bottom >= 0) {
+            const speed = 0.5;
+            const yPos = (scrolled * speed);
+            
+            parallaxBg.style.transform = `translate3d(0, ${yPos}px, 0)`;
+            parallaxContent.style.transform = `translate3d(0, ${yPos * 0.8}px, 0)`;
+          }
+          
+          ticking = false;
+        };
+  
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            window.requestAnimationFrame(updateParallax);
+            ticking = true;
+          }
+        }, { passive: true });
+        
+        // 초기 로드 시 실행
+        updateParallax();
+      })();
+    </script>
+  </div>
+<div class="wave-container" data-ez="module-155zbj4-1" data-ez-module="user-defined/1" data-ez-name="USER DEFINED" data-ez-type="plain" style="margin-bottom: 10px;">
+  <div class="wave-overlay"></div>
+  <svg class="wave-svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path class="wave wave1" d="M0,20 C240,25 480,15 720,20 C960,25 1200,15 1440,20 L1440,120 L0,120 Z"></path>
+    <path class="wave wave2" d="M0,40 C240,45 480,35 720,40 C960,45 1200,35 1440,40 L1440,120 L0,120 Z"></path>
+    <path class="wave wave3" d="M0,60 C240,65 480,55 720,60 C960,65 1200,55 1440,60 L1440,120 L0,120 Z"></path>
+  </svg>
+  <style>
+    
+  </style>
+</div>
+<section class="section main_text ez-textsize-medium ez-align-center" data-ez-module="text/1" data-ez-role="style.background" data-ez-align="center" data-ez-textsize="medium" style="background-color: rgb(201, 173, 141); display: none;" data-ez="contents-0owazym-1" data-ez-display="hidden">
+  
+  
+      <div class="main_long_banner"><!-- 메인 롱배너 -->
+          <div class="main_long_banner_txt">
+              <div class="main_long_banner_txt01" data-ez-role="title" style="color: rgb(255, 255, 255);">배송 지연 안내</div>
+              <div class="main_long_banner_txt02" data-ez-role="desc" style="color: rgb(119, 119, 119);"><p><span style="color: rgb(255, 255, 255);">추석 연휴 기간 동안 택배 배송은 진행하지 않습니다.</span></p><p><span style="color: rgb(255, 255, 255);">17일 이후의 주문 건은 23일부터 순차적으로 배송될 예정입니다.</span></p></div>
+              <div class="main_text_link" style="display: none;"><a data-ez-role="a" href="#" target="_self"></a></div>
+          </div><!-- //main_long_banner_txt -->
+      </div><!-- //main_long_banner -->
+  </section>
+<div class="background-wrapper" style="overflow: hidden; position: relative; margin-bottom: 40px; width: 100vw; height: 75vh; background: linear-gradient(135deg, rgb(255, 107, 107), rgb(78, 205, 196), rgb(69, 182, 73)) 0% 0% / 300% 300%; animation: 15s ease 0s infinite normal none running gradientAnimation;" data-ez="module-0nch67a-1" data-ez-module="user-defined/1" data-ez-name="USER DEFINED" data-ez-type="plain">
+  
+  <style>
+ 
+  </style>
+  
+      <!-- 초록색 곡선 배경 추가 -->
+      <div class="curve-left"></div>
+      <div class="curve-right"></div>
+     
+      <section class="section main_image_text_gallery" data-ez-module="image-gallery/2" data-ez-role="style.background" data-ez-item-length="1" data-ez="contents-12mes2k-1" data-ez-display="visible" style="margin-top: 100px; margin-bottom: 0; position: relative; z-index: 1;">
+  
+          <!-- 스마트 배너 추가 끝 -->
+          
+          <div class="main_title ez-align-center" data-ez-role="ez-align" data-ez-align="center"><!-- 라이프스타일 타이틀 수정하는곳 -->
+              <div class="main_title_txt01" data-ez-role="title" style="color:rgba(0, 255, 0, 0.671)">대표 메뉴</div>
+              <div class="main_title_txt02" data-ez-role="desc"></div>
+          </div><!-- //main_title -->
+          <style>
+         
+          </style>
+          <div class="main_3dan_banner ez-mobile-layout-none" data-ez-role="ez-mobile-layout" data-ez-mobile-layout="none" style="display: flex; justify-content: center;">
+              <ul data-ez-role="image-list ez-column" class="ez-column-3" data-ez-column="3" style="width: 100%; max-width: 1480px; gap: 20px; display: flex; justify-content: center;">
+                  <li data-ez-role="image-item ez-align" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 40px; box-shadow: 0 8px 16px rgba(0,0,0,0.2), 0 0 30px rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; position: relative; overflow: hidden;" onmousemove="handleGlow(event, this)" onmouseleave="removeGlow(this)">
+                      <a data-ez-role="a" href="#" target="_self">
+                          <picture class="image-hover">
+                              <source srcset="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-0x2nw4a-4.jpg?v=1736146664370" media="(max-width: 1024px)" data-ez-role="img-pc" data-ez-eb="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-0x2nw4a-4.edibotbanner.json">
+                              <img src="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-0x2nw4a-4.jpg?v=1736146664370" data-ez-role="img-mobile" style="border-radius: 20px;">
+                          </picture>
+                          <div class="main_3dan_banner_txt">
+                              <div class="main_3dan_banner_txt01" data-ez-role="title" style="color: rgb(0, 255, 0);justify-content: center;">소고기 전골</div>
+                          </div>
+                      </a>
+                  </li>
+                  <li data-ez-role="image-item ez-align" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 40px; box-shadow: 0 8px 16px rgba(0,0,0,0.2), 0 0 30px rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; position: relative; overflow: hidden;" onmousemove="handleGlow(event, this)" onmouseleave="removeGlow(this)">
+                      <a data-ez-role="a" href="#" target="_self">
+                          <picture class="image-hover">
+                              <source srcset="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-1qcrirm-4.jpg?v=1736146647585" media="(max-width: 1024px)" data-ez-role="img-pc" data-ez-eb="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-1qcrirm-4.edibotbanner.json">
+                              <img src="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-1qcrirm-4.jpg?v=1736146647585" data-ez-role="img-mobile" style="border-radius: 20px;">
+                          </picture>
+                          <div class="main_3dan_banner_txt">
+                              <div class="main_3dan_banner_txt01" data-ez-role="title" style="color: rgb(0, 255, 0);">치즈 감자전</div>
+                          </div>
+                      </a>
+                  </li>
+                  <li data-ez-role="image-item ez-align" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 40px; box-shadow: 0 8px 16px rgba(0,0,0,0.2), 0 0 30px rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; position: relative; overflow: hidden;" onmousemove="handleGlow(event, this)" onmouseleave="removeGlow(this)">
+                      <a data-ez-role="a" href="#" target="_self">
+                          <picture class="image-hover">
+                              <source srcset="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-190ug3j-4.jpg?v=1736146622198" media="(max-width: 1024px)" data-ez-role="img-pc" data-ez-eb="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-190ug3j-4.edibotbanner.json" style="border-radius: 20px;">
+                              <img src="https://ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/ezst/image/ez-image-contents-1oe6nys-1-190ug3j-4.jpg?v=1736146622198" data-ez-role="img-mobile" style="border-radius: 20px;">
+                          </picture>
+                          <div class="main_3dan_banner_txt">
+                              <div class="main_3dan_banner_txt01" data-ez-role="title" style="color: rgb(0,255,0);">수육</div>
+                          </div>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </section>
+  
+      <script>
+          function createPetals() {
+              const container = document.querySelector('.background-wrapper');
+              const petal = document.createElement('div');
+              petal.classList.add('petal');
+              
+              petal.style.left = Math.random() * 100 + '%';
+              petal.style.top = '-20px';
+              
+              const duration = Math.random() * 5 + 7;
+              petal.style.animationDuration = `${duration}s`;
+              
+              const size = Math.random() * 5 + 10;
+              petal.style.width = `${size}px`;
+              petal.style.height = `${size}px`;
+              
+              const scale = Math.random() * 0.4 + 0.6;
+              petal.style.transform = `scale(${scale})`;
+              
+              container.appendChild(petal);
+              
+              setTimeout(() => {
+                  petal.remove();
+              }, duration * 1000);
+          }
+  
+          for(let i = 0; i < 15; i++) {
+              createPetals();
+          }
+  
+          setInterval(createPetals, 500);
+      </script>
+      
+  </div>
+
+  <div class="wave-container" data-ez="module-155zbj4-1" data-ez-module="user-defined/1" data-ez-name="USER DEFINED" data-ez-type="plain" style="margin-bottom: 10px; -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -o-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg);">
+    <div class="wave-overlay"></div>
+    <svg class="wave-svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path class="wave wave1" d="M0,20 C240,25 480,15 720,20 C960,25 1200,15 1440,20 L1440,120 L0,120 Z"></path>
+      <path class="wave wave2" d="M0,40 C240,45 480,35 720,40 C960,45 1200,35 1440,40 L1440,120 L0,120 Z"></path>
+      <path class="wave wave3" d="M0,60 C240,65 480,55 720,60 C960,65 1200,55 1440,60 L1440,120 L0,120 Z"></path>
+    </svg>
+  </div>
+  <section class="section main_text ez-textsize-medium ez-align-center" data-ez-module="text/1" data-ez-role="style.background" data-ez-align="center" data-ez-textsize="medium" style="background-color: rgb(201, 173, 141); display: none;" data-ez="contents-0owazym-1" data-ez-display="hidden">
+    
+        <div class="main_long_banner"><!-- 메인 롱배너 -->
+            <div class="main_long_banner_txt">
+                <div class="main_long_banner_txt01" data-ez-role="title" style="color: rgb(255, 255, 255);">배송 지연 안내</div>
+                <div class="main_long_banner_txt02" data-ez-role="desc" style="color: rgb(119, 119, 119);"><p><span style="color: rgb(255, 255, 255);">추석 연휴 기간 동안 택배 배송은 진행하지 않습니다.</span></p><p><span style="color: rgb(255, 255, 255);">17일 이후의 주문 건은 23일부터 순차적으로 배송될 예정입니다.</span></p></div>
+                <div class="main_text_link" style="display: none;"><a data-ez-role="a" href="#" target="_self"></a></div>
+            </div><!-- //main_long_banner_txt -->
+        </div><!-- //main_long_banner -->
+    </section>
+
+
+<div class="background-t" style="background-color: rgba(243, 243, 243, 0.816); padding: 40px; margin-bottom: 0px;" data-ez="module-0ztch71-2" data-ez-module="user-defined/1" data-ez-name="USER DEFINED" data-ez-type="plain">
+          <div class="outter-background-layer" style="width: 100%; max-width: 1450px; padding: 20px; margin: 0px auto; border-radius: 18px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); border: 2px solid rgba(255,255,255,0.4); position: relative; overflow: hidden; transform-style: preserve-3d; perspective: 1000px; transform: translateZ(10px); -webkit-backface-visibility: hidden; backface-visibility: hidden;" onmousemove="handleGlow(event, this)" onmouseleave="removeGlow(this)">
+              <div class="main_long_banner" style="width: 100%; max-width: 1350px; margin: 0 auto;">
+                  <!-- 상단 영역 -->
+                  <div style="display: flex; margin: 20px 0; gap: 20px;">
+                      <div style="flex: 1; background: rgba(255, 107, 0, 0.7); backdrop-filter: blur(10px); height: 120px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2);">
+                          <p style="color: #ffffff; text-align: center; padding-top: 45px; font-size: 16px;">주감의 대표메뉴</p>
+                      </div>
+                      <div style="flex: 2; background: rgba(13, 63, 12, 0.7); backdrop-filter: blur(10px); height: 120px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2);">
+                          <p style="color: #ffffff; padding: 45px 20px; font-size: 16px; text-align: center;">맛있는 한식과 함께하는 즐거운 시간</p>
+                      </div>
+                  </div>
+                  
+                  <!-- 하단 영역 -->
+                  <div style="display: flex; justify-content: center; gap: 20px;">
+                      <div style="flex: 2; background: rgba(37, 148, 10, 0.7); backdrop-filter: blur(10px); height: 120px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2);">
+                          <p style="color: #ffffff; padding: 45px 20px; font-size: 16px; text-align: center;">신선한 재료로 정성껏 준비합니다</p>
+                      </div>
+                      <div style="flex: 1; background: rgba(0, 163, 224, 0.7); backdrop-filter: blur(10px); height: 120px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2);">
+                          <p style="color: #ffffff; text-align: center; padding-top: 45px; font-size: 16px;">최고의 맛을 약속드립니다</p>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+          <div app4you-smart-banner="smart-banner-admin-RES00020" app4you-smart-banner-html="true" class="xans-element- xans-smart-banner-admin xans-smart-banner-admin-RES00020 section section_full location-section" data-ez="module-0csghml-1" data-ez-layoutsize="full" data-ez-module="user-defined/1" data-ez-name="USER DEFINED" data-ez-type="plain" style="margin: 40px 0;">
+            <div class="location-container" style="display: flex; flex-direction: column; gap: 15px; max-width: 1500px; margin: 0 auto; padding: 20px;">
+              <!-- 본점 -->
+              <div data-slider="true" data-type="full" data-mode="fade" data-minslides="1" data-maxslides="10" data-controls="true" data-adaptiveheight="true" data-autohover="true" data-responsive="true" class="smart-banner-wrapper circle" data-pager="true" data-auto="true" data-speed="300" data-pause="3000" style="box-shadow: 0 12px 24px rgba(0,0,0,0.2); border-radius: 20px; background: rgba(255,255,255,0.95); margin-top: 20px;">
+                <ul style="width: auto; position: relative; visibility:hidden; background-color: #ffffff; min-height: 500px; border-radius: 20px; overflow: hidden;" class="smart-banner-bxslider">
+                  <!-- 본점 -->
+                  <li style="height: 500px;">
+                    <div class="location-item" style="position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: all 0.3s ease; height: 100%;">
+                      <div class="location-title" style="position: absolute; top: 20px; left: 20px; z-index: 2; background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 15px;">
+                        <h2 style="color: rgb(255, 255, 255); font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin: 0;">본점 안내</h2>
+                      </div>
+                      <div class="location-image" style="height: 100%;">
+                        <img src="//ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/img%20%281%29.jpg" alt="본점 지도" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);">
+                      </div>
+                      <div class="location-info" style="position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px); box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+                        <div class="info-text" style="color: rgb(118, 118, 118); line-height: 1.6;">
+                          <p><strong><span style="color: rgb(0, 0, 0); font-size: 16px;">주소</span></strong></p>
+                          <p style="margin: 5px 0;">대전광역시 서구 갈마동 855</p>
+                          <p><strong><span style="color: rgb(0, 0, 0); font-size: 16px;">운영시간</span></strong></p>
+                          <p style="margin: 5px 0;">운영시간 : 오전 10시 ~ 오후 06시</p>
+                          <p style="margin: 5px 0;">점심시간 : 오후 12시 ~ 오후 01시</p>
+                        </div>
+                        <div class="info-link" style="margin-top: 15px;">
+                          <a href="https://map.naver.com/v5/search/대전광역시%20서구%20갈마동%20855" target="_blank" class="map-link" style="display: inline-block; padding: 10px 25px; background: linear-gradient(135deg, #333 0%, #222 100%); color: #fff; text-decoration: none; border-radius: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: all 0.3s ease;">바로가기</a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- 강남점 -->
+                  <li style="height: 500px;">
+                    <div class="location-item" style="position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: all 0.3s ease; height: 100%;">
+                      <div class="location-title" style="position: absolute; top: 20px; left: 20px; z-index: 2; background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 15px;">
+                        <h2 style="color: rgb(255, 255, 255); font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin: 0;">강남점 안내</h2>
+                      </div>
+                      <div class="location-image" style="height: 100%;">
+                        <img src="//ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/SE-1D4ADF56-2089-42FA-9BC6-38EE662EDD13.jpg" alt="강남점 지도" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);">
+                      </div>
+                      <div class="location-info" style="position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px); box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+                        <div class="info-text" style="color: rgb(118, 118, 118); line-height: 1.6;">
+                          <p><strong><span style="color: rgb(0, 0, 0); font-size: 16px;">주소</span></strong></p>
+                          <p style="margin: 5px 0;">대전광역시 서구 갈마동 855</p>
+                          <p><strong><span style="color: rgb(0, 0, 0); font-size: 16px;">운영시간</span></strong></p>
+                          <p style="margin: 5px 0;">운영시간 : 오전 11시 ~ 오후 08시</p>
+                          <p style="margin: 5px 0;">점심시간 : 오후 01시 ~ 오후 02시</p>
+                        </div>
+                        <div class="info-link" style="margin-top: 15px;">
+                          <a href="https://map.naver.com/v5/search/대전광역시%20서구%20갈마동%20855" target="_blank" class="map-link" style="display: inline-block; padding: 10px 25px; background: linear-gradient(135deg, #333 0%, #222 100%); color: #fff; text-decoration: none; border-radius: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: all 0.3s ease;">바로가기</a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li style="height: 500px;">
+                    <div class="location-item" style="position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: all 0.3s ease; height: 100%;">
+                      <div class="location-title" style="position: absolute; top: 20px; left: 20px; z-index: 2; background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 15px;">
+                        <h2 style="color: rgb(255, 255, 255); font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin: 0;">ㄴㄴ 안내</h2>
+                      </div>
+                      <div class="location-image" style="height: 100%;">
+                        <img src="//ecimg.cafe24img.com/pg1588b80791895060/jugamz/web/upload/146459335_254874412883185_1597217806664691606_n.jpg" alt="강남점 지도" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);">
+                      </div>
+                      <div class="location-info" style="position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.95); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px); box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
+                        <div class="info-text" style="color: rgb(118, 118, 118); line-height: 1.6;">
+                          <p><strong><span style="color: rgb(0, 0, 0); font-size: 16px;">주소</span></strong></p>
+                          <p style="margin: 5px 0;">서울특별시 강남구 테헤란로 00길 00</p>
+                          <p><strong><span style="color: rgb(0, 0, 0); font-size: 16px;">운영시간</span></strong></p>
+                          <p style="margin: 5px 0;">운영시간 : 오전 11시 ~ 오후 08시</p>
+                          <p style="margin: 5px 0;">점심시간 : 오후 01시 ~ 오후 02시</p>
+                        </div>
+                        <div class="info-link" style="margin-top: 15px;">
+                          <a href="https://map.naver.com/v5/search/대전광역시%20서구%20갈마동%20855" target="_blank" class="map-link" style="display: inline-block; padding: 10px 25px; background: linear-gradient(135deg, #333 0%, #222 100%); color: #fff; text-decoration: none; border-radius: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: all 0.3s ease;">바로가기</a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+  </div>
+<!--#ez="1/9"-->
+<!--#ez="1/3"-->
